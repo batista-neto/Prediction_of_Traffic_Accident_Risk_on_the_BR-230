@@ -1,0 +1,1370 @@
+{ Template: {
+        "Head": {
+            "Configuration": {
+                "Layout": {
+                    "Columns": [
+                        12
+                    ]
+                }
+            },
+            "Integrations": []
+        },
+        "Body": [
+            {
+                "_id": "Container_1789493489935",
+                "Type": "Container",
+                "Props": {
+                    "HideBorder": false,
+                    "Visibility": true
+                },
+                "Content": [
+                    {
+                        "_id": "Container_1788873384624",
+                        "Type": "Container",
+                        "Props": {
+                            "HideBorder": false,
+                            "Visibility": true
+                        },
+                        "Content": [
+                            {
+                                "_id": "Form_1789406193078",
+                                "Type": "Form",
+                                "Props": {
+                                    "HideBorder": true
+                                },
+                                "Content": [
+                                    {
+                                        "_id": "TIPesquisarCliente",
+                                        "Type": "FormInput",
+                                        "Props": {
+                                            "Label": "Pesquisar Cliente",
+                                            "Name": "TIPesquisarCliente",
+                                            "InputType": "text",
+                                            "HelperText": "Digite apenas os números do CPF do cliente.",
+                                            "DefaultValue": ""
+                                        },
+                                        "Content": []
+                                    },
+                                    {
+                                        "_id": "TIBuscarCliente",
+                                        "Type": "SubmitButton",
+                                        "Props": {
+                                            "Action": "TIBuscarCliente",
+                                            "Label": "Buscar Cliente",
+                                            "IconName": "search",
+                                            "IconAlign": "left"
+                                        },
+                                        "Content": []
+                                    }
+                                ],
+                                "Configuration": {
+                                    "Layout": {
+                                        "Align": "left"
+                                    }
+                                }
+                            },
+                            {
+                                "_id": "Container_1789666400809",
+                                "Type": "Container",
+                                "Props": {
+                                    "HideBorder": true,
+                                    "Visibility": true
+                                },
+                                "Content": [
+                                    {
+                                        "_id": "Form_1789666643242",
+                                        "Type": "Form",
+                                        "Props": {
+                                            "HideBorder": true
+                                        },
+                                        "Content": [
+                                            {
+                                                "_id": "Section_1788873455578",
+                                                "Type": "Section",
+                                                "Props": {
+                                                    "Heading": "Dados do Cliente",
+                                                    "Visibility": true
+                                                },
+                                                "Content": [
+                                                    {
+                                                        "_id": "TIDadosCliente",
+                                                        "Type": "AttributeSection",
+                                                        "Props": {
+                                                            "Items": [
+                                                                {
+                                                                    "Value": "$.TIDadosCliente.Items[0].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false,
+                                                                    "Label": "Nome"
+                                                                },
+                                                                {
+                                                                    "Value": "$.TIDadosCliente.Items[1].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false,
+                                                                    "Label": "CPF"
+                                                                },
+                                                                {
+                                                                    "Value": "$.TIDadosCliente.Items[2].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false,
+                                                                    "Label": "E-mail"
+                                                                },
+                                                                {
+                                                                    "Value": "$.TIDadosCliente.Items[3].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false,
+                                                                    "Label": "Telefone"
+                                                                },
+                                                                {
+                                                                    "Label": "Gênero",
+                                                                    "Value": "$.TIDadosCliente.Items[4].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false
+                                                                },
+                                                                {
+                                                                    "Label": "Data de nascimento",
+                                                                    "Value": "$.TIDadosCliente.Items[5].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false
+                                                                },
+                                                                {
+                                                                    "Label": "Endereço",
+                                                                    "Value": "$.TIDadosCliente.Items[6].Value",
+                                                                    "AutoOpen": true,
+                                                                    "Copyable": true
+                                                                },
+                                                                {
+                                                                    "Label": "Aceite de privacidade de dados",
+                                                                    "Value": "$.TIDadosCliente.Items[7].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false
+                                                                }
+                                                            ],
+                                                            "Columns": ""
+                                                        },
+                                                        "Content": [],
+                                                        "Configuration": {
+                                                            "Layout": {
+                                                                "Columns": [
+                                                                    "6",
+                                                                    "6"
+                                                                ],
+                                                                "Align": "left"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "Configuration": {
+                                                    "Style": {
+                                                        "--section-border-style": "null",
+                                                        "--section-padding-top": "0px",
+                                                        "--section-padding-right": "0px",
+                                                        "--section-padding-bottom": "0px",
+                                                        "--section-padding-left": "20px",
+                                                        "--section-border-width": "0px",
+                                                        "--section-heading-padding-top": "0px",
+                                                        "--section-heading-padding-right": "0px",
+                                                        "--section-heading-padding-bottom": "0px",
+                                                        "--section-heading-padding-left": "20px",
+                                                        "--section-border-radius": "16px"
+                                                    },
+                                                    "Layout": {
+                                                        "Columns": "12",
+                                                        "Align": "center"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "_id": "Form_1789390915935",
+                                        "Type": "Form",
+                                        "Props": {
+                                            "HideBorder": true
+                                        },
+                                        "Content": [
+                                            {
+                                                "_id": "TIDetalhesPedidoSelecionadoHeader",
+                                                "Type": "Section",
+                                                "Props": {
+                                                    "Heading": "$.TIDetalhesPedidoSelecionadoHeader.Heading",
+                                                    "Visibility": true
+                                                },
+                                                "Content": [
+                                                    {
+                                                        "_id": "TIDetalhesDoPedido",
+                                                        "Type": "AttributeSection",
+                                                        "Props": {
+                                                            "Items": [
+                                                                {
+                                                                    "Label": "Status",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[0].Value"
+                                                                },
+                                                                {
+                                                                    "Label": "Valor Total",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[1].Value"
+                                                                },
+                                                                {
+                                                                    "Label": "Data do pedido",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[2].Value"
+                                                                },
+                                                                {
+                                                                    "Label": "ID da filial",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[3].Value"
+                                                                },
+                                                                {
+                                                                    "Label": "Marca",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[4].Value",
+                                                                    "AutoOpen": true,
+                                                                    "Copyable": true
+                                                                },
+                                                                {
+                                                                    "Label": "Filial",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[5].Value",
+                                                                    "AutoOpen": true,
+                                                                    "Copyable": true
+                                                                },
+                                                                {
+                                                                    "Label": "Telefone",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[6].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false
+                                                                },
+                                                                {
+                                                                    "Label": "Celular",
+                                                                    "Value": "$.TIDetalhesDoPedido.Items[7].Value",
+                                                                    "AutoOpen": false,
+                                                                    "Copyable": false
+                                                                }
+                                                            ],
+                                                            "Columns": ""
+                                                        },
+                                                        "Content": [],
+                                                        "Configuration": {
+                                                            "Layout": {
+                                                                "Columns": [
+                                                                    "6",
+                                                                    "6"
+                                                                ],
+                                                                "Align": "left"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "Configuration": {
+                                                    "Style": {
+                                                        "--section-border-style": "null",
+                                                        "--section-heading-padding-top": "0px",
+                                                        "--section-heading-padding-right": "0px",
+                                                        "--section-heading-padding-bottom": "0px",
+                                                        "--section-border-width": "0px"
+                                                    },
+                                                    "Layout": {
+                                                        "Align": "center",
+                                                        "Columns": "12"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "_id": "Button_1789585473153",
+                                                "Type": "Button",
+                                                "Props": {
+                                                    "Variant": "normal",
+                                                    "IconName": "call",
+                                                    "IconAlign": "left",
+                                                    "Action": "ActionSelected",
+                                                    "Disabled": false
+                                                },
+                                                "Content": [
+                                                    "Telefone"
+                                                ]
+                                            }
+                                        ],
+                                        "Configuration": {
+                                            "Style": {
+                                                "--form-padding-top": "20px",
+                                                "--form-padding-right": "0px",
+                                                "--form-padding-bottom": "0px",
+                                                "--form-padding-left": "0px"
+                                            },
+                                            "Layout": {
+                                                "Align": "center"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "Configuration": {
+                                    "Layout": {
+                                        "Columns": [
+                                            "6",
+                                            "6"
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "Configuration": {
+                            "Style": {
+                                "--container-padding-left": "10px",
+                                "--container-padding-bottom": "10px",
+                                "--container-padding-right": "10px",
+                                "--container-padding-top": "10px"
+                            },
+                            "Layout": {
+                                "Columns": "12"
+                            }
+                        }
+                    },
+                    {
+                        "_id": "Container_1788873421203",
+                        "Type": "Container",
+                        "Props": {
+                            "HideBorder": false,
+                            "Visibility": true
+                        },
+                        "Content": [
+                            {
+                                "_id": "ExpandableSection_1788875814970",
+                                "Type": "ExpandableSection",
+                                "Props": {
+                                    "header": "Histórico de Interação",
+                                    "variant": "footer"
+                                },
+                                "Content": [
+                                    {
+                                        "_id": "TIHistoricoDeInteracao",
+                                        "Type": "TemplateStringComponent",
+                                        "Props": {
+                                            "TemplateString": "<Container header={<h1>Historico</h1>}><section class=\"summary\">\n      <strong>Resumo</strong>\n\n      <ul>\n        <li>\n          <strong>Assunto:</strong>\n          O usuário relatou a falta de um medicamento (Lasix) em um pedido que foi entregue, mas incompleto.\n        </li>\n\n        <li>\n          <strong>Ações do Usuário:</strong>\n          Forneceu o CPF e selecionou o pedido específico para verificar o status.\n        </li>\n\n        <li>\n          <strong>Objetivo:</strong>\n          Ser atendido por um agente humano para solucionar a ausência do medicamento Lasix.\n        </li>\n      </ul>\n    </section>\n<div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>Boa noite</p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p></p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Posso te ajudar com várias coisas por aqui! Mas se precisar falar\n        com alguém da equipe, o atendimento humano é das 7h às 23h para\n        assuntos gerais, e das 7h às 22h para pedidos de loja parceira.\n      </p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Posso te ajudar a fazer uma compra, encontrar informações,\n        solucionar problemas ou tirar dúvidas. No que posso te ajudar hoje?\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>\n        Esqueceram de enviar o medicamento Lasix para mim, e eu paguei por ele!\n      </p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Sinto muito pelo ocorrido. Para que eu possa te ajudar,\n        o medicamento <strong>Lasix</strong> não chegou na sua casa?\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>Não chegou</p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Para consultar o status do seu pedido, preciso que\n        <strong>digite</strong> o número do CPF.\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>Somente os outros medicamentos</p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        O CPF informado não é válido. Preciso que digite o CPF com 11 números.\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>48098093824</p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Aguarde só um instante enquanto procuro seus pedidos.\n      </p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Eu encontrei alguns pedidos, por favor,\n        <strong>selecione um pedido</strong> para consultar o status. 😉\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>Pedido com o final 8650</p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Obrigada! Aguarde só um instante enquanto verifico o status\n        do seu pedido 8650.\n      </p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        O status do pedido é: <strong>pedido entregue</strong>.\n      </p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Você recebeu todos os seus produtos conforme solicitado?\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>Não</p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Nesse caso você vai precisar falar com um dos nossos atendentes.\n      </p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        No momento, estamos com um volume alto de atendimentos,\n        e por isso o <strong>tempo de espera</strong> pode ser\n        <strong>maior que o normal</strong>.\n      </p>\n\n      <p>\n        Quer <strong>aguardar</strong> para falar com um atendente?\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>Sim</p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Você entrou na fila de atendimento 😊\n      </p>\n\n      <p>\n        Aguarde nessa conversa para ser atendido.\n      </p>\n\n      <p>\n        Se quiser sair da fila, é só mandar "Sair" aqui na conversa.\n      </p>\n    </div>\n\n    <div class=\"message client\">\n      <strong>Cliente</strong>\n      <p>\n        Não mandaram o medicamento Lasix que eu paguei, mandaram só outros\n        remédios que havia pedido e faltou o Lasix.\n      </p>\n    </div>\n\n    <div class=\"message agent\">\n      <strong>Agente virtual</strong>\n      <p>\n        Você entrou na fila de atendimento 😊\n      </p>\n\n      <p>\n        Aguarde nessa conversa para ser atendido.\n      </p>\n\n      <p>\n        Se quiser sair da fila, é só mandar "Sair" aqui na conversa.\n      </p>\n    </div>\n</Container>"
+                                        },
+                                        "Content": []
+                                    }
+                                ]
+                            }
+                        ],
+                        "Configuration": {
+                            "Layout": {
+                                "Columns": 12
+                            }
+                        }
+                    },
+                    {
+                        "_id": "Container_1788873386731",
+                        "Type": "Container",
+                        "Props": {
+                            "HideBorder": false,
+                            "Visibility": true
+                        },
+                        "Content": [
+                            {
+                                "_id": "ExpandableSection_1788873523624",
+                                "Type": "ExpandableSection",
+                                "Props": {
+                                    "header": "Pedidos",
+                                    "variant": "footer"
+                                },
+                                "Content": [
+                                    {
+                                        "_id": "TIPedidos",
+                                        "Type": "Table",
+                                        "Props": {
+                                            "Header": "Últimos pedidos",
+                                            "Name": "TIPedidos",
+                                            "Description": "",
+                                            "Items": "$.TIPedidos.Items",
+                                            "Filterable": true,
+                                            "ItemsPerPage": "10",
+                                            "Columns": [
+                                                {
+                                                    "Label": "Número do Pedido",
+                                                    "Id": "numero_pedido",
+                                                    "EditableType": "",
+                                                    "Type": "action"
+                                                },
+                                                {
+                                                    "Label": "Status",
+                                                    "Id": "status_pedido",
+                                                    "Type": "number",
+                                                    "EditableType": "",
+                                                    "Options": [
+                                                        ""
+                                                    ]
+                                                },
+                                                {
+                                                    "Label": "Valor total",
+                                                    "Id": "valor_pedido",
+                                                    "Type": "text",
+                                                    "EditableType": ""
+                                                },
+                                                {
+                                                    "Label": "Data do pedido",
+                                                    "Id": "data_pedido",
+                                                    "Type": "text",
+                                                    "EditableType": ""
+                                                },
+                                                {
+                                                    "Label": "Marca",
+                                                    "Id": "branchLogo",
+                                                    "EditableType": "",
+                                                    "Type": "text"
+                                                },
+                                                {
+                                                    "Label": "Modalidade de entrega",
+                                                    "Id": "deliveryMode",
+                                                    "EditableType": ""
+                                                },
+                                                {
+                                                    "Label": "Transportadora de entrega",
+                                                    "Id": "trackingCompanny",
+                                                    "EditableType": ""
+                                                }
+                                            ],
+                                            "ColumnWidth": "flexible",
+                                            "TableAction": "TIDetalhesPedido",
+                                            "Actions": [
+                                                {
+                                                    "Label": "-",
+                                                    "Action": "ActionSelected",
+                                                    "FormAction": "none",
+                                                    "Disabled": true,
+                                                    "Variant": "normal",
+                                                    "IconAlign": ""
+                                                }
+                                            ]
+                                        },
+                                        "Content": []
+                                    }
+                                ]
+                            }
+                        ],
+                        "Configuration": {
+                            "Layout": {
+                                "Columns": 12
+                            }
+                        }
+                    },
+                    {
+                        "_id": "Form_1788873605949",
+                        "Type": "Form",
+                        "Props": {
+                            "HideBorder": false
+                        },
+                        "Content": [
+                            {
+                                "_id": "TIMotivoDeContato",
+                                "Type": "Dropdown",
+                                "Props": {
+                                    "Label": "Motivo de Contato",
+                                    "Name": "TIMotivoDeContato",
+                                    "DefaultValue": "$.TIMotivoDeContato.DefaultValue",
+                                    "Options": [
+                                        {
+                                            "Label": "Problemas na entrega",
+                                            "Value": "Problemas na entrega"
+                                        },
+                                        {
+                                            "Label": "Devolução do pedido",
+                                            "Value": "Devolução do pedido"
+                                        },
+                                        {
+                                            "Label": "Troca do pedido",
+                                            "Value": "Option 3"
+                                        }
+                                    ],
+                                    "MultiSelect": false,
+                                    "Clearable": true,
+                                    "Required": true,
+                                    "Disabled": false,
+                                    "AIFormPopulationOptions": {
+                                        "EnableAutoFormPopulation": false
+                                    }
+                                },
+                                "Content": []
+                            },
+                            {
+                                "_id": "TICanalDeAtendimento",
+                                "Type": "FormInput",
+                                "Props": {
+                                    "Label": "Canal de  Atendimento",
+                                    "Name": "TICanalDeAtendimento",
+                                    "InputType": "text",
+                                    "DefaultValue": {
+                                        "Conditions": [
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "0-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "1-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "2-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "3-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "4-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "5-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "6-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "7-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "8-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "9-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "10-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "11-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "12-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "13-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "14-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "15-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "16-TICanalDeAtendimento-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "SAC",
+                                                "id": "17-TICanalDeAtendimento-DefaultValue"
+                                            }
+                                        ],
+                                        "Fallback": ""
+                                    },
+                                    "Disabled": true
+                                },
+                                "Content": []
+                            },
+                            {
+                                "_id": "TIAssunto",
+                                "Type": "FormInput",
+                                "Props": {
+                                    "Label": "Assunto",
+                                    "Name": "TIAssunto",
+                                    "DefaultValue": {
+                                        "Conditions": [
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Entrega",
+                                                "id": "0-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Devolução",
+                                                "id": "1-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Troca",
+                                                "id": "2-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Entrega",
+                                                "id": "3-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Devolução",
+                                                "id": "4-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Troca",
+                                                "id": "5-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Entrega",
+                                                "id": "6-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Devolução",
+                                                "id": "7-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Troca",
+                                                "id": "8-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Entrega",
+                                                "id": "9-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Devolução",
+                                                "id": "10-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Troca",
+                                                "id": "11-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Entrega",
+                                                "id": "12-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Devolução",
+                                                "id": "13-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Troca",
+                                                "id": "14-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Entrega",
+                                                "id": "15-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Devolução",
+                                                "id": "16-TIAssunto-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Troca",
+                                                "id": "17-TIAssunto-DefaultValue"
+                                            }
+                                        ],
+                                        "Fallback": ""
+                                    },
+                                    "InputType": "text",
+                                    "Required": false,
+                                    "HelperText": "",
+                                    "ValidationPattern": "",
+                                    "Disabled": true,
+                                    "AIFormPopulationOptions": {
+                                        "EnableAutoFormPopulation": false
+                                    }
+                                },
+                                "Content": []
+                            },
+                            {
+                                "_id": "TITipo",
+                                "Type": "FormInput",
+                                "Props": {
+                                    "Label": "Tipo",
+                                    "Name": "TITipo",
+                                    "InputType": "text",
+                                    "Disabled": true,
+                                    "DefaultValue": {
+                                        "Conditions": [
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "0-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Solicitação",
+                                                "id": "1-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "2-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "3-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Solicitação",
+                                                "id": "4-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "5-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "6-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Solicitação",
+                                                "id": "7-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "8-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "9-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Solicitação",
+                                                "id": "10-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "11-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "12-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Solicitação",
+                                                "id": "13-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "14-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Problemas na entrega"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "15-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Devolução do pedido"
+                                                    }
+                                                },
+                                                "Result": "Solicitação",
+                                                "id": "16-TITipo-DefaultValue"
+                                            },
+                                            {
+                                                "Condition": {
+                                                    "Equals": {
+                                                        "ElementByKey": "TIMotivoDeContato",
+                                                        "ElementByValue": "Option 3"
+                                                    }
+                                                },
+                                                "Result": "Reclamação",
+                                                "id": "17-TITipo-DefaultValue"
+                                            }
+                                        ],
+                                        "Fallback": ""
+                                    }
+                                },
+                                "Content": []
+                            },
+                            {
+                                "_id": "TISalvarTabulacao",
+                                "Type": "SubmitButton",
+                                "Props": {
+                                    "Action": "TISalvarTabulacao",
+                                    "Label": "Salvar Tabulação",
+                                    "Variant": "primary",
+                                    "IconAlign": "left",
+                                    "IconName": "check"
+                                },
+                                "Content": []
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "Container_1788873423509",
+                        "Type": "Container",
+                        "Props": {
+                            "HideBorder": false,
+                            "Visibility": true
+                        },
+                        "Content": [
+                            {
+                                "_id": "Form_1788875982666",
+                                "Type": "Form",
+                                "Props": {
+                                    "HideBorder": true
+                                },
+                                "Content": [
+                                    {
+                                        "_id": "TICatalogo",
+                                        "Type": "Dropdown",
+                                        "Props": {
+                                            "Label": "Catálogo",
+                                            "Name": "TICatalogo",
+                                            "DefaultValue": [
+                                                "Option 1"
+                                            ],
+                                            "Options": {
+                                                "Conditions": [
+                                                    {
+                                                        "Condition": {
+                                                            "Equals": {
+                                                                "ElementByKey": "TIMotivoDeContato",
+                                                                "ElementByValue": "Problemas na entrega"
+                                                            }
+                                                        },
+                                                        "Result": [
+                                                            {
+                                                                "Label": "Entrega",
+                                                                "Value": "Formulário - Entrega"
+                                                            }
+                                                        ],
+                                                        "id": "0-TICatalogo-Options"
+                                                    },
+                                                    {
+                                                        "Condition": {
+                                                            "Equals": {
+                                                                "ElementByKey": "TIMotivoDeContato",
+                                                                "ElementByValue": "Devolução do pedido"
+                                                            }
+                                                        },
+                                                        "Result": [
+                                                            {
+                                                                "Label": "Devolução",
+                                                                "Value": "Formulário - Devolução"
+                                                            }
+                                                        ],
+                                                        "id": "1-TICatalogo-Options"
+                                                    },
+                                                    {
+                                                        "Condition": {
+                                                            "Equals": {
+                                                                "ElementByKey": "TIMotivoDeContato",
+                                                                "ElementByValue": "Option 3"
+                                                            }
+                                                        },
+                                                        "Result": [
+                                                            {
+                                                                "Label": "Troca",
+                                                                "Value": "Formulário - Troca"
+                                                            }
+                                                        ],
+                                                        "id": "2-TICatalogo-Options"
+                                                    }
+                                                ],
+                                                "Fallback": [
+                                                    {
+                                                        "Label": "Entrega",
+                                                        "Value": "Formulário - Entrega"
+                                                    },
+                                                    {
+                                                        "Label": "Devolução",
+                                                        "Value": "Formulário - Devolução"
+                                                    },
+                                                    {
+                                                        "Label": "Troca",
+                                                        "Value": "Formulário - Troca"
+                                                    }
+                                                ]
+                                            },
+                                            "MultiSelect": false,
+                                            "Clearable": true,
+                                            "Required": false,
+                                            "Disabled": {
+                                                "Conditions": [
+                                                    {
+                                                        "Condition": {
+                                                            "Includes": {
+                                                                "ElementByKey": "TIMotivoDeContato",
+                                                                "ElementByValue": [
+                                                                    "Problemas na entrega",
+                                                                    "Devolução do pedido",
+                                                                    "Option 3"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "Result": false,
+                                                        "id": "3-TICatalogo-Disabled"
+                                                    }
+                                                ],
+                                                "Fallback": true
+                                            },
+                                            "AIFormPopulationOptions": {
+                                                "EnableAutoFormPopulation": false
+                                            }
+                                        },
+                                        "Content": []
+                                    },
+                                    {
+                                        "_id": "TIAcessarCatalogo",
+                                        "Type": "SubmitButton",
+                                        "Props": {
+                                            "Action": "TIAcessarCatalogo",
+                                            "Label": "Acessar Formulário",
+                                            "Variant": "primary",
+                                            "IconAlign": "left",
+                                            "IconName": "menu"
+                                        },
+                                        "Content": []
+                                    }
+                                ],
+                                "Configuration": {
+                                    "Style": {
+                                        "--form-padding-top": "0px",
+                                        "--form-padding-right": "0px",
+                                        "--form-padding-bottom": "0px",
+                                        "--form-padding-left": "0px"
+                                    }
+                                }
+                            }
+                        ],
+                        "Configuration": {
+                            "Layout": {
+                                "Columns": 12
+                            }
+                        }
+                    },
+                    {
+                        "_id": "Container_1788873418491",
+                        "Type": "Container",
+                        "Props": {
+                            "HideBorder": false,
+                            "Visibility": true,
+                            "header": ""
+                        },
+                        "Content": [
+                            {
+                                "_id": "Form_1789736592543",
+                                "Type": "Form",
+                                "Props": {
+                                    "HideBorder": true
+                                },
+                                "Content": [
+                                    {
+                                        "_id": "TIJavaFarmacia",
+                                        "Type": "FormInput",
+                                        "Props": {
+                                            "Label": "Identificador Java da Farmácia",
+                                            "Name": "TIJavaFarmacia",
+                                            "InputType": "text"
+                                        },
+                                        "Content": []
+                                    },
+                                    {
+                                        "_id": "TIBuscarFarmacia",
+                                        "Type": "SubmitButton",
+                                        "Props": {
+                                            "Action": "TIBuscarFarmacia",
+                                            "Label": "Buscar Farmácia",
+                                            "IconName": "search"
+                                        },
+                                        "Content": []
+                                    },
+                                    {
+                                        "_id": "TIListaDeFarmacias",
+                                        "Type": "Table",
+                                        "Props": {
+                                            "Header": "Dados da Farmácia",
+                                            "Name": "TIListaDeFarmacias",
+                                            "Description": "",
+                                            "Items": "$.TIListaDeFarmacias.Items",
+                                            "Filterable": false,
+                                            "ItemsPerPage": "15",
+                                            "Columns": [
+                                                {
+                                                    "Id": "branch_id",
+                                                    "EditableType": "",
+                                                    "Label": "Java",
+                                                    "Type": "",
+                                                    "Options": [
+                                                        "Value 2"
+                                                    ]
+                                                },
+                                                {
+                                                    "Id": "branchName",
+                                                    "Options": [
+                                                        "3"
+                                                    ],
+                                                    "Type": "",
+                                                    "EditableType": "",
+                                                    "Label": "Nome"
+                                                },
+                                                {
+                                                    "Id": "branchNeighborhood",
+                                                    "Label": "Bairro"
+                                                },
+                                                {
+                                                    "Id": "branchPhone",
+                                                    "Type": "",
+                                                    "EditableType": "",
+                                                    "Label": "Telefone"
+                                                },
+                                                {
+                                                    "Id": "branchCellPhone",
+                                                    "EditableType": "",
+                                                    "Label": "Celular"
+                                                },
+                                                {
+                                                    "Label": "Rede",
+                                                    "Id": "branchLogo",
+                                                    "EditableType": ""
+                                                }
+                                            ],
+                                            "ColumnWidth": "locked",
+                                            "TableAction": "TIFarmaciaDetalhado",
+                                            "Actions": [
+                                                {
+                                                    "Label": "-",
+                                                    "Action": "TableAction",
+                                                    "FormAction": "",
+                                                    "Disabled": true,
+                                                    "IconName": ""
+                                                }
+                                            ]
+                                        },
+                                        "Content": []
+                                    }
+                                ],
+                                "Configuration": {
+                                    "Style": {
+                                        "--form-padding-top": "5px",
+                                        "--form-padding-right": "5px",
+                                        "--form-padding-bottom": "5px",
+                                        "--form-padding-left": "5px"
+                                    }
+                                }
+                            }
+                        ],
+                        "Configuration": {
+                            "Layout": {
+                                "Columns": 12
+                            }
+                        }
+                    }
+                ],
+                "Configuration": {
+                    "Layout": {
+                        "Columns": "12"
+                    }
+                }
+            }
+        ],Actions: [
+            "ActionSelected",
+            "TIBuscarCliente",
+            "TIDetalhesPedido",
+            "TISalvarTabulacao",
+            "TIAcessarCatalogo",
+            "TIBuscarFarmacia",
+            "TIFarmaciaDetalhado",
+            "TableAction"
+        ]
+    }
