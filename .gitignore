@@ -9,6 +9,16 @@ __pycache__/
 # macOS
 .DS_Store
 
-# O GitHub recusa arquivos acima de 100 MB.
-# Este CSV tem cerca de 213 MB e fica apenas na máquina local.
-bases/acidentes2025_todas_causas_tipos.csv
+# O GitHub recusa arquivos acima de 100 MB e bases pesadas tornam o repositório lento.
+# As bases da PRF são baixadas e extraídas automaticamente pelo notebook via garantir_base().
+bases/*.csv
+bases/*.zip
+
+# LaTeX auxiliares e logs
+*.log
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
