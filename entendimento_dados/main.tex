@@ -269,35 +269,35 @@ DNIT & \textit{Malha Rodoviária} & Especificação cadastral & Segmento de rodo
 \end{tabularx}
 \end{table}
 
-\subsection{Fonte A: PRF --- Acidentes Agrupados por Ocorrência (\texttt{datatran2025.csv})}
+\subsection{Série Histórica de Ocorrências: \texttt{datatran} (2022 a 2025)}
 
-O arquivo \texttt{datatran2025.csv} é a fonte principal do estudo. Nele, cada registro representa exatamente um acidente de trânsito em rodovia federal com boletim de ocorrência lavrado no decorrer do ano de 2025.
+A série de arquivos \texttt{datatran2022.csv} a \texttt{datatran2025.csv} compõe a base principal do estudo. Em cada arquivo, uma linha representa exatamente um acidente de trânsito registrado pela PRF em rodovia federal.
 \begin{itemize}
-    \item \textbf{Localização e Acesso:} Armazenado no diretório local \texttt{bases/datatran2025.csv}, obtido por download via protocolo HTTP no Portal Brasileiro de Dados Abertos (\url{https://www.gov.br/prf/pt-br/acesso-a-informacao/dados-abertos/dados-abertos-da-prf}).
-    \item \textbf{Volume Bruto e Recorte:} O arquivo possui 72.529 linhas e 30 colunas na escala nacional (21,1 MB em disco). O filtro pela rodovia de interesse (\texttt{br == 230}) extrai 1.745 acidentes.
-    \item \textbf{Uso no Projeto:} Alimenta o Mapa de Calor através do par de coordenadas geográficas (\texttt{latitude} e \texttt{longitude}), suporta as agregações temporais (mês, dia da semana, faixa horária, fase do dia) e define a severidade da ocorrência.
+    \item \textbf{Localização e Acesso:} Armazenados no diretório \texttt{bases/}, com download automático gerenciado pela rotina \texttt{garantir\_base()} diretamente do Google Drive oficial da PRF (\url{https://www.gov.br/prf/pt-br/acesso-a-informacao/dados-abertos/dados-abertos-da-prf}).
+    \item \textbf{Volume Consolidado:} Na escala nacional, os quatro anos somam 278.103 ocorrências. O recorte pela rodovia de interesse (\texttt{br == 230}) totaliza \textbf{6.217 acidentes} (1.345 em 2022, 1.403 em 2023, 1.724 em 2024 e 1.745 em 2025).
+    \item \textbf{Papel no Projeto:} Alimenta o Mapa de Calor através das coordenadas geográficas (\texttt{latitude} e \texttt{longitude}), suporta as agregações temporais (ano, mês, dia da semana, hora e luminosidade) e fornece a variável-alvo supervisionada de severidade.
 \end{itemize}
 
-\subsection{Fonte B: PRF --- Acidentes Agrupados por Pessoa (\texttt{acidentes2025.csv})}
+\subsection{Série Histórica de Pessoas: \texttt{acidentes} (2022 a 2025)}
 
-O arquivo \texttt{acidentes2025.csv} detalha o perfil individual de cada cidadão envolvido no evento de trânsito.
+A série de arquivos \texttt{acidentes2022.csv} a \texttt{acidentes2025.csv} detalha individualmente cada pessoa envolvida no evento de trânsito (condutores, passageiros e pedestres).
 \begin{itemize}
-    \item \textbf{Localização e Acesso:} Diretório \texttt{bases/acidentes2025.csv}, obtido diretamente do portal da PRF.
-    \item \textbf{Volume Bruto e Recorte:} Possui 194.629 linhas e 35 colunas (72,8 MB em disco). No recorte da BR-230, soma 4.410 linhas de pessoas vinculadas aos 1.745 sinistros.
-    \item \textbf{Uso no Projeto:} Permite construir o perfil de vítimas (idade, gênero, condição física), de condutores, pedestres e passageiros, além de caracterizar a frota de veículos envolvida (tipo de veículo, marca, ano de fabricação).
+    \item \textbf{Localização e Acesso:} Diretório \texttt{bases/}, também com rotina de download e checagem automatizada.
+    \item \textbf{Volume Consolidado:} Na escala nacional, totaliza 766.412 registros de pessoas. No recorte da rodovia BR-230, consolida \textbf{15.764 pessoas envolvidas} (3.482 em 2022, 3.657 em 2023, 4.215 em 2024 e 4.410 em 2025).
+    \item \textbf{Papel no Projeto:} Caracterização demográfica das vítimas (idade, sexo, estado físico), identificação da condição dos envolvidos e caracterização da frota de veículos (automóvel, motocicleta, veículos de carga).
 \end{itemize}
 
-\subsection{Fonte C: PRF --- Todas as Causas e Tipos (\texttt{acidentes2025\_todas\_causas\_tipos.csv})}
+\subsection{Base de Todas as Causas e Tipos (\texttt{acidentes2025\_todas\_causas\_tipos.csv})}
 
-Esta extração desdobra as ocorrências em todas as causas prováveis e dinâmicas de impacto apontadas pelos agentes policiais.
+Esta extração desdobra os sinistros em todas as causas prováveis e tipos de colisão identificados na perícia policial para o ano de referência (2025).
 \begin{itemize}
-    \item \textbf{Volume e Processamento:} O arquivo nacional atinge 584.010 linhas e 37 colunas (~195 MB). Pelo seu volume elevado, sua carga foi processada via blocos iterativos (\textit{chunksize} de 200.000 linhas), isolando 18.255 registros referentes à BR-230.
-    \item \textbf{Uso no Projeto:} Identificação de causas secundárias e tipos associados. O estudo demonstrou que 42,5\% dos sinistros da BR-230 possuem mais de uma causa registrada e 65,5\% possuem mais de um tipo de ocorrência. Quando filtrado para causa principal e tipo de ordem 1, o conjunto colapsa perfeitamente para as 4.410 linhas do arquivo por pessoa, confirmando a integridade do modelo relacional da PRF.
+    \item \textbf{Volume e Processamento:} O arquivo nacional atinge 584.010 linhas e 37 colunas (212,7 MB). Processado em fluxo de blocos (\textit{chunksize} de 200.000 linhas), isolou 18.255 registros referentes à BR-230.
+    \item \textbf{Papel no Projeto:} Identificação de causas secundárias e multiplicidade de impactos. O estudo revelou que 42,5\% dos sinistros possuem mais de uma causa registrada e 65,5\% possuem mais de um tipo de ocorrência. Quando filtrado para a causa principal e tipo de ordem 1, o conjunto colapsa perfeitamente para as 4.410 linhas do arquivo por pessoa de 2025, confirmando a consistência relacional do sistema da PRF.
 \end{itemize}
 
-\subsection{Fontes Externas de Validação}
+\subsection{Fontes Externas de Validação e Controle}
 
-Para garantir que a base local é autêntica e represents o fechamento consolidado do ano de 2025, foram incorporadas duas referências institucionais:
+Para garantir rigor analítico, autenticidade dos dados e conferência geográfica, foram integradas duas fontes externas:
 \begin{enumerate}
     \item \textbf{Anuário Estatístico 2025 da PRF:} Relatório oficial consolidado em maio de 2026 contendo os totais de sinistros, feridos e óbitos no país e por rodovia.
     \item \textbf{Dados Cadastrais do DNIT:} Atestam a extensão de 4.260 km da BR-230 e os limites oficiais de cada trecho estadual (ex.: 521,0 km na Paraíba e 144,7 km no Tocantins).
@@ -309,7 +309,7 @@ Durante a ingestão inicial dos dados, três problemas técnicos relevantes fora
 \begin{enumerate}
     \item \textbf{Codificação dos Arquivos (\textit{Encoding}):} Os arquivos exportados pela PRF encontram-se codificados em \texttt{ISO-8859-1} (\textit{latin-1}). A leitura sob padrão \texttt{UTF-8} resulta em falhas de decodificação. A rotina de carga foi configurada com o parâmetro explícito \texttt{encoding='latin-1'}, preservando integralmente acentuações e caracteres especiais.
     \item \textbf{Delimitadores e Separador Decimal:} Os dados utilizam ponto e vírgula (\texttt{;}) como separador de campos e vírgula (\texttt{,}) como separador decimal para latitude, longitude e quilometragem. A leitura inadvertida converte essas grandezas em texto (\textit{string}). Configurou-se \texttt{sep=';'} e \texttt{decimal=','}, garantindo que as coordenadas fossem carregadas como números de ponto flutuante de precisão dupla (\texttt{float64}).
-    \item \textbf{Multiplicação Granular no Arquivo Expandido:} O arquivo de todas as causas e tipos repete o mesmo acidente em múltiplas linhas. Se utilizado ingenuamente para contagem de acidentes, superestimaria as ocorrências na BR-230 em mais de 10 vezes (18.255 linhas vs. 1.745 acidentes reais). Definiu-se como regra arquitetural o uso exclusivo de \texttt{datatran2025.csv} para a contagem de sinistros e alimentação do mapa de calor.
+    \item \textbf{Multiplicação Granular no Arquivo Expandido:} O arquivo de todas as causas e tipos repete o mesmo acidente em múltiplas linhas. Se utilizado ingenuamente para contagem de acidentes, superestimaria as ocorrências na BR-230 em mais de 10 vezes (18.255 linhas vs. 1.745 acidentes reais). Definiu-se como regra arquitetural o uso exclusivo dos arquivos \texttt{datatran} (grão de ocorrência) para a contagem de sinistros e alimentação do mapa de calor, reservando os arquivos \texttt{acidentes} estritamente para o perfil demográfico.
 \end{enumerate}
 
 \newpage
@@ -350,13 +350,13 @@ A Tabela~\ref{tab:embalagem} resume as propriedades de superfície e consumo com
 
 Nota-se uma correspondência biunívoca perfeita: os 72.529 identificadores de acidente presentes em \texttt{datatran2025.csv} encontram correspondência exata nos outros dois arquivos, sem nenhum registro órfão.
 
-\subsection{Delimitação Temporal (Início e Fim da Base)}
+\subsection{Delimitação Temporal (Início e Fim da Série Histórica)}
 
-A base cobre com continuidade os 12 meses do ano de 2025:
+A série histórica cobre ininterruptamente os 48 meses do quadriênio pós-pandemia (\textbf{2022 a 2025}), totalizando 1.461 dias consecutivos:
 \begin{itemize}
-    \item \textbf{Primeiro registro observado:} 01/01/2025 às 06:20:00 (ID 652493).
-    \item \textbf{Último registro observado:} 31/12/2025 às 23:55:00 (ID 757510).
-    \item Na escala nacional, o volume mensal varia de 5.287 (fevereiro) a 6.788 ocorrências (dezembro). No recorte da BR-230, as ocorrências oscilam de forma equilibrada entre 120 e 166 casos mensais.
+    \item \textbf{Primeiro registro observado na BR-230:} 01/01/2022 às 01:50:00 (ID 408544).
+    \item \textbf{Último registro observado na BR-230:} 31/12/2025 às 13:30:00 (ID 757510).
+    \item Em toda a série histórica, houve registros de acidentes em 1.398 dos 1.461 dias possíveis (cobertura de 95,7\% dos dias do quadriênio). O volume mensal na rodovia mantém-se equilibrado, variando de uma média de 112 casos/mês em 2022 até 145 casos/mês em 2025.
 \end{itemize}
 
 \subsection{Grão e Relacionamento de Integridade}
@@ -381,7 +381,7 @@ A Tabela~\ref{tab:dicionario} cataloga as 41 variáveis que integram o ecossiste
 \hline
 \texttt{pesid} & \texttt{int64} & Pessoa e Expandido & Identificador único da pessoa. O valor 0 indica pessoa não identificada. \\
 \hline
-\texttt{data\_inversa} & \texttt{str} & Ocorrência & Data do acidente no formato AAAA-MM-DD (2025-01-01 a 2025-12-31). \\
+\texttt{data\_inversa} & \texttt{str} & Ocorrência & Data do acidente no formato AAAA-MM-DD (2022-01-01 a 2025-12-31). \\
 \hline
 \texttt{dia\_semana} & \texttt{str} & Ocorrência & Dia da semana por extenso (segunda-feira a domingo). \\
 \hline
@@ -470,29 +470,29 @@ A Tabela~\ref{tab:resumo_numerico} confronta as estatísticas de variáveis num�
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\caption{Resumo univariado das variáveis contínuas e discretas (Recorte BR-230: $n=1.745$).}
+\caption{Resumo univariado das variáveis contínuas e discretas (Série BR-230 2022--2025: $n=6.217$).}
 \label{tab:resumo_numerico}
 \begin{tabularx}{\textwidth}{|p{2.8cm}|c|c|c|c|c|c|c|}
 \hline
 \textbf{Atributo} & \textbf{Média} & \textbf{Desvio Pad.} & \textbf{Mínimo} & \textbf{Q25} & \textbf{Mediana} & \textbf{Q75} & \textbf{Máximo} \\
 \hline
-\texttt{km} & 179,9 km & 240,6 km & 0,0 km & 25,0 km & 78,0 km & 231,0 km & 1.230,0 km \\
+\texttt{km} & 185,47 km & 223,04 km & 0,0 km & 23,0 km & 117,0 km & 281,3 km & 1.470,0 km \\
 \hline
-\texttt{pessoas} & 2,46 & 1,82 & 1,00 & 2,00 & 2,00 & 3,00 & 45,00 \\
+\texttt{pessoas} & 2,47 & 1,90 & 1,00 & 2,00 & 2,00 & 3,00 & 50,00 \\
 \hline
-\texttt{veiculos} & 1,67 & 0,81 & 1,00 & 1,00 & 2,00 & 2,00 & 11,00 \\
+\texttt{veiculos} & 1,90 & 0,97 & 1,00 & 1,00 & 2,00 & 2,00 & 22,00 \\
 \hline
-\texttt{mortos} & 0,110 & 0,39 & 0,00 & 0,00 & 0,00 & 0,00 & 4,00 \\
+\texttt{mortos} & 0,11 & 0,36 & 0,00 & 0,00 & 0,00 & 0,00 & 6,00 \\
 \hline
-\texttt{feridos\_leves} & 0,79 & 1,05 & 0,00 & 0,00 & 1,00 & 1,00 & 25,00 \\
+\texttt{feridos\_leves} & 0,78 & 1,01 & 0,00 & 0,00 & 1,00 & 1,00 & 29,00 \\
 \hline
-\texttt{feridos\_graves} & 0,35 & 0,68 & 0,00 & 0,00 & 0,00 & 1,00 & 7,00 \\
+\texttt{feridos\_graves} & 0,36 & 0,66 & 0,00 & 0,00 & 0,00 & 1,00 & 13,00 \\
 \hline
-\texttt{ilesos} & 0,91 & 1,32 & 0,00 & 0,00 & 1,00 & 1,00 & 40,00 \\
+\texttt{ilesos} & 0,93 & 1,56 & 0,00 & 0,00 & 1,00 & 1,00 & 49,00 \\
 \hline
-\texttt{latitude} & -6,71$^\circ$ & 1,94$^\circ$ & -9,75$^\circ$ & -7,21$^\circ$ & -7,09$^\circ$ & -7,04$^\circ$ & -2,32$^\circ$ \\
+\texttt{latitude} & -6,68$^\circ$ & 1,89$^\circ$ & -8,23$^\circ$ & -7,21$^\circ$ & -7,09$^\circ$ & -7,03$^\circ$ & -3,09$^\circ$ \\
 \hline
-\texttt{longitude} & -40,32$^\circ$ & 7,85$^\circ$ & -64,95$^\circ$ & -35,88$^\circ$ & -35,32$^\circ$ & -34,88$^\circ$ & -34,83$^\circ$ \\
+\texttt{longitude} & -40,41$^\circ$ & 7,81$^\circ$ & -63,85$^\circ$ & -35,89$^\circ$ & -35,33$^\circ$ & -34,89$^\circ$ & -34,83$^\circ$ \\
 \hline
 \end{tabularx}
 \end{table}
@@ -505,7 +505,7 @@ O exame dos dados confirma a aderência aos requisitos definidos na Fase 1:
 \begin{itemize}
     \item \textbf{Requisito de Representação Espacial:} 100\% dos acidentes da BR-230 possuem coordenadas válidas de latitude e longitude, aptas à geração de Mapas de Calor por Estimação de Densidade Kernel (KDE)~\cite{le2020}.
     \item \textbf{Requisito Temporal e Viário:} Data, horário, perfil da pista, uso do solo e condição meteorológica possuem preenchimento integral, fornecendo as variáveis explicativas do componente preditivo.
-    \item \textbf{Requisito de Desfecho Supervisionado:} A variável \texttt{classificacao\_acidente} encontra-se 100\% preenchida no recorte, com 168 acidentes com vítimas fatais (9,63\%) e 1.329 com feridos (76,16\%).
+    \item \textbf{Requisito de Desfecho Supervisionado:} A variável \texttt{classificacao\_acidente} encontra-se 100\% preenchida no recorte, com 603 acidentes com vítimas fatais (9,70\%), 4.653 com feridos (74,84\%) e 961 sem vítimas (15,46\%) ao longo dos 6.217 sinistros do quadriênio.
 \end{itemize}
 
 \newpage
@@ -521,7 +521,7 @@ A exploração estatística e visual dos dados (\textit{Explore data}) responde 
 
 \textit{Os acidentes cobrem o corredor da BR-230? Em quais estados, municípios e trechos os sinistros se acumulam?}
 
-A BR-230 estende-se da costa oriental paraibana até o sudoeste do Amazonas. Em 2025, a PRF registrou acidentes em 7 Unidades da Federação e 93 municípios. A Tabela~\ref{tab:uf_br230} sintetiza a distribuição das ocorrências por estado.
+A BR-230 estende-se da costa oriental paraibana até o sudoeste do Amazonas. No quadriênio 2022 a 2025, a PRF registrou sinistros em 7 Unidades da Federação e 100 municípios distintos. A Tabela~\ref{tab:uf_br230} sintetiza a distribuição consolidada das ocorrências por estado.
 
 \begin{table}[H]
 \centering
@@ -552,7 +552,7 @@ A BR-230 estende-se da costa oriental paraibana até o sudoeste do Amazonas. Em 
 \end{tabularx}
 \end{table}
 
-A Figura~\ref{fig:mapa_espacial} ilustra a dispersão espacial das coordenadas de latitude e longitude dos 1.745 acidentes, evidenciando o corredor da Transamazônica colorido pela gravidade da ocorrência.
+A Figura~\ref{fig:mapa_espacial} ilustra a dispersão espacial das coordenadas de latitude e longitude dos 6.217 acidentes da série pós-pandemia, evidenciando o corredor da Transamazônica colorido pela gravidade da ocorrência.
 
 \begin{figure}[H]
 \centering
@@ -663,7 +663,7 @@ Fora da Paraíba & Urbano (Sim) & Dupla & 359 & 8,08\% & 29 \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{figuras/distribuicao_idade.png}
-\caption{Distribuição etária das pessoas envolvidas em acidentes na BR-230 em 2025.}
+\caption{Distribuição etária das pessoas envolvidas em sinistros na BR-230 no quadriênio pós-pandemia (2022--2025, N = 15.764).}
 \label{fig:idade}
 \end{figure}
 
@@ -704,17 +704,17 @@ A Tabela~\ref{tab:ausencias} detalha as taxas de valores nulos nos arquivos do e
 \label{tab:ausencias}
 \begin{tabularx}{\textwidth}{|p{3.5cm}|p{2.8cm}|c|X|}
 \hline
-\textbf{Arquivo} & \textbf{Campo} & \textbf{Nulos / Taxa} & \textbf{Diagnóstico e Impacto no Projeto} \\
+\textbf{Arquivo / Recorte} & \textbf{Campo} & \textbf{Nulos / Taxa} & \textbf{Diagnóstico e Impacto no Projeto} \\
 \hline
-\texttt{datatran2025.csv} & \texttt{uop}, \texttt{delegacia} & 38 / 22 casos (nac.) & Metadados policiais; sem impacto para o modelo. \\
+\texttt{datatran (2022--2025)} & \texttt{lat, lon, km, data} & \textbf{0 nulos na BR-230} & Completude operacional de 100\%; nenhum descarte espacial em 6.217 registros. \\
 \hline
-\texttt{datatran2025.csv} & \texttt{lat, lon, km, data} & 0 nulos na BR-230 & Completude de 100\%; nenhum descarte espacial. \\
+\texttt{datatran (2022--2025)} & \texttt{classificacao\_acidente} & \textbf{0 nulos na BR-230} & Rótulo da variável-alvo 100\% preenchido em todos os 4 anos. \\
 \hline
-\texttt{acidentes2025.csv} & \texttt{tipo\_envolvido, sexo} & 8,81\% (nacional) & Omissão de dados de vítimas evadidas ou não identificadas. \\
+\texttt{acidentes (2022--2025)} & \texttt{tipo\_veiculo} & 3,77\% (594 em 15.764) & Pedestres, animais ou veículos não cadastrados na BR-230. \\
 \hline
-\texttt{acidentes2025.csv} & \texttt{tipo\_veiculo} & 3,26\% (nacional) & Pedestres, animais ou veículos não cadastrados. \\
+\texttt{acidentes (2022--2025)} & \texttt{tipo\_envolvido, sexo} & 5,56\% (876 em 15.764) & Vítimas hospitalizadas imediatamente ou sem documento no boletim. \\
 \hline
-\texttt{expandido} & \texttt{idade} & 18,08\% (nacional) & Exige tratamento de sentinela e imputação na Fase 3. \\
+\texttt{expandido (2025)} & \texttt{idade} & 17,1\% (BR-230) & Mistura ausência com código sentinela 0; requer imputação na Fase 3. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -770,7 +770,7 @@ A Tabela~\ref{tab:encaminhamentos} formaliza o plano de ação técnico obrigat�
 \hline
 \textbf{Decisão Técnica} & \textbf{Motivação} & \textbf{Ação / Implementação} \\
 \hline
-1. Base única de ocorrências & Evitar inflar contagens de acidentes & Utilizar \texttt{datatran2025.csv} filtrado em \texttt{br == 230} para o mapa de calor e modelo primário. \\
+1. Base única de ocorrências & Evitar inflar contagens de acidentes & Utilizar a série histórica consolidada \texttt{datatran (2022--2025)} na BR-230 (6.217 registros), particionando temporalmente em treino (2022--2024, N=4.472) e teste prospectivo (2025, N=1.745). \\
 \hline
 2. Posicionamento por coordenadas & Quilometragem reinicia a cada UF & Mapear e espacializar exclusivamente pelo par (\texttt{latitude}, \texttt{longitude}) em formato WGS84. \\
 \hline

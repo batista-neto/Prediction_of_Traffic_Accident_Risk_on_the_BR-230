@@ -381,7 +381,7 @@ As falhas humanas e comportamentais dominam os boletins:
 
 ![Distribuição Etária das Pessoas Envolvidas na BR-230 (2022-2025)](figuras/distribuicao_idade.png)
 
-### Perfil dos Envolvidos e Veículos (Grão Pessoa — 4.410 registros na BR-230)
+### Perfil dos Envolvidos e Veículos (Grão Pessoa — 15.764 registros na BR-230 (2022 a 2025))
 - **Tipo de Envolvido:** Condutores representam a grande maioria dos registros identificados (**2.915; 65,9%**), seguidos por Passageiros (1.069; 24,2%), Testemunhas (85) e Pedestres (76).
 - **Gênero:** Predomínio expressivo do sexo Masculino (**2.840; 75,6%** dos válidos) frente ao Feminino (915; 24,4%).
 - **Faixa Etária:** Entre os registros com idade informada válida (1 a 91 anos), a média é de **38,4 anos** e a mediana é de **37,0 anos** (1º quartil: 27 anos; 3º quartil: 48 anos), situando a maior incidência na faixa economicamente ativa.
