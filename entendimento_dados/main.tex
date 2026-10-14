@@ -209,7 +209,7 @@ Concluído &
 
 A tarefa de coleta inicial (\textit{Collect initial data}) do processo CRISP-DM consiste na aquisição e carga dos conjuntos de dados necessários para a resolução do problema de negócio, registrando seus locais de armazenamento, os métodos empregados para extração e os eventuais obstáculos técnicos superados~\cite{chapman2000}. O objetivo central do projeto é a construção de um mapa de calor e a predição da gravidade do risco de acidentes na rodovia federal BR-230 (Rodovia Transamazônica).
 
-Para atender a essas metas, foram coletados os registros históricos de acidentes rodoviários do ano de 2025 disponibilizados publicamente pela Polícia Rodoviária Federal (PRF)~\cite{prfdados}. As extrações governamentais apresentam diferentes granularidades de dados, complementadas por fontes oficiais de validação externa: o Anuário Estatístico 2025 da PRF~\cite{prfanuario2025} e o cadastro oficial da malha rodoviária federal mantido pelo DNIT~\cite{dnit2026}.
+Para atender a essas metas, foram coletados os registros históricos de acidentes rodoviários de 2022 a 2025 disponibilizados publicamente pela Polícia Rodoviária Federal (PRF)~\cite{prfdados}. As extrações governamentais apresentam diferentes granularidades de dados. O ano de 2025 cumpre, além disso, duas conferências específicas: a validação contra o Anuário Estatístico 2025 da PRF~\cite{prfanuario2025} e a leitura do arquivo expandido de causas e tipos, publicado neste estudo apenas para esse ano. A extensão dos trechos estaduais foi conferida com o cadastro da malha rodoviária federal mantido pelo DNIT~\cite{dnit2026}.
 
 \subsection{Automação de Download e Série Histórica Pós-Pandemia (2022 a 2025)}
 
@@ -240,7 +240,7 @@ Em consonância com as diretrizes de reprodutibilidade científica e o plano de 
 \end{tabularx}
 \end{table}
 
-A consolidação do quadriênio acumula \textbf{6.217 acidentes} e \textbf{603 sinistros fatais} na BR-230, estabilizando as amostras dos estados com menor densidade populacional (Ceará atinge 82 acidentes, Tocantins 74 e Amazonas 92) e viabilizando a divisão temporal prospectiva para modelagem preditiva (treinamento em 2022--2024 e teste prospectivo em 2025).
+A consolidação do quadriênio acumula \textbf{6.217 acidentes} e \textbf{603 sinistros fatais} na BR-230, estabilizando as amostras dos estados com menor densidade populacional (Ceará atinge 82 acidentes, Tocantins 74 e Amazonas 92) e viabilizando a divisão temporal prospectiva para modelagem preditiva (treinamento em 2022-2024 e teste prospectivo em 2025).
 
 \subsection{Catálogo Consolidado de Fontes de Dados}
 
@@ -256,15 +256,15 @@ A Tabela~\ref{tab:catalogo} apresenta o catálogo consolidado das bases adquirid
 \hline
 \textbf{Fonte / Autor} & \textbf{Arquivo} & \textbf{Formato} & \textbf{Grão} & \textbf{Volume BR-230} & \textbf{Papel no Projeto} \\
 \hline
-Polícia Rodoviária Federal (PRF) & \texttt{datatran2025.csv} & CSV (\textit{latin-1}) & 1 linha = 1 ocorrência & 1.745 acidentes (21,1 MB nac.) & Mapa de Calor, coordenadas espaciais, sazonalidade e desfecho de gravidade. \\
+Polícia Rodoviária Federal (PRF) & \texttt{datatran2022.csv} a \texttt{datatran2025.csv} & CSV (\textit{latin-1}) & 1 linha = 1 ocorrência & 6.217 acidentes & Mapa de calor, coordenadas, sazonalidade e desfecho de gravidade. \\
 \hline
-Polícia Rodoviária Federal (PRF) & \texttt{acidentes2025.csv} & CSV (\textit{latin-1}) & 1 linha = 1 pessoa & 4.410 pessoas (72,8 MB nac.) & Perfil demográfico de vítimas, condutores, veículos e gravidade clínica. \\
+Polícia Rodoviária Federal (PRF) & \texttt{acidentes2022.csv} a \texttt{acidentes2025.csv} & CSV (\textit{latin-1}) & 1 linha = 1 pessoa & 15.764 pessoas & Perfil de envolvidos, veículos e estado físico. \\
 \hline
-Polícia Rodoviária Federal (PRF) & \texttt{acidentes2025\_ todas\_causas\_ tipos.csv} & CSV (\textit{latin-1}) & 1 linha = pessoa $\times$ causa $\times$ tipo & 18.255 linhas (~195 MB nac.) & Mapeamento de causas secundárias e multiplicidade de tipos de sinistros. \\
+Polícia Rodoviária Federal (PRF) & \texttt{acidentes2025\_ todas\_causas\_ tipos.csv} & CSV (\textit{latin-1}) & 1 linha = pessoa $\times$ causa $\times$ tipo & 18.255 linhas em 2025 (212,7 MB) & Causas e tipos adicionais. Esta extração existe, neste estudo, apenas para 2025. \\
 \hline
-PRF (Oficial) & \textit{Anuário Estatístico 2025} & PDF / Relatório & Agregado nacional / UF & 72.529 sinistros, 6.043 óbitos & Validação externa de fidelidade dos dados brutos locais. \\
+PRF (Oficial) & \textit{Anuário Estatístico 2025} & PDF / Relatório & Agregado nacional / UF & 72.529 sinistros e 6.043 óbitos em 2025 & Validação da extração nacional de 2025. \\
 \hline
-DNIT & \textit{Malha Rodoviária} & Especificação cadastral & Segmento de rodovia & 4.260 km totais (PB: 521 km) & Delimitação territorial e validação dos marcos quilométricos. \\
+DNIT & \textit{Malha Rodoviária} & Especificação cadastral & Segmento de rodovia & PB: 521 km; TO: 144,7 km & Limite oficial dos marcos quilométricos estaduais. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -309,7 +309,7 @@ Durante a ingestão inicial dos dados, três problemas técnicos relevantes fora
 \begin{enumerate}
     \item \textbf{Codificação dos Arquivos (\textit{Encoding}):} Os arquivos exportados pela PRF encontram-se codificados em \texttt{ISO-8859-1} (\textit{latin-1}). A leitura sob padrão \texttt{UTF-8} resulta em falhas de decodificação. A rotina de carga foi configurada com o parâmetro explícito \texttt{encoding='latin-1'}, preservando integralmente acentuações e caracteres especiais.
     \item \textbf{Delimitadores e Separador Decimal:} Os dados utilizam ponto e vírgula (\texttt{;}) como separador de campos e vírgula (\texttt{,}) como separador decimal para latitude, longitude e quilometragem. A leitura inadvertida converte essas grandezas em texto (\textit{string}). Configurou-se \texttt{sep=';'} e \texttt{decimal=','}, garantindo que as coordenadas fossem carregadas como números de ponto flutuante de precisão dupla (\texttt{float64}).
-    \item \textbf{Multiplicação Granular no Arquivo Expandido:} O arquivo de todas as causas e tipos repete o mesmo acidente em múltiplas linhas. Se utilizado ingenuamente para contagem de acidentes, superestimaria as ocorrências na BR-230 em mais de 10 vezes (18.255 linhas vs. 1.745 acidentes reais). Definiu-se como regra arquitetural o uso exclusivo dos arquivos \texttt{datatran} (grão de ocorrência) para a contagem de sinistros e alimentação do mapa de calor, reservando os arquivos \texttt{acidentes} estritamente para o perfil demográfico.
+    \item \textbf{Multiplicação Granular no Arquivo Expandido:} O arquivo de todas as causas e tipos de 2025 repete o mesmo acidente em múltiplas linhas. Usá-lo para contar acidentes superestimaria a BR-230 naquele ano em cerca de dez vezes (18.255 linhas para 1.745 acidentes). A contagem e o mapa usam os arquivos \texttt{datatran} de cada ano. Os arquivos \texttt{acidentes} ficam restritos ao perfil das pessoas e dos veículos.
 \end{enumerate}
 
 \newpage
@@ -329,39 +329,34 @@ A Tabela~\ref{tab:embalagem} resume as propriedades de superfície e consumo com
 \centering
 \small
 \renewcommand{\arraystretch}{1.25}
-\caption{Resumo da embalagem (\textit{packaging}) dos arquivos na escala nacional.}
+\caption{Embalagem da série da BR-230 (2022-2025) e do arquivo expandido de 2025.}
 \label{tab:embalagem}
-\begin{tabularx}{\textwidth}{|X|c|c|c|c|p{3.2cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|c|X|c|c|}
 \hline
-\textbf{Arquivo / Recorte} & \textbf{Linhas (Nac.)} & \textbf{Colunas} & \textbf{BR-230} & \textbf{Memória RAM} & \textbf{Formato} \\
+\textbf{Ano} & \textbf{Ocorrências} & \textbf{MB} & \textbf{BR-230} & \textbf{Pessoas} & \textbf{MB} & \textbf{Pessoas na BR-230} \\
 \hline
-\texttt{datatran2025.csv} & 72.529 & 30 & 1.745 & 82,5 MB & CSV (\textit{latin-1}, sep \texttt{;}) \\
+2022 & \texttt{datatran2022.csv} & 17,9 & 1.345 & \texttt{acidentes2022.csv} & 60,4 & 3.482 \\
 \hline
-\texttt{acidentes2025.csv} & 194.629 & 35 & 4.410 & 279,3 MB & CSV (\textit{latin-1}, sep \texttt{;}) \\
+2023 & \texttt{datatran2023.csv} & 18,9 & 1.403 & \texttt{acidentes2023.csv} & 65,3 & 3.657 \\
 \hline
-\textbf{Série BR-230 (2022--2025)} & \textbf{278.103} & \textbf{30} & \textbf{6.217} & \textbf{315,2 MB} & CSV (\textit{latin-1}, sep \texttt{;}) \\
+2024 & \texttt{datatran2024.csv} & 20,4 & 1.724 & \texttt{acidentes2024.csv} & 70,2 & 4.215 \\
 \hline
-\textbf{Pessoas BR-230 (2022--2025)} & \textbf{766.412} & \textbf{35} & \textbf{15.764} & \textbf{1.085 MB} & CSV (\textit{latin-1}, sep \texttt{;}) \\
+2025 & \texttt{datatran2025.csv} & 20,2 & 1.745 & \texttt{acidentes2025.csv} & 69,5 & 4.410 \\
 \hline
-\texttt{acidentes2025\_expandido} & 584.010 & 37 & 18.255 & ~750 MB (streaming) & CSV (\textit{latin-1}, sep \texttt{;}) \\
+\textbf{Série} & \textbf{2022-2025} & \textbf{77,4} & \textbf{6.217} & \textbf{2022-2025} & \textbf{265,4} & \textbf{15.764} \\
 \hline
 \end{tabularx}
 \end{table}
 
-Nota-se uma correspondência biunívoca perfeita: os 72.529 identificadores de acidente presentes em \texttt{datatran2025.csv} encontram correspondência exata nos outros dois arquivos, sem nenhum registro órfão.
+O arquivo expandido de 2025 (\texttt{acidentes2025\_todas\_causas\_tipos.csv}) tem 584.010 linhas nacionais, 37 colunas e 212,7 MB. Na BR-230, esse arquivo reúne 18.255 linhas e 1.745 acidentes. Os três arquivos nacionais de 2025 descrevem os mesmos 72.529 acidentes, sem identificador exclusivo de um deles. Os arquivos de ocorrência e de pessoa de 2022, 2023 e 2024 repetem esse grão e compõem a série.
 
 \subsection{Delimitação Temporal (Início e Fim da Série Histórica)}
 
-A série histórica cobre ininterruptamente os 48 meses do quadriênio pós-pandemia (\textbf{2022 a 2025}), totalizando 1.461 dias consecutivos:
-\begin{itemize}
-    \item \textbf{Primeiro registro observado na BR-230:} 01/01/2022 às 01:50:00 (ID 408544).
-    \item \textbf{Último registro observado na BR-230:} 31/12/2025 às 13:30:00 (ID 757510).
-    \item Em toda a série histórica, houve registros de acidentes em 1.398 dos 1.461 dias possíveis (cobertura de 95,7\% dos dias do quadriênio). O volume mensal na rodovia mantém-se equilibrado, variando de uma média de 112 casos/mês em 2022 até 145 casos/mês em 2025.
-\end{itemize}
+A série da BR-230 começa em 1º de janeiro de 2022, às 01:50, e termina em 31 de dezembro de 2025, às 13:30. O calendário do quadriênio tem 1.461 dias. Há acidente registrado em 1.438 desses dias (98,4\%). Os quatro anos entram sem lacuna de ano. A média mensal na rodovia sobe de 112 acidentes em 2022 (1.345 / 12) para 145 em 2025 (1.745 / 12).
 
 \subsection{Grão e Relacionamento de Integridade}
 
-No arquivo por pessoa (\texttt{acidentes2025.csv}), as variáveis \texttt{ilesos}, \texttt{feridos\_leves}, \texttt{feridos\_graves} e \texttt{mortos} funcionam como \textit{flags} indicadoras binárias (0 ou 1) atribuídas ao indivíduo daquela linha. A soma dessas colunas agrupada pelo identificador \texttt{id} recupera de maneira exata o total de vítimas computado nas colunas homônimas em \texttt{datatran2025.csv}.
+No arquivo por pessoa, as variáveis \texttt{ilesos}, \texttt{feridos\_leves}, \texttt{feridos\_graves} e \texttt{mortos} funcionam como indicadores binários (0 ou 1) da pessoa daquela linha. Na série 2022-2025 da BR-230, a soma desses indicadores por \texttt{id} reproduz, sem divergência, as contagens homônimas do arquivo por ocorrência. Na BR-230 em 2025, restringir o arquivo expandido à causa principal e ao tipo de ordem 1 devolve 4.410 linhas, o mesmo total do arquivo por pessoa da rodovia naquele ano. Em 42,5\% desses acidentes há mais de uma causa, e em 65,5\% há mais de um tipo. A média da série é de 2,54 pessoas por acidente (15.764 / 6.217).
 
 \subsection{Dicionário de Dados Consolidado}
 
@@ -470,7 +465,7 @@ A Tabela~\ref{tab:resumo_numerico} confronta as estatísticas de variáveis num�
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\caption{Resumo univariado das variáveis contínuas e discretas (Série BR-230 2022--2025: $n=6.217$).}
+\caption{Resumo univariado das variáveis contínuas e discretas (Série BR-230 2022-2025: $n=6.217$).}
 \label{tab:resumo_numerico}
 \begin{tabularx}{\textwidth}{|p{2.8cm}|c|c|c|c|c|c|c|}
 \hline
@@ -490,14 +485,10 @@ A Tabela~\ref{tab:resumo_numerico} confronta as estatísticas de variáveis num�
 \hline
 \texttt{ilesos} & 0,93 & 1,56 & 0,00 & 0,00 & 1,00 & 1,00 & 49,00 \\
 \hline
-\texttt{latitude} & -6,68$^\circ$ & 1,89$^\circ$ & -8,23$^\circ$ & -7,21$^\circ$ & -7,09$^\circ$ & -7,03$^\circ$ & -3,09$^\circ$ \\
-\hline
-\texttt{longitude} & -40,41$^\circ$ & 7,81$^\circ$ & -63,85$^\circ$ & -35,89$^\circ$ & -35,33$^\circ$ & -34,89$^\circ$ & -34,83$^\circ$ \\
-\hline
 \end{tabularx}
 \end{table}
 
-A taxa média de óbitos por sinistro na BR-230 (0,110) é 32,5\% superior à média nacional (0,083), confirmando a criticidade da rodovia. O terceiro quartil do marco quilométrico (231,0 km) indica forte assimetria: mais de 75\% dos sinistros ocorrem nos segmentos iniciais de cada estado.
+A média de mortos por acidente na BR-230, no quadriênio, é 0,11. O terceiro quartil do marco quilométrico é 281,3 km: 75\% dos registros têm quilômetro igual ou inferior a esse valor dentro do respectivo estado, porque a marcação recomeça em cada UF. As coordenadas observadas vão de $-8{,}23^\circ$ a $-3{,}09^\circ$ de latitude e de $-63{,}85^\circ$ a $-34{,}83^\circ$ de longitude.
 
 \subsection{Avaliação de Atendimento aos Requisitos}
 
@@ -527,27 +518,27 @@ A BR-230 estende-se da costa oriental paraibana até o sudoeste do Amazonas. No 
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\caption{Distribuição consolidada de acidentes e gravidade por UF na BR-230 (2022--2025).}
+\caption{Distribuição consolidada de acidentes e gravidade por UF na BR-230 (2022-2025).}
 \label{tab:uf_br230}
 \begin{tabularx}{\textwidth}{|c|c|c|c|c|c|c|c|}
 \hline
 \textbf{UF} & \textbf{Acidentes} & \textbf{Part. (\%)} & \textbf{Mortos} & \textbf{Feridos} & \textbf{Km Máx.} & \textbf{Fatais} & \textbf{Prop. Fatais (\%)} \\
 \hline
-\textbf{PB} & 4.244 & 68,26\% & 280 & 4.949 & 521,0 km & 247 & 5,82\% \\
+\textbf{PB} & 4.244 & 68,26\% & 280 & 4.949 & 516,9 km & 247 & 5,82\% \\
 \hline
-\textbf{PA} & 1.000 & 16,08\% & 187 & 1.013 & 1.230,0 km & 170 & 17,00\% \\
+\textbf{PA} & 1.000 & 16,08\% & 187 & 1.013 & 1.470,0 km & 170 & 17,00\% \\
 \hline
 \textbf{MA} & 430 & 6,92\% & 95 & 485 & 570,0 km & 86 & 20,00\% \\
 \hline
 \textbf{PI} & 295 & 4,75\% & 46 & 337 & 310,4 km & 42 & 14,24\% \\
 \hline
-\textbf{AM} & 92 & 1,48\% & 8 & 108 & 687,0 km & 6 & 6,52\% \\
+\textbf{AM} & 92 & 1,48\% & 8 & 108 & 695,3 km & 6 & 6,52\% \\
 \hline
 \textbf{CE} & 82 & 1,32\% & 41 & 78 & 113,0 km & 36 & 43,90\% \\
 \hline
-\textbf{TO} & 74 & 1,19\% & 18 & 104 & 144,7 km & 16 & 21,62\% \\
+\textbf{TO} & 74 & 1,19\% & 18 & 104 & 146,0 km & 16 & 21,62\% \\
 \hline
-\textbf{Total} & \textbf{6.217} & \textbf{100,0\%} & \textbf{675} & \textbf{7.074} & --- & \textbf{603} & \textbf{9,70\%} \\
+\textbf{Total} & \textbf{6.217} & \textbf{100,0\%} & \textbf{675} & \textbf{7.074} & - & \textbf{603} & \textbf{9,70\%} \\
 \hline
 \end{tabularx}
 \end{table}
@@ -561,12 +552,12 @@ A Figura~\ref{fig:mapa_espacial} ilustra a dispersão espacial das coordenadas d
 \label{fig:mapa_espacial}
 \end{figure}
 
-A análise em janelas de 50 km revelou que a faixa do \textbf{km 0 ao km 50 na Paraíba} concentra isoladamente \textbf{2.095 acidentes} (33,7\% do total da rodovia no país ao longo de 2022--2025), compreendendo a área metropolitana de João Pessoa, Cabedelo, Bayeux e Santa Rita. Todavia, a proporção de acidentes fatais nessa faixa é de apenas \textbf{3,10\%} (65 acidentes fatais e 67 óbitos). Em contrapartida, os trechos a partir do km 50 na PB e nas demais UFs atingem taxas de letalidade muito superiores. A Figura~\ref{fig:barras_uf} confronta o volume bruto de sinistros contra a proporção de acidentes com óbitos em cada UF no quadriênio.
+A análise em janelas de 50 km mostrou que a faixa do \textbf{km 0 ao km 50 na Paraíba} reúne \textbf{2.095 acidentes} (33,7\% da rodovia no quadriênio), com proporção fatal de \textbf{3,1\%} e 67 óbitos. Do km 50 em diante, ainda na Paraíba, há 2.149 acidentes e proporção fatal de 8,5\%. A Figura~\ref{fig:barras_uf} confronta o volume de sinistros com a proporção de acidentes fatais em cada UF. Ceará (43,9\%), Tocantins (21,6\%) e Maranhão (20,0\%) têm as proporções mais altas. O Amazonas, com 92 acidentes, fica em 6,5\%, próximo da Paraíba (5,8\%). Ceará, Tocantins e Amazonas seguem com menos de cem acidentes no quadriênio.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{figuras/acidentes_letalidade_uf.png}
-\caption{Volume total de acidentes (esquerda) e taxa percentual de acidentes fatais (direita) por unidade federativa na BR-230 (2022--2025).}
+\caption{Volume total de acidentes (esquerda) e taxa percentual de acidentes fatais (direita) por unidade federativa na BR-230 (2022-2025).}
 \label{fig:barras_uf}
 \end{figure}
 
@@ -579,20 +570,20 @@ A Figura~\ref{fig:temporal} apresenta a decomposição temporal dos acidentes em
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figuras/distribuicao_temporal.png}
-\caption{Painel temporal consolidado da BR-230 (2022--2025): evolução anual (A), sazonalidade mensal (B), dia da semana (C) e curva horária com pico às 18h (D).}
+\caption{Painel temporal consolidado da BR-230 (2022-2025): evolução anual (A), sazonalidade mensal (B), dia da semana (C) e curva horária com pico às 18h (D).}
 \label{fig:temporal}
 \end{figure}
 
 \begin{itemize}
-    \item \textbf{Sazonalidade Mensal:} O volume mensal consolidado no quadriênio 2022--2025 revela estabilidade rigorosa (média de 518 acidentes acumulados por mês), com ligeira elevação nos meses do segundo semestre (pico em dezembro com 578 casos).
-    \item \textbf{Dia da Semana:} Notável concentração nos finais de semana: sexta-feira (933 casos; 15,0\%), sábado (997 casos; 16,0\%) e domingo (1.020 casos; 16,4\%). O \textbf{domingo} reúne a maior letalidade: \textbf{13,92\% dos acidentes resultam em óbito} (157 mortes acumuladas).
-    \item \textbf{Ciclo Horário e Fase do Dia:} O pico de registros ocorre pontualmente às 18:00 (504 acidentes acumulados), coincidindo com a saída do trabalho e a transição dia-noite. Já a letalidade percentual atinge ápice na \textbf{Plena Noite (13,00\%)} e no \textbf{Amanhecer (19,15\%)}, quase o triplo do registrado em Pleno Dia (7,06\%), conforme comprovado na Figura~\ref{fig:fase_dia}.
+    \item \textbf{Volume anual:} 1.345 acidentes em 2022, 1.403 em 2023, 1.724 em 2024 e 1.745 em 2025. O painel mensal acumula esses quatro anos.
+    \item \textbf{Dia da Semana:} Sexta-feira (933 casos; 15,0\%), sábado (997; 16,0\%) e domingo (1.020; 16,4\%) reúnem 2.950 ocorrências, 47,5\% do total. O domingo tem a maior proporção de acidentes fatais da semana: 13,9\%, com 157 mortos.
+    \item \textbf{Hora e fase do dia:} O pico de volume está às 18h. A proporção fatal é de 7,1\% no pleno dia (3.386 acidentes), 13,0\% na plena noite (2.208) e 19,1\% no amanhecer (235). O amanhecer fica cerca de 2,7 vezes acima do pleno dia. O horário com mais registros e o horário com maior proporção de mortes descrevem fenômenos diferentes, como mostra a Figura~\ref{fig:fase_dia}.
 \end{itemize}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{figuras/fase_dia_letalidade.png}
-\caption{Proporção de acidentes com vítimas fatais segundo a fase do dia (esquerda) e taxa horária (direita) na BR-230 (2022--2025).}
+\caption{Proporção de acidentes com vítimas fatais segundo a fase do dia (esquerda) e taxa horária (direita) na BR-230 (2022-2025).}
 \label{fig:fase_dia}
 \end{figure}
 
@@ -601,10 +592,10 @@ A Figura~\ref{fig:temporal} apresenta a decomposição temporal dos acidentes em
 \textit{Quais características físicas e meteorológicas se associam ao aumento do risco?}
 
 \begin{itemize}
-    \item \textbf{Condição Meteorológica:} 70,6\% dos sinistros no quadriênio ocorreram sob \textbf{Céu Claro} (4.391 casos; letalidade de 9,84\%), 10,5\% sob céu \textbf{Nublado} (650 casos; 10,62\% fatais), 7,4\% sob \textbf{Sol} (462 casos) e 6,9\% sob \textbf{Chuva} (431 casos; letalidade de 7,89\%). A menor letalidade sob chuva decorre da prudência e redução forçada de velocidade em pista molhada.
-    \item \textbf{Tipo de Pista:} O volume na BR-230 divide-se entre Pista Simples (3.170 casos; 51,0\%), Pista Dupla (2.865 casos; 46,1\%) e Pista Múltipla (182 casos; 2,9\%). Todavia, a \textbf{Pista Simples concentra 76,7\% de todas as mortes da BR-230} (518 dos 675 óbitos), exibindo proporção fatal quase três vezes superior à da pista dupla (14,26\% vs. 5,06\%).
-    \item \textbf{Uso do Solo:} O ambiente urbano concentra 55,3\% dos sinistros (3.439 casos; 5,61\% fatais e 202 mortes), enquanto a área rural responde por 44,7\% (2.778 casos; \textbf{14,76\% fatais} e 473 mortes acumuladas).
-    \item \textbf{Geometria da Via:} Trechos em reta concentram a maioria dos registros, mas curvas em pista simples no interior destacam-se pela severidade letal.
+    \item \textbf{Condição Meteorológica:} Céu claro responde por 70,6\% dos acidentes (4.391 casos; proporção fatal de 9,8\%). Céu nublado responde por 10,5\% (650 casos; 10,6\% fatais), sol por 7,4\% (462 casos; 7,6\% fatais) e chuva por 6,9\% (431 casos; 7,9\% fatais). A meteorologia é a registrada no boletim. O fluxo de veículos exposto a cada clima fica fora desta base.
+    \item \textbf{Tipo de Pista:} Pista simples reúne 3.170 acidentes (51,0\%) e proporção fatal de 14,3\%. Pista dupla reúne 2.865 (46,1\%) e proporção fatal de 5,1\%. Pista múltipla reúne 182 (2,9\%). A pista simples concentra 518 dos 675 mortos (76,7\%).
+    \item \textbf{Uso do Solo:} A área urbana concentra 3.439 acidentes (55,3\%), com proporção fatal de 5,6\% e 202 mortos. A área rural reúne 2.778 acidentes (44,7\%), com proporção fatal de 14,8\% e 473 mortos.
+    \item \textbf{Geometria da Via:} O valor mais frequente de \texttt{tracado\_via} é reta, com 3.483 registros. Há 1.606 células com mais de um traçado, separados por ponto e vírgula.
 \end{itemize}
 
 \subsection{Questão 4: Gravidade e Variável-Alvo Preditiva}
@@ -613,41 +604,41 @@ A Figura~\ref{fig:temporal} apresenta a decomposição temporal dos acidentes em
 
 A constatação analítica mais relevante da Fase 2 é a \textbf{dissociação entre concentração de acidentes e gravidade}:
 \begin{itemize}
-    \item Onde os acidentes são mais volumosos (trecho metropolitano paraibano, pista dupla, urbano), a severidade percentual é baixa (3,4\% fatais).
-    \item Onde os acidentes são raros e dispersos (pista simples, área rural), a gravidade dispara.
+    \item Onde os acidentes são mais volumosos, na faixa do km 0 ao km 50 na Paraíba, a proporção fatal é de 3,1\%.
+    \item Fora da Paraíba, a combinação de área rural e pista simples reúne 1.040 acidentes e proporção fatal de 25,1\%.
 \end{itemize}
 
-A Tabela~\ref{tab:cruzada} documenta o cruzamento entre Uso do Solo e Tipo de Pista, demonstrando que na área rural em pista simples fora da Paraíba, \textbf{25,10\% dos acidentes resultam em mortes} (1 em cada 4 acidentes é fatal).
+A Tabela~\ref{tab:cruzada} documenta o cruzamento entre uso do solo e tipo de pista. Na área rural em pista simples, a proporção fatal é de 19,2\% na rodovia inteira (1.840 acidentes) e de 25,1\% fora da Paraíba (1.040 acidentes e 295 mortos).
 
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\caption{Cruzamento bivariado consolidado de severidade: Uso do Solo $\times$ Tipo de Pista (2022--2025).}
+\caption{Cruzamento bivariado consolidado de severidade: Uso do Solo $\times$ Tipo de Pista (2022-2025).}
 \label{tab:cruzada}
 \begin{tabularx}{\textwidth}{|p{3.8cm}|p{2.5cm}|p{2.5cm}|c|c|c|}
 \hline
 \textbf{Recorte Territorial} & \textbf{Uso do Solo} & \textbf{Tipo de Pista} & \textbf{Acidentes} & \textbf{Prop. Fatais (\%)} & \textbf{Mortos} \\
 \hline
-BR-230 Completa & Urbano (Sim) & Dupla & 1.952 & 4,66\% & 93 \\
+BR-230 Completa & Urbano (Sim) & Dupla & 1.952 & 4,7\% & 93 \\
 \hline
-BR-230 Completa & Urbano (Sim) & Simples & 1.330 & 7,37\% & 105 \\
+BR-230 Completa & Urbano (Sim) & Simples & 1.330 & 7,4\% & 105 \\
 \hline
-BR-230 Completa & Rural (Não) & Dupla & 913 & 5,91\% & 58 \\
+BR-230 Completa & Rural (Não) & Dupla & 913 & 5,9\% & 58 \\
 \hline
-\textbf{BR-230 Completa} & \textbf{Rural (Não)} & \textbf{Simples} & \textbf{1.840} & \textbf{19,24\%} & \textbf{413} \\
+\textbf{BR-230 Completa} & \textbf{Rural (Não)} & \textbf{Simples} & \textbf{1.840} & \textbf{19,2\%} & \textbf{413} \\
 \hline
 \hline
-Fora da Paraíba & Urbano (Sim) & Simples & 540 & 11,67\% & 68 \\
+Fora da Paraíba & Urbano (Sim) & Simples & 540 & 11,7\% & 68 \\
 \hline
-Fora da Paraíba & Urbano (Sim) & Dupla & 359 & 8,08\% & 29 \\
+Fora da Paraíba & Urbano (Sim) & Dupla & 359 & 8,1\% & 29 \\
 \hline
-\textbf{Fora da Paraíba} & \textbf{Rural (Não)} & \textbf{Simples} & \textbf{1.040} & \textbf{25,10\%} & \textbf{295} \\
+\textbf{Fora da Paraíba} & \textbf{Rural (Não)} & \textbf{Simples} & \textbf{1.040} & \textbf{25,1\%} & \textbf{295} \\
 \hline
 \end{tabularx}
 \end{table}
 
-\textbf{Definição da Variável-Alvo:} Para a modelagem preditiva, estabelece-se a gravidade binária do sinistro (\texttt{Com Vítimas Fatais}). Na série consolidada 2022--2025 da BR-230, contabilizam-se \textbf{6.217 acidentes, sendo 603 fatais (9,70\%)}, acumulando 675 mortes e 7.074 feridos. Esse desbalanceamento de classes (~1:9,3) é consistente e robusto ao longo dos quatro anos, orientando as estratégias de ponderação e amostragem sintética nas Fases 3 e 4.
+\textbf{Definição da Variável-Alvo:} Para a modelagem preditiva, estabelece-se a gravidade binária do sinistro (\texttt{Com Vítimas Fatais}). Na série consolidada 2022-2025 da BR-230, contabilizam-se \textbf{6.217 acidentes, sendo 603 fatais (9,70\%)}, acumulando 675 mortes e 7.074 feridos. Esse desbalanceamento de classes (~1:9,3) é consistente e robusto ao longo dos quatro anos, orientando as estratégias de ponderação e amostragem sintética nas Fases 3 e 4.
 
 \subsection{Questão 5: Causas, Tipos de Sinistro, Perfil de Vítimas e Veículos}
 
@@ -655,15 +646,15 @@ Fora da Paraíba & Urbano (Sim) & Dupla & 359 & 8,08\% & 29 \\
 
 \begin{itemize}
     \item \textbf{Causas Determinantes:} Ausência de reação do condutor (1.062 acidentes; 17,1\%), Reação tardia ou ineficiente do condutor (850 acidentes; 13,7\%), Acessar a via sem observar veículos (632 acidentes; 10,2\%), Condutor deixou de manter distância segura (455 acidentes; 7,3\%) e Ingestão de álcool pelo condutor (360 acidentes; 5,8\%).
-    \item \textbf{Tipos de Acidente:} Colisão traseira (1.273 casos; 20,5\%), Colisão transversal (817; 13,1\%), Saída de leito carroçável (802; 12,9\%), Tombamento (765; 12,3\%), Colisão lateral (610; 9,8\%) e Colisão frontal (475 casos; 7,6\% --- modalidade responsável pela maior taxa de óbito instantâneo).
-    \item \textbf{Perfil dos Envolvidos:} Dos \textbf{15.764 registros de pessoas} na BR-230 no quadriênio, os condutores totalizam 10.427 (66,1\%), passageiros 3.867 (24,5\%) e pedestres 282 (1,8\%). Nos registros com sexo informado, 74,9\% são homens (10.102) e 25,1\% mulheres (3.380). A idade dos envolvidos apresenta média de \textbf{38,4 anos} e mediana de \textbf{37,0 anos}, conforme evidenciado no histograma da Figura~\ref{fig:idade}.
-    \item \textbf{Frota de Veículos:} Os automóveis totalizam 4.992 veículos (31,7\%) e as motocicletas 4.570 (29,0\%), seguidos por caminhonetes (1.521; 9,6\%) e transporte pesado de carga (caminhões, semirreboques e caminhões-trator somam 2.083 unidades; 13,2\%). A vulnerabilidade dos motociclistas e a severidade dos impactos com veículos pesados destacam-se como os fatores determinantes de óbito.
+    \item \textbf{Tipos de Acidente:} Colisão traseira (1.273 casos; 20,5\%), colisão transversal (817; 13,1\%), saída de leito carroçável (802; 12,9\%), tombamento (765; 12,3\%), colisão lateral no mesmo sentido (610; 9,8\%) e colisão frontal (475; 7,6\%).
+    \item \textbf{Perfil dos Envolvidos:} Dos 15.764 registros de pessoas na BR-230 no quadriênio, os condutores totalizam 10.427 (66,1\%), os passageiros 3.867 (24,5\%) e os pedestres 282 (1,8\%). Entre os registros classificados como masculino ou feminino, 10.102 são homens (74,9\%) e 3.380 são mulheres (25,1\%). Nas idades de 1 a 100 anos (13.061 registros), a média é de 38,4 anos e a mediana é de 37 anos. A Figura~\ref{fig:idade} deixa de fora a idade 0.
+    \item \textbf{Frota de Veículos:} Automóvel (4.992 linhas; 31,7\%) e motocicleta (4.570; 29,0\%) são os tipos mais frequentes, seguidos por caminhonete (1.521; 9,6\%). Caminhão, semirreboque e caminhão-trator somam 2.083 linhas (13,2\%).
 \end{itemize}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{figuras/distribuicao_idade.png}
-\caption{Distribuição etária das pessoas envolvidas em sinistros na BR-230 no quadriênio pós-pandemia (2022--2025, N = 15.764).}
+\caption{Distribuição das idades informadas entre 1 e 100 anos na BR-230 (2022-2025, n = 13.061). A idade 0 foi excluída.}
 \label{fig:idade}
 \end{figure}
 
@@ -679,17 +670,19 @@ A tarefa de verificação da qualidade dos dados (\textit{Verify data quality}) 
 \subsection{Completude dos Dados e Limitações Estruturais}
 
 \begin{itemize}
-    \item \textbf{Completude Operacional:} A base cobre com 100\% de preenchimento as variáveis geográficas (\texttt{latitude}, \texttt{longitude}), quilômetro, data, horário e gravidade para os 1.745 acidentes da BR-230.
+    \item \textbf{Completude Operacional:} Nas 6.217 ocorrências da BR-230 entre 2022 e 2025, latitude, longitude, quilômetro, data, horário, classificação, pista e condição meteorológica estão preenchidos. Nenhuma coordenada cai fora do retângulo do Brasil.
     \item \textbf{Limitação de Exposição (Ausência de Tráfego/VMD):} A base da PRF cobre estritamente ocorrências consumadas. Não há dados de contagem contínua de veículos (Volume Médio Diário do DNIT) nem registros de trechos-hora seguros. Consequentemente, o modelo preditivo expressa a \textbf{probabilidade condicional de gravidade} ($P(\text{Fatal} \mid \text{Acidente})$), enquanto o Mapa de Calor expressa a \textbf{densidade histórica de concentração}.
 \end{itemize}
 
 \subsection{Correção e Identificação de Erros Lógicos}
 
 \begin{enumerate}
-    \item \textbf{Código Sentinela \texttt{pesid = 0}:} Identificou-se 263 linhas com \texttt{pesid = 0} na BR-230. Trata-se de código sentinela da PRF para vítimas não identificadas ou condutores foragidos. A repetição do valor zero no mesmo boletim gerava a falsa impressão de linhas duplicadas.
-    \item \textbf{Valores Sentinela em Idade e Ano:} Foram constatadas 753 linhas com \texttt{idade = 0} e 567 com \texttt{ano\_fabricacao\_veiculo = 0}, atuando como omissão e não como grandezas numéricas. Identificou-se ainda 1 registro com idade de 914 anos (erro de digitação).
-    \item \textbf{Divergência Político-Administrativa:} Em 34 acidentes na divisa MA/PI, a circunscrição da PRF (SPRF-PI) difere do estado geográfico do município (MA). Estabeleceu-se que as coordenadas e o município têm prevalência absoluta sobre a unidade administrativa.
-    \item \textbf{Traçados Compostos:} 536 boletins apresentam valores combinados por ponto e vírgula no campo \texttt{tracado\_via}.
+    \item \textbf{Código sentinela \texttt{pesid = 0}:} Há 876 linhas com \texttt{pesid = 0} na BR-230 (2022-2025), todas com estado físico ausente. São 5,56\% das 15.764 linhas de pessoa e correspondem às ausências de estado físico, sexo e tipo de envolvido. Há ainda 382 linhas de pessoa além da coluna \texttt{pessoas}.
+    \item \textbf{Valores sentinela em idade e ano:} Idade 0 aparece em 2.698 linhas e ano de fabricação 0 em 2.175. Há 5 idades acima de 100 anos. Esses zeros estão preenchidos e, por isso, não entram na tabela de nulos.
+    \item \textbf{Soma interna da ocorrência:} Em 218 acidentes (3,5\% da série), a soma de mortos, feridos, ilesos e ignorados difere da coluna \texttt{pessoas}. A coluna \texttt{pessoas} permanece a contagem do arquivo por ocorrência. As flags do arquivo por pessoa, somadas por acidente, reproduzem ilesos, feridos e mortos sem divergência.
+    \item \textbf{Divergência entre município e regional:} Em 109 acidentes, a UF do município difere da UF da regional. O caso mais visível é município no Maranhão com regional do Piauí (102 registros); outros 7 estão no Ceará com regional da Paraíba. No mapa, a UF e as coordenadas do local prevalecem sobre a unidade que lavrou o boletim.
+    \item \textbf{Traçados compostos:} 1.606 registros trazem mais de um valor em \texttt{tracado\_via}, separados por ponto e vírgula.
+    \item \textbf{Quilômetro no Tocantins:} O maior marco observado na série é 146,0 km, acima dos 144,7 km publicados pelo DNIT para o trecho. Na Paraíba, o máximo observado é 516,9 km e permanece dentro dos 521 km do trecho.
 \end{enumerate}
 
 \subsection{Valores Ausentes}
@@ -706,15 +699,15 @@ A Tabela~\ref{tab:ausencias} detalha as taxas de valores nulos nos arquivos do e
 \hline
 \textbf{Arquivo / Recorte} & \textbf{Campo} & \textbf{Nulos / Taxa} & \textbf{Diagnóstico e Impacto no Projeto} \\
 \hline
-\texttt{datatran (2022--2025)} & \texttt{lat, lon, km, data} & \textbf{0 nulos na BR-230} & Completude operacional de 100\%; nenhum descarte espacial em 6.217 registros. \\
+\texttt{datatran (2022-2025)} & \texttt{lat, lon, km, data} & \textbf{0 nulos na BR-230} & Completude operacional de 100\%; nenhum descarte espacial em 6.217 registros. \\
 \hline
-\texttt{datatran (2022--2025)} & \texttt{classificacao\_acidente} & \textbf{0 nulos na BR-230} & Rótulo da variável-alvo 100\% preenchido em todos os 4 anos. \\
+\texttt{datatran (2022-2025)} & \texttt{classificacao\_acidente} & \textbf{0 nulos na BR-230} & Rótulo da variável-alvo 100\% preenchido em todos os 4 anos. \\
 \hline
-\texttt{acidentes (2022--2025)} & \texttt{tipo\_veiculo} & 3,77\% (594 em 15.764) & Pedestres, animais ou veículos não cadastrados na BR-230. \\
+\texttt{acidentes (2022-2025)} & \texttt{tipo\_veiculo} & 3,77\% (594 em 15.764) & Pedestres, animais ou veículos não cadastrados na BR-230. \\
 \hline
-\texttt{acidentes (2022--2025)} & \texttt{tipo\_envolvido, sexo} & 5,56\% (876 em 15.764) & Vítimas hospitalizadas imediatamente ou sem documento no boletim. \\
+\texttt{acidentes (2022-2025)} & \texttt{tipo\_envolvido, sexo, estado\_fisico} & 5,56\% (876 em 15.764) & Mesmas linhas com \texttt{pesid = 0}. \\
 \hline
-\texttt{expandido (2025)} & \texttt{idade} & 17,1\% (BR-230) & Mistura ausência com código sentinela 0; requer imputação na Fase 3. \\
+\texttt{acidentes (2022-2025)} & \texttt{idade = 0} & 2.698 linhas (17,1\%) & Valor preenchido, usado como omissão. Fica de fora da contagem de nulos. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -754,7 +747,7 @@ Sinistros no Paraná & 7.630 & 7.630 & Exato (100\%) \\
 \end{tabularx}
 \end{table}
 
-Além disso, os limites de quilômetro observados na Paraíba (516 km) e no Tocantins (144 km) permaneceram contidos nas extensões oficiais cadastradas pelo DNIT (521,0 km e 144,7 km, respectivamente).
+A checagem de estados e de quilômetro usa a série da BR-230, de 1º de janeiro de 2022 a 31 de dezembro de 2025. Os sete estados da rodovia estão presentes. O maior quilômetro observado na Paraíba é 516,9 km e permanece dentro dos 521 km do trecho. No Tocantins, o maior quilômetro observado é 146,0 km e ultrapassa os 144,7 km publicados pelo DNIT. Esse ponto fica para a preparação dos dados. Municípios do traçado oficial podem ficar sem acidente em determinado arquivo. No fechamento de 2025, Lábrea não tem registro. A ausência de ponto indica ausência de ocorrência na base, e esta fonte não traz o movimento de veículos desses trechos.
 
 \subsection{Matriz de Encaminhamentos para a Fase 3 (Preparação dos Dados)}
 
@@ -770,17 +763,17 @@ A Tabela~\ref{tab:encaminhamentos} formaliza o plano de ação técnico obrigat�
 \hline
 \textbf{Decisão Técnica} & \textbf{Motivação} & \textbf{Ação / Implementação} \\
 \hline
-1. Base única de ocorrências & Evitar inflar contagens de acidentes & Utilizar a série histórica consolidada \texttt{datatran (2022--2025)} na BR-230 (6.217 registros), particionando temporalmente em treino (2022--2024, N=4.472) e teste prospectivo (2025, N=1.745). \\
+1. Base única de ocorrências & Evitar inflar contagens de acidentes & Utilizar a série histórica consolidada \texttt{datatran (2022-2025)} na BR-230 (6.217 registros), particionando temporalmente em treino (2022-2024, N=4.472) e teste prospectivo (2025, N=1.745). \\
 \hline
 2. Posicionamento por coordenadas & Quilometragem reinicia a cada UF & Mapear e espacializar exclusivamente pelo par (\texttt{latitude}, \texttt{longitude}) em formato WGS84. \\
 \hline
 3. Conversão de zeros sentinela & Zeros representam omissão & Converter \texttt{pesid = 0}, \texttt{idade = 0} e \texttt{ano = 0} para \texttt{NaN} antes de imputação ou codificação. \\
 \hline
-4. Tratamento de traçado composto & 536 casos com ponto e vírgula & Desmembrar em variáveis indicadoras binárias (\textit{one-hot}) ou selecionar geometria primária. \\
+4. Tratamento de traçado composto & 1.606 registros da série com ponto e vírgula & Separar o campo ou reduzir ao primeiro valor, conforme a análise. \\
 \hline
-5. Prevalência geográfica & 34 conflitos de jurisdição policial & Prevalecer coordenadas e UF do município sobre a regional administrativa da PRF. \\
+5. Prevalência geográfica e marco do Tocantins & 109 divergências de UF e km 146,0 no TO & Prevalecer coordenadas e UF do município sobre a regional. Revisar o quilômetro que ultrapassa os 144,7 km do DNIT. \\
 \hline
-6. Tratamento do desbalanceamento & Apenas 9,63\% de acidentes fatais & Adotar ponderação de perdas (\textit{balanced weights}), avaliar alvo agrupado (\textit{Fatal + Grave}) e métricas PR-AUC/F1. \\
+6. Tratamento do desbalanceamento & 603 acidentes fatais em 6.217 (9,70\%) & Tratar a classe fatal como desfecho minoritário, cerca de 1 caso para cada 9,3 acidentes, e escolher a métrica de acordo com esse desbalanceamento. \\
 \hline
 \end{tabularx}
 \end{table}
