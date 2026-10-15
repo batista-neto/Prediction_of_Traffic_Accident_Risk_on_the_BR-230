@@ -15,7 +15,16 @@
 
 ---
 
-### Histórico de Revisões do Documento
+#
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/batista-neto/Prediction_of_Traffic_Accident_Risk_on_the_BR-230/blob/main/entendimento_dados/entendimento_dados_br230.ipynb)
+
+> **Execução Interativa na Nuvem (Google Colab):**  
+> Todo o pipeline da Fase 2 está disponível para auditoria e execução direta sem necessidade de instalação local:  
+> [https://colab.research.google.com/github/batista-neto/Prediction_of_Traffic_Accident_Risk_on_the_BR-230/blob/main/entendimento_dados/entendimento_dados_br230.ipynb](https://colab.research.google.com/github/batista-neto/Prediction_of_Traffic_Accident_Risk_on_the_BR-230/blob/main/entendimento_dados/entendimento_dados_br230.ipynb)
+
+---
+
+## Histórico de Revisões do Documento
 
 | Revisão | Descrição | Modificado por | Status | Data |
 | :---: | :--- | :---: | :---: | :---: |

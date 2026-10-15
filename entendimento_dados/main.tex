@@ -170,7 +170,20 @@ Projeto:
 
 {\Large\textbf{\NomeProjeto}}\\[0.5cm]
 
-\textit{Universidade Federal do Maranhão (UFMA) \\ Programa de Pós-Graduação em Ciência da Computação (PPGCC)}
+\textit{Universidade Federal do Maranhão (UFMA) \\ Programa de Pós-Graduação em Ciência da Computação (PPGCC)}\\[1.0cm]
+
+\begin{minipage}{0.94\textwidth}
+\centering
+\fcolorbox{bordergray}{lightgray}{%
+\begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+\vspace{0.4em}
+\centering
+\textbf{\color{primary}Ambiente Computacional e Execução Interativa (Google Colab):}\\[0.3em]
+\footnotesize\url{https://colab.research.google.com/github/batista-neto/Prediction_of_Traffic_Accident_Risk_on_the_BR-230/blob/main/entendimento_dados/entendimento_dados_br230.ipynb}
+\vspace{0.4em}
+\end{minipage}%
+}
+\end{minipage}
 
 \end{center}
 
@@ -214,6 +227,11 @@ Para atender a essas metas, foram coletados os registros históricos de acidente
 \subsection{Automação de Download e Série Histórica Pós-Pandemia (2022 a 2025)}
 
 Em consonância com as diretrizes de reprodutibilidade científica e o plano de contingência formulado na Fase de Negócio, o projeto implementa rotinas automáticas de download e extração diretamente a partir dos repositórios oficiais da PRF (via Google Drive institucional). Se o arquivo de qualquer ano não estiver presente na pasta local \texttt{bases/}, o pipeline efetua a requisição e descompactação automática, sem necessidade de download manual.
+
+\textbf{Acesso e Execução Interativa no Google Colab:} Com vistas a assegurar irrestrita reprodutibilidade científica e transparência metodológica, todo o pipeline de extração, limpeza, conferência de grãos, tabelas estatísticas e geração dos mapas de calor está disponível para execução interativa no ambiente em nuvem do Google Colab:
+\begin{center}
+\url{https://colab.research.google.com/github/batista-neto/Prediction_of_Traffic_Accident_Risk_on_the_BR-230/blob/main/entendimento_dados/entendimento_dados_br230.ipynb}
+\end{center}
 
 \textbf{Definição do Período Pós-Pandemia:} Foram consolidados os dados do quadriênio \textbf{2022 a 2025}. Os anos de 2020 e 2021 foram descartados devido às anomalias severas de circulação e restrições sanitárias decorrentes da pandemia de COVID-19. A Tabela~\ref{tab:pos_pandemia} resume a evolução da série histórica na rodovia BR-230.
 
