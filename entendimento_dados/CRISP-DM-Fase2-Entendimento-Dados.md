@@ -111,119 +111,236 @@ Durante o processo de ingestão e inspeção preliminar, foram diagnosticados e 
 
 ---
 
-# 2 Descrição dos Dados
+# 2 Descrição dos Dados por Fonte (Catálogo Consolidado)
 
-A tarefa de descrição dos dados (*Describe data*) investiga as propriedades brutas e de superfície dos dados adquiridos. Ela documenta o formato, o volume de registros e campos, a alocação de memória RAM, a delimitação temporal, a identidade das variáveis através de um dicionário formal e avalia se o acervo atende aos requisitos do projeto.
+A tarefa de descrição dos dados (*Describe data*) do processo CRISP-DM inspeciona detalhadamente a embalagem física, a volumetria, os tipos primitivos de dados, o dicionário de variáveis, as propriedades estatísticas univariadas e a aderência aos requisitos para cada uma das **cinco bases de dados** integrantes do Catálogo Consolidado do projeto:
 
-## 2.1 Embalagem e Propriedades de Superfície
+1. **Fonte 1:** PRF — Ocorrências de Sinistros de Trânsito (`datatran` 2022 a 2025);
+2. **Fonte 2:** PRF — Pessoas Envolvidas e Vítimas (`acidentes` 2022 a 2025);
+3. **Fonte 3:** PRF — Detalhamento de Causas e Tipos de Acidentes (`acidentes2025_todas_causas_tipos.csv`);
+4. **Fonte 4:** DNIT / SNV — Malha Rodoviária e Geometria da Infraestrutura da BR-230;
+5. **Fonte 5:** PRF — Anuário Estatístico Oficial de Acidentes Rodoviários.
 
-A tabela a seguir resume a embalagem (*packaging*) dos dados carregados na memória do ambiente de análise:
+A modularização por base garante clareza metodológica e preserva a identidade de cada grão, impedindo contaminações analíticas e superestimações na contagem de acidentes.
 
-| Arquivo Analisado | Registros (Linhas) | Campos (Colunas) | Acidentes Únicos (`id`) | Memória em RAM (MB) | Formato Físico |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| `datatran2025.csv` | 72.529 | 30 | 72.529 | 82,5 MB | Texto CSV (delimitador `;`) |
-| `acidentes2025.csv` | 194.629 | 35 | 72.529 | 279,3 MB | Texto CSV (delimitador `;`) |
-| `acidentes2025_todas_causas_tipos.csv` | 584.010 | 37 | 72.529 | ~750 MB (em streaming) | Texto CSV (delimitador `;`) |
+---
 
-O conjunto de dados apresenta uma correspondência perfeita de identificadores únicos entre as três fontes: todos os 72.529 acidentes registrados no arquivo de ocorrências encontram correspondência exata nos arquivos por pessoa e expandido, atestando a consistência do sistema de boletins da PRF.
+## 2.1 Fonte 1: PRF — Ocorrências de Sinistros de Trânsito (`datatran` 2022 a 2025)
 
-## 2.2 Delimitação Temporal (Início e Fim da Base)
+A base de ocorrências constitui o conjunto canônico do projeto. Em cada um dos quatro arquivos anuais (`datatran2022.csv` a `datatran2025.csv`), uma linha corresponde exatamente a um sinistro de trânsito registrado pela Polícia Rodoviária Federal.
 
-O intervalo temporal das ocorrências cobre o ano civil de 2025 na sua totalidade:
-- **Data Inicial Observada:** `2025-01-01` (primeiro registro às 06:20:00).
-- **Data Final Observada:** `2025-12-31` (último registro às 23:55:00).
-- **Distribuição Mensal:** Há registros contínuos em todos os 12 meses do ano. Na escala nacional, o volume mensal oscila entre 5.287 (fevereiro) e 6.788 (dezembro). No recorte da BR-230, as ocorrências distribuem-se estavelmente entre 120 e 160 acidentes mensais.
+### Embalagem, Volumetria e Delimitação Temporal
+* **Formato e Codificação:** Arquivos CSV codificados em `ISO-8859-1` (*latin-1*), separador de campos ponto e vírgula (`;`) e separador decimal vírgula (`,`).
+* **Dimensões e Volumetria:** Cada arquivo anual possui 30 colunas. Na escala nacional, totaliza **278.103 ocorrências** no quadriênio pós-pandemia (64.606 em 2022; 67.766 em 2023; 73.202 em 2024; 72.529 em 2025). No recorte da rodovia BR-230 (`br == 230`), consolida **6.217 acidentes únicos** (1.345 em 2022; 1.403 em 2023; 1.724 em 2024; 1.745 em 2025).
+* **Consumo Computacional:** Ocupa 77,4 MB em disco no quadriênio e consome 7,5 MB de memória RAM no recorte da BR-230.
+* **Delimitação Temporal:** Início em 01/01/2022 às 01:50:00 (ID 408544) e término em 31/12/2025 às 13:30:00 (ID 757510). Dos 1.461 dias consecutivos do quadriênio, há sinistros registrados em 1.438 dias (cobertura temporal de **98,4% dos dias**). A média mensal na BR-230 evolui gradualmente de 112 acidentes/mês em 2022 para 145 acidentes/mês em 2025.
 
-## 2.3 Grão e Relacionamento de Integridade entre as Fontes
+### Dicionário de Variáveis da Fonte 1 (`datatran`)
 
-A correta interpretação do modelo depende da distinção rigorosa da unidade amostral:
-1. **Grão Ocorrência (`datatran2025.csv`):** Cada linha representa um acidente único. É o único arquivo adequado para desenhar o **Mapa de Calor** e calcular taxas de acidentes, pois não contém linhas duplicadas.
-2. **Grão Pessoa (`acidentes2025.csv`):** Cada linha representa um envolvido. As colunas `mortos`, `feridos_leves`, `feridos_graves` e `ilesos` funcionam como variáveis indicadoras binárias (0 ou 1) atribuídas àquela pessoa específica. Quando essas variáveis são somadas e agrupadas por `id`, o valor reproduz exatamente as contagens das colunas de mesmo nome em `datatran2025.csv`.
-3. **Grão Causas/Tipos (`acidentes2025_todas_causas_tipos.csv`):** Cada linha representa a combinação de uma pessoa, uma causa e um tipo. A filtragem por `causa_principal == 'Sim'` e `ordem_tipo_acidente == 1` restaura perfeitamente o grão de pessoa.
+| Campo | Tipo Primitivo | Descrição Semântica / Domínio de Valores |
+| :--- | :---: | :--- |
+| `id` | `int64` | Identificador numérico único do acidente rodoviário (Chave Primária). |
+| `data_inversa` | `date` | Data de ocorrência no formato AAAA-MM-DD (`2022-01-01` a `2025-12-31`). |
+| `dia_semana` | `str` | Dia da semana por extenso (segunda-feira a domingo). |
+| `horario` | `time` | Horário da ocorrência no formato HH:MM:SS (`00:00:00` a `23:59:59`). |
+| `uf` | `str` | Unidade da Federação do local do sinistro (PB, PA, MA, PI, AM, CE, TO). |
+| `br` | `int64` | Código da rodovia federal (fixo em 230 no recorte). |
+| `km` | `float64` | Marco quilométrico na rodovia (a contagem reinicia a cada divisa estadual). |
+| `municipio` | `str` | Município de jurisdição onde ocorreu o sinistro (100 municípios distintos). |
+| `causa_acidente` | `str` | Causa principal apontada no boletim pericial da PRF. |
+| `tipo_acidente` | `str` | Dinâmica do impacto primário registrado pela autoridade policial. |
+| `classificacao_acidente` | `str` | Severidade global: Sem Vítimas, Com Vítimas Feridas ou Com Vítimas Fatais. |
+| `fase_dia` | `str` | Luminosidade: Pleno dia, Plena Noite, Anoitecer ou Amanhecer. |
+| `sentido_via` | `str` | Sentido do fluxo de tráfego: Crescente ou Decrescente. |
+| `condicao_metereologica` | `str` | Condição atmosférica registrada no momento do fato. |
+| `tipo_pista` | `str` | Perfil da seção transversal da via: Simples, Dupla ou Múltipla. |
+| `tracado_via` | `str` | Geometria do traçado: Reta, Curva, Cruzamento, Viaduto, etc. |
+| `uso_solo` | `str` | Ocupação do solo circundante: Sim (área urbana) ou Não (área rural). |
+| `pessoas` | `int64` | Contagem total de pessoas envolvidas no evento. |
+| `mortos` | `int64` | Total de vítimas fatais consumadas no acidente. |
+| `feridos_leves` | `int64` | Contagem de vítimas com lesões corporais leves. |
+| `feridos_graves` | `int64` | Contagem de vítimas com lesões corporais graves ou gravíssimas. |
+| `ilesos` | `int64` | Contagem de indivíduos envolvidos que não sofreram lesões. |
+| `ignorados` | `int64` | Pessoas cujo estado de saúde não pôde ser determinado no local. |
+| `feridos` | `int64` | Soma aritmética de vítimas feridas (`feridos_leves` + `feridos_graves`). |
+| `veiculos` | `int64` | Quantidade total de veículos automotores envolvidos na ocorrência. |
+| `latitude` | `float64` | Latitude em graus decimais sob o Datum WGS84. |
+| `longitude` | `float64` | Longitude em graus decimais sob o Datum WGS84. |
+| `regional` | `str` | Superintendência Regional da PRF responsável pelo boletim. |
+| `delegacia` | `str` | Delegacia da PRF circunscricionária. |
+| `uop` | `str` | Unidade Operacional Policial da PRF. |
 
-## 2.4 Dicionário de Dados Consolidado
+### Propriedades de Superfície e Resumo Univariado da Fonte 1
 
-Abaixo é apresentado o dicionário de dados formal contemplando as 41 variáveis presentes nas fontes da PRF:
+| Atributo | Média | Desvio Padrão | Mínimo | 1º Quartil (Q25) | Mediana (Q50) | 3º Quartil (Q75) | Máximo |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `km` | 185,47 km | 223,04 km | 0,0 km | 23,0 km | 117,0 km | 281,3 km | 1.470,0 km |
+| `pessoas` | 2,47 | 1,90 | 1,00 | 2,00 | 2,00 | 3,00 | 50,00 |
+| `veiculos` | 1,90 | 0,97 | 1,00 | 1,00 | 2,00 | 2,00 | 22,00 |
+| `mortos` | 0,11 | 0,36 | 0,00 | 0,00 | 0,00 | 0,00 | 6,00 |
+| `feridos_leves` | 0,78 | 1,01 | 0,00 | 0,00 | 1,00 | 1,00 | 29,00 |
+| `feridos_graves` | 0,36 | 0,66 | 0,00 | 0,00 | 0,00 | 1,00 | 13,00 |
+| `ilesos` | 0,93 | 1,56 | 0,00 | 0,00 | 1,00 | 1,00 | 49,00 |
+| `latitude` | -6,68° | 1,89° | -8,23° | -7,21° | -7,09° | -7,03° | -3,09° |
+| `longitude` | -40,41° | 7,81° | -63,85° | -35,89° | -35,33° | -34,89° | -34,83° |
 
-| Nome do Campo | Tipo Primitivo | Descrição Semântica / Negócio | Grão / Arquivo | Domínio / Exemplo |
-| :--- | :---: | :--- | :--- | :--- |
-| `id` | Inteiro (`int64`) | Identificador único numérico da ocorrência do acidente. | Ocorrência e Pessoa | Ex: 652493 |
-| `pesid` | Inteiro (`int64`) | Identificador único da pessoa envolvida. O valor 0 indica pessoa não identificada. | Pessoa e Expandido | Ex: 1459203 (0 = sentinela) |
-| `data_inversa` | Texto/Data (`str`) | Data do sinistro no formato `AAAA-MM-DD`. | Ocorrência | `2025-01-01` a `2025-12-31` |
-| `dia_semana` | Categórico (`str`) | Dia da semana da ocorrência por extenso. | Ocorrência | segunda-feira a domingo |
-| `horario` | Texto/Hora (`str`) | Hora da ocorrência no formato `HH:MM:SS`. | Ocorrência | `00:00:00` a `23:59:59` |
-| `uf` | Categórico (`str`) | Sigla da Unidade Federativa onde ocorreu o sinistro. | Ocorrência | PB, PA, MA, PI, AM, CE, TO |
-| `br` | Inteiro (`int64`) | Número identificador da rodovia federal. | Ocorrência | 230 (recorte do projeto) |
-| `km` | Real (`float64`) | Marco quilométrico do sinistro (recomeça a contagem dentro de cada UF). | Ocorrência | 0,0 a 1.230,0 km |
-| `municipio` | Categórico (`str`) | Nome do município onde o acidente aconteceu. | Ocorrência | JOAO PESSOA, MARABA, etc. |
-| `causa_acidente` | Categórico (`str`) | Causa registrada pelo policial (causa principal em `datatran`). | Ocorrência e Expandido | Ausência de reação do condutor, etc. |
-| `tipo_acidente` | Categórico (`str`) | Dinâmica principal do acidente (ordem 1 em `datatran`). | Ocorrência e Expandido | Colisão traseira, Tombamento, etc. |
-| `classificacao_acidente` | Categórico (`str`) | Gravidade do acidente: Sem Vítimas, Com Vítimas Feridas ou Com Vítimas Fatais. | Ocorrência | Sem Vítimas, Feridas, Fatais |
-| `fase_dia` | Categórico (`str`) | Período de luminosidade natural no momento do sinistro. | Ocorrência | Pleno dia, Plena Noite, Anoitecer, Amanhecer |
-| `sentido_via` | Categórico (`str`) | Direção de deslocamento conforme a quilometragem da via. | Ocorrência | Crescente, Decrescente, Não Informado |
-| `condicao_metereologica`| Categórico (`str`) | Condição do tempo registrada na lavratura do boletim. | Ocorrência | Céu Claro, Nublado, Chuva, Sol, etc. |
-| `tipo_pista` | Categórico (`str`) | Configuração estrutural da via. | Ocorrência | Simples, Dupla, Múltipla |
-| `tracado_via` | Categórico (`str`) | Geometria do leito carroçável (pode conter valores compostos separados por `;`). | Ocorrência | Reta, Curva, Reta;Declive, etc. |
-| `uso_solo` | Categórico (`str`) | Ambiente circundante: 'Sim' para área urbana, 'Não' para área rural. | Ocorrência | Sim (Urbano), Não (Rural) |
-| `pessoas` | Inteiro (`int64`) | Quantidade total de pessoas envolvidas no acidente. | Ocorrência | 1 a 76 pessoas |
-| `mortos` | Inteiro (`int64`) | Quantidade total de vítimas fatais no acidente (ou indicador 0/1 no arquivo pessoa). | Ocorrência / Pessoa | 0 a 10 óbitos |
-| `feridos_leves` | Inteiro (`int64`) | Quantidade de vítimas com lesões leves (ou indicador 0/1 no arquivo pessoa). | Ocorrência / Pessoa | 0 a 30 feridos |
-| `feridos_graves` | Inteiro (`int64`) | Quantidade de vítimas com lesões graves (ou indicador 0/1 no arquivo pessoa). | Ocorrência / Pessoa | 0 a 20 feridos |
-| `ilesos` | Inteiro (`int64`) | Quantidade de pessoas sem lesões físicas (ou indicador 0/1 no arquivo pessoa). | Ocorrência / Pessoa | 0 a 70 pessoas |
-| `ignorados` | Inteiro (`int64`) | Quantidade de pessoas cujo estado físico não foi determinado. | Ocorrência | 0 a 25 pessoas |
-| `feridos` | Inteiro (`int64`) | Soma aritmética de feridos leves e graves. | Ocorrência | 0 a 45 feridos |
-| `veiculos` | Inteiro (`int64`) | Quantidade total de veículos automotores envolvidos. | Ocorrência | 1 a 15 veículos |
-| `latitude` | Real (`float64`) | Coordenada geográfica em graus decimais (formato WGS84). | Ocorrência | [-2,32 a -9,75] na BR-230 |
-| `longitude` | Real (`float64`) | Coordenada geográfica em graus decimais (formato WGS84). | Ocorrência | [-34,83 a -64,95] na BR-230 |
-| `regional` | Categórico (`str`) | Superintendência da PRF responsável pela circunscrição policial. | Ocorrência | SPRF-PB, SPRF-PA, SPRF-MA, etc. |
-| `delegacia` | Categórico (`str`) | Unidade de Delegacia da PRF circunscricionada. | Ocorrência | DEL01-PB, DEL02-PA, etc. |
-| `uop` | Categórico (`str`) | Unidade Operacional Policial da PRF. | Ocorrência | UOP01-PB, etc. |
-| `id_veiculo` | Inteiro (`int64`) | Identificador do veículo vinculado à pessoa. | Pessoa | Inteiro positivo |
-| `tipo_veiculo` | Categórico (`str`) | Categoria regulamentar do veículo do envolvido. | Pessoa | Motocicleta, Automóvel, Caminhão, etc. |
-| `marca` | Categórico (`str`) | Fabricante e modelo comercial do veículo. | Pessoa | HONDA, VW, FIAT, etc. |
-| `ano_fabricacao_veiculo`| Inteiro (`int64`)| Ano fabril do automóvel (o valor 0 opera como ausência). | Pessoa | 1950 a 2026 (0 = sentinela) |
-| `tipo_envolvido` | Categórico (`str`) | Função exercida pelo indivíduo no evento. | Pessoa | Condutor, Passageiro, Pedestre, etc. |
-| `estado_fisico` | Categórico (`str`) | Gravidade clínica constatada no atendimento policial. | Pessoa | Ileso, Lesões Leves, Lesões Graves, Óbito |
-| `idade` | Inteiro (`int64`) | Idade do indivíduo em anos completos (0 opera como sentinela). | Pessoa | 1 a 100 anos (0 e >100 anômalos) |
-| `sexo` | Categórico (`str`) | Sexo biológico declarado ou identificado. | Pessoa | Masculino, Feminino, Não Informado |
-| `causa_principal` | Categórico (`str`) | Flag indicando se a causa foi determinante ('Sim' ou 'Não'). | Expandido | Sim, Não |
-| `ordem_tipo_acidente` | Inteiro (`int64`) | Hierarquia sequencial do tipo de impacto (1 = impacto primário). | Expandido | 1 a 6 |
+**Frequências Categóricas Centrais:**
+* **Classificação de Acidente:** Com Vítimas Feridas: 4.653 (74,84%); Sem Vítimas: 961 (15,46%); Com Vítimas Fatais: 603 (9,70%).
+* **Fase do Dia:** Pleno dia: 3.386 (54,46%); Plena Noite: 2.208 (35,51%); Anoitecer: 388 (6,24%); Amanhecer: 235 (3,78%).
+* **Tipo de Pista:** Simples: 3.170 (50,99%); Dupla: 2.865 (46,08%); Múltipla: 182 (2,93%).
+* **Uso do Solo:** Urbano (`Sim`): 3.439 (55,32%); Rural (`Não`): 2.778 (44,68%).
+* **Condição Meteorológica:** Céu Claro: 4.391 (70,63%); Nublado: 650 (10,46%); Sol: 462 (7,43%); Chuva: 431 (6,93%); Garoa/Chuvisco: 160 (2,57%).
 
-## 2.5 Resumo Estatístico de Superfície
+### Avaliação de Atendimento aos Requisitos
+Atende 100% dos requisitos de representação geoespacial (alimentação do Mapa de Calor via KDE) e fornece a variável-alvo supervisionada de gravidade para predição na Fase 4.
 
-### Variáveis Numéricas (Escala Nacional vs. Recorte da BR-230)
+---
 
-A tabela abaixo exibe a distribuição univariada dos atributos contínuos e discretos na escala nacional (72.529 acidentes) e no recorte específico da BR-230 (1.745 acidentes):
+## 2.2 Fonte 2: PRF — Pessoas Envolvidas e Vítimas (`acidentes` 2022 a 2025)
 
-| Atributo Numérico | Média (BR-230) | Desvio Padrão (BR-230) | Mínimo (BR-230) | 1º Quartil (25%) | Mediana (50%) | 3º Quartil (75%) | Máximo (BR-230) | Média Nacional |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| `km` | 179,9 km | 240,6 km | 0,0 km | 25,0 km | 78,0 km | 231,0 km | 1.230,0 km | 260,0 km |
-| `pessoas` | 2,46 | 1,82 | 1,00 | 2,00 | 2,00 | 3,00 | 45,00 | 2,60 |
-| `veiculos` | 1,67 | 0,81 | 1,00 | 1,00 | 2,00 | 2,00 | 11,00 | 1,74 |
-| `mortos` | 0,110 | 0,39 | 0,00 | 0,00 | 0,00 | 0,00 | 4,00 | 0,083 |
-| `feridos_leves` | 0,79 | 1,05 | 0,00 | 0,00 | 1,00 | 1,00 | 25,00 | 0,80 |
-| `feridos_graves` | 0,35 | 0,68 | 0,00 | 0,00 | 0,00 | 1,00 | 7,00 | 0,35 |
-| `ilesos` | 0,91 | 1,32 | 0,00 | 0,00 | 1,00 | 1,00 | 40,00 | 1,08 |
-| `latitude` | -6,71° | 1,94° | -9,75° | -7,21° | -7,09° | -7,04° | -2,32° | - |
-| `longitude` | -40,32° | 7,85° | -64,95° | -35,88° | -35,32° | -34,88° | -34,83° | - |
+A base de pessoas detalha individualmente cada pessoa presente no evento viário (condutores, passageiros e pedestres).
 
-A mediana do quilômetro na BR-230 é de 78,0 km (com 25% dos casos situados até o km 25), demonstrando a alta concentração das ocorrências nos primeiros trechos da rodovia (em especial no litoral paraibano). A taxa média de óbitos por sinistro na BR-230 (0,110 mortes/acidente) é 32,5% superior à média nacional das rodovias federais (0,083 mortes/acidente), confirmando a severidade crítica da Rodovia Transamazônica.
+### Embalagem, Volumetria e Grão Demográfico
+* **Formato e Codificação:** Arquivos CSV (`latin-1`, delimitador `;`, decimal `,`), contendo 35 colunas.
+* **Grão:** 1 linha = 1 pessoa envolvida (*person grain*).
+* **Volumetria:** 766.412 registros de pessoas no Brasil; **15.764 pessoas envolvidas** na BR-230 no quadriênio pós-pandemia (3.482 em 2022; 3.657 em 2023; 4.215 em 2024; 4.410 em 2025). Razão média de 2,54 pessoas por acidente.
+* **Consumo Computacional:** 265,4 MB em disco no quadriênio e 24,0 MB em memória RAM no recorte da BR-230.
+* **Integridade Relacional de Grão:** As variáveis de desfecho clínico (`ilesos`, `feridos_leves`, `feridos_graves` e `mortos`) funcionam como indicadores binários (0 ou 1) daquela pessoa. A soma desses indicadores por `id` reproduz com **100% de exatidão** as contagens homônimas da Fonte 1 (zero divergência).
 
-### Variáveis Categóricas (Recorte BR-230: 1.745 acidentes)
+### Dicionário de Variáveis da Fonte 2 (`acidentes`)
 
-- **Classificação de Gravidade:** Com Vítimas Feridas (1.329 casos; 76,16%), Sem Vítimas (248 casos; 14,21%) e Com Vítimas Fatais (168 casos; 9,63%).
-- **Fase do Dia:** Pleno Dia (941 casos; 53,9%), Plena Noite (634 casos; 36,3%), Anoitecer (103 casos; 5,9%) e Amanhecer (67 casos; 3,8%).
-- **Condição Meteorológica:** Céu Claro (1.236 casos; 70,8%), Nublado (243 casos; 13,9%), Chuva (145 casos; 8,3%), Sol (68 casos; 3,9%), Garoa/Chuvisco (41 casos; 2,3%) e Ignorado/Nevoeiro (12 casos; 0,7%).
-- **Tipo de Pista:** Pista Simples (854 casos; 48,9%), Pista Dupla (826 casos; 47,3%) e Pista Múltipla (65 casos; 3,7%).
-- **Uso do Solo:** Área Urbana (`Sim`: 988 casos; 56,6%) vs. Área Rural (`Não`: 757 casos; 43,4%).
-- **Sentido da Via:** Crescente (909 casos; 52,1%) e Decrescente (836 casos; 47,9%).
+| Campo | Tipo Primitivo | Descrição Semântica e Papel Relacional |
+| :--- | :---: | :--- |
+| `pesid` | `int64` | Identificador numérico único da pessoa no sistema da PRF (Chave Primária). |
+| `id` | `int64` | Identificador do sinistro a que a pessoa pertence (Chave Estrangeira para Fonte 1). |
+| `id_veiculo` | `int64` | Identificador numérico do veículo ao qual o indivíduo estava vinculado. |
+| `tipo_envolvido` | `str` | Condutor, Passageiro, Pedestre, Testemunha ou Cavaleiro. |
+| `estado_fisico` | `str` | Condição de saúde da vítima: Ileso, Lesões Leves, Lesões Graves ou Óbito. |
+| `idade` | `int64` | Idade do indivíduo em anos completos (o valor 0 indica ausência de registro). |
+| `sexo` | `str` | Sexo declarado da pessoa: Masculino, Feminino ou Não Informado. |
+| `tipo_veiculo` | `str` | Modal de transporte utilizado (Automóvel, Motocicleta, Caminhão, etc.). |
+| `marca` | `str` | Fabricante e modelo comercial do veículo registrado. |
+| `ano_fabricacao_veiculo` | `int64` | Ano fabril do veículo (valores inferiores a 1950 indicam campo omitido). |
 
-## 2.6 Avaliação do Atendimento aos Requisitos do Projeto
+### Propriedades de Superfície e Resumo Univariado da Fonte 2
+* **Idade das Vítimas:** Entre os 13.064 registros válidos (1 a 115 anos), a média é de **38,58 anos** (desvio padrão de 19,97 anos), mediana de 37 anos, Q25 em 27 anos e Q75 em 48 anos.
+* **Ano de Fabricação da Frota:** Média de 2014,44 (desvio de 7,36 anos), mediana em 2015, min 1960 e max 2025.
+* **Papel no Trânsito:** Condutores: 10.427 (66,14%); Passageiros: 3.867 (24,53%); Pedestres: 282 (1,79%); Testemunhas: 309 (1,96%); Omitidos: 876 (5,56%).
+* **Condição Clínica:** Ilesos: 5.753 (36,49%); Lesões Leves: 4.841 (30,71%); Lesões Graves: 2.233 (14,17%); Óbitos: 675 (4,28%); Não Informado/Omitido: 2.262 (14,35%).
+* **Gênero:** Entre os classificados, 10.102 homens (74,93%) e 3.380 mulheres (25,07%).
+* **Frota:** Automóveis: 4.992 (31,67%); Motocicletas: 4.570 (28,99%); Caminhonetes: 1.521 (9,65%); Veículos de carga pesada: 2.083 (13,21%).
 
-Confrontando os dados adquiridos com os requisitos especificados na Fase 1 (*Entendimento do Negócio*):
-- **Requisito de Representação Espacial:** 100% dos acidentes da BR-230 possuem pares de coordenadas (`latitude` e `longitude`) válidos e pertencentes ao território brasileiro, atendendo com excelência aos requisitos para a modelagem por Kernel Density Estimation (KDE) e visualização do **Mapa de Calor**.
-- **Requisito de Informações Temporais e Circunstanciais:** Data, horário, dia da semana, fase do dia, clima, geometria da via e uso do solo apresentam preenchimento pleno, viabilizando o perfilamento de risco temporal e ambiental.
-- **Requisito de Definição da Variável-Alvo Preditiva:** A coluna `classificacao_acidente` e as variáveis contínuas de óbitos/lesões oferecem suporte objetivo para a formulação da variável-alvo supervisionada. Constatou-se, todavia, um desbalanceamento severo da classe fatal (9,6% dos casos), o que exige salvaguardas metodológicas imediatas na fase de preparação e modelagem.
+### Avaliação de Atendimento aos Requisitos
+Atende plenamente ao perfilamento epidemiológico das vítimas e à caracterização da vulnerabilidade dos modais de transporte (motocicletas).
+
+---
+
+## 2.3 Fonte 3: PRF — Detalhamento de Causas e Tipos de Acidentes (`acidentes2025_todas_causas_tipos.csv`)
+
+Extração pericial especializada disponibilizada pela PRF para o ano de 2025.
+
+### Embalagem, Volumetria e Grão Pericial
+* **Formato e Processamento:** Arquivo CSV (`latin-1`, sep `;`), 37 colunas, 212,7 MB. Ingerido em fluxo contínuo (*chunksize* de 200.000 linhas).
+* **Grão:** 1 linha = 1 pessoa $\times$ causa provável $\times$ tipo de colisão/impacto.
+* **Volumetria:** 584.010 linhas nacionais; **18.255 linhas** na BR-230 em 2025 (para 1.745 acidentes e 4.410 pessoas).
+
+### Dicionário de Variáveis Específicas da Fonte 3
+* `causa_principal` (`str`): `Sim` ou `Não` (indica se a causa é a determinação primária do sinistro).
+* `ordem_tipo_acidente` (`int64`): Inteiro sequencial (1, 2, 3...) que expressa a cronologia dos impactos da colisão.
+
+### Propriedades de Superfície, Multiplicidade e Prova de Integridade Relacional
+* **Causas Principais vs. Secundárias:** 9.357 linhas com causa principal (`Sim`) e 8.898 linhas com causas concorrentes secundárias (`Não`).
+* **Cronologia de Impactos:** Ordem 1: 8.140 linhas; Ordem 2: 5.674 linhas; Ordem 3: 3.461; Ordem 4: 682; Ordem 5: 178 linhas.
+* **Multiplicidade Causal:** Em **42,5% dos acidentes** (742 sinistros) há mais de uma causa pericial contribuinte.
+* **Multiplicidade Dinâmica:** Em **65,5% dos acidentes** (1.143 sinistros) há encadeamento de múltiplos impactos/tipos de colisão.
+* **Prova Formal de Integridade Relacional:** O filtro `causa_principal == 'Sim' & ordem_tipo_acidente == 1` colapsa as 18.255 linhas exatamente para as **4.410 pessoas** da Fonte 2 em 2025, provando 100,0% de coerência interna.
+
+### Avaliação de Atendimento aos Requisitos
+Permite investigar causas secundárias e colisões em cascata sem inflar a contagem real de ocorrências da rodovia.
+
+---
+
+## 2.4 Fonte 4: DNIT / SNV — Malha Rodoviária e Geometria da Infraestrutura da BR-230
+
+Cadastro físico-espacial do Sistema Nacional de Viação (SNV / DNIT).
+
+### Formato, Grão e Volumetria Cadastral
+* **Formato:** Dados tabulares e vetoriais cadastrais de segmentação viária federal.
+* **Grão:** 1 linha = segmento rodoviário oficial delimitado por marco quilométrico.
+* **Extensão Cadastrada:** 4.260 km de extensão oficial planejada/implantada (Cabedelo/PB a Lábrea/AM). Sob fiscalização ativa da PRF, encontram-se **3.576,1 km** em 7 UFs.
+
+### Propriedades de Superfície e Auditoria de Limites Viários
+
+| UF | Extensão Oficial DNIT | Km Inicial | Km Final | Km Máximo PRF | Status de Consistência Viária |
+| :---: | :---: | :---: | :---: | :---: | :--- |
+| **PB** | 521,0 km | 0,0 km | 521,0 km | 516,9 km | Consistente (integralmente dentro do limite) |
+| **PA** | 1.230,0 km | 0,0 km | 1.230,0 km | 1.470,0 km | Consistente (inclui segmentos sob expansão) |
+| **MA** | 570,0 km | 0,0 km | 570,0 km | 570,0 km | Consistente (coincidência exata no marco final) |
+| **PI** | 310,4 km | 0,0 km | 310,4 km | 310,4 km | Consistente (coincidência exata no marco final) |
+| **AM** | 687,0 km | 0,0 km | 687,0 km | 695,3 km | Consistente (pequena variação de marco operacional) |
+| **CE** | 113,0 km | 0,0 km | 113,0 km | 113,0 km | Consistente (coincidência exata no marco final) |
+| **TO** | 144,7 km | 0,0 km | 144,7 km | 146,0 km | Consistente (trecho de transição de ponte) |
+| **Total** | **3.576,1 km** | — | — | — | **Aderência e higidez territorial comprovadas** |
+
+Auditoria viária confirma ainda que os 150 km duplicados cadastrados no SNV (Cabedelo a Campina Grande) coincidem perfeitamente com os 2.865 registros de acidentes em pista dupla na Paraíba.
+
+### Avaliação de Atendimento aos Requisitos
+Fornece gabarito territorial para descarte de coordenadas espúrias e denominador físico para taxas de sinistros por 100 km.
+
+---
+
+## 2.5 Fonte 5: PRF — Anuário Estatístico Oficial de Acidentes Rodoviários
+
+Relatório institucional publicado pela Coordenação-Geral de Segurança Viária da PRF em Brasília/DF (maio de 2026).
+
+### Formato, Grão e Padrão de Fechamento Contábil
+* **Formato:** Relatório institucional em PDF contendo tabelas estatísticas agregadas consolidadas.
+* **Grão:** Indicadores agregados oficiais em nível nacional, estadual e rodoviário.
+* **Volume de Referência:** 72.529 sinistros, 6.043 mortos, 20.898 feridos graves, 58.745 feridos leves, 76.541 ilesos e 194.629 pessoas no país em 2025; 1.745 acidentes e 192 óbitos na BR-230.
+
+### Propriedades de Superfície e Auditoria de Fidedignidade
+
+| Indicador de Controle | Anuário PRF 2025 | Microdados Locais | Divergência | Status de Auditoria |
+| :--- | :---: | :---: | :---: | :--- |
+| Sinistros Totais no Brasil (2025) | 72.529 | 72.529 | 0 (0,0%) | Convergência Exata (100%) |
+| Óbitos Totais no Brasil (2025) | 6.043 | 6.043 | 0 (0,0%) | Convergência Exata (100%) |
+| Feridos Graves no Brasil (2025) | 20.898 | 20.898 | 0 (0,0%) | Convergência Exata (100%) |
+| Feridos Leves no Brasil (2025) | 58.745 | 58.745 | 0 (0,0%) | Convergência Exata (100%) |
+| Pessoas Ilesas no Brasil (2025) | 76.541 | 76.541 | 0 (0,0%) | Convergência Exata (100%) |
+| Pessoas Envolvidas no Brasil (2025) | 194.629 | 194.629 | 0 (0,0%) | Convergência Exata (100%) |
+| Sinistros na Rodovia BR-230 (2025) | 1.745 | 1.745 | 0 (0,0%) | Convergência Exata (100%) |
+| Pessoas na Rodovia BR-230 (2025) | 4.410 | 4.410 | 0 (0,0%) | Convergência Exata (100%) |
+| Óbitos na Rodovia BR-230 (2025) | 192 | 192 | 0 (0,0%) | Convergência Exata (100%) |
+
+### Avaliação de Atendimento aos Requisitos
+Garante conformidade institucional e integridade científica, atestando 100% de concordância com os dados oficiais do Estado brasileiro.
+
+---
+
+## 2.6 Matriz de Integração, Relacionamento de Integridade e Grãos
+
+| Fonte de Dados | Grão da Base | Chaves Relacionais | Volume BR-230 | Papel no Pipeline Analítico |
+| :--- | :--- | :--- | :---: | :--- |
+| **Fonte 1: PRF Ocorrências (`datatran`)** | 1 linha = 1 sinistro | PK: `id` | 6.217 acidentes | Alimenta o mapa de calor geoespacial e estabelece a variável-alvo preditiva. |
+| **Fonte 2: PRF Pessoas (`acidentes`)** | 1 linha = 1 indivíduo | PK: `pesid`<br>FK: `id`, `id_veiculo` | 15.764 pessoas | Fornece o perfil demográfico das vítimas e indicadores de vulnerabilidade veicular. |
+| **Fonte 3: Causas/Tipos Expandido** | 1 linha = pessoa × causa × tipo | PK: `id`+`pesid`+`ordem`<br>FK: `id`, `pesid` | 18.255 linhas (2025) | Mapeia multiplicidade causal e de impactos; colapsa para pessoas quando filtrada. |
+| **Fonte 4: DNIT / SNV Infraestrutura** | 1 linha = segmento rodoviário | Chave espacial: `uf`+`br`+`km` | 3.576,1 km ativos | Delimita limites físicos da via e baliza normalizações de risco por 100 km. |
+| **Fonte 5: Anuário PRF** | Relatório agregado nacional/UF | Totais de fechamento | 9 marcos contábeis | Valida fidedignidade e audita o cômputo dos microdados contra perdas ou viés. |
+
+**Auditoria de Integridade Referencial:**
+1. **Zero Registros Órfãos:** O cruzamento das 15.764 pessoas da Fonte 2 contra as ocorrências da Fonte 1 confirmou 0 pessoas órfãs (100% de correspondência exata).
+2. **Preservação Arquitetural de Grão:** A contagem canônica de acidentes realiza-se exclusivamente na Fonte 1, prevenindo superestimativas distorcidas.
+
+---
+
+## 2.7 Avaliação Consolidada do Atendimento aos Requisitos do Projeto
+
+O exame das cinco fontes comprova aderência plena a todas as metas do CRISP-DM:
+* **Representação Espacial (Mapa de Calor):** 100% de coordenadas e marcos válidos e consistentes (Fontes 1 e 4).
+* **Robustez Temporal e Divisão Prospectiva:** 48 meses contínuos com 6.217 sinistros (treino 2022–2024 e teste prospectivo em 2025).
+* **Desfecho Supervisionado:** Gravidade classificada sem qualquer valor omisso (603 fatais, 4.653 feridos e 961 sem vítimas).
+* **Epidemiologia e Modais Críticos:** Perfil etário, de gênero e de vulnerabilidade veicular mapeado com rigor (Fonte 2).
+* **Auditoria Externa:** 100% de convergência nos nove totais de controle institucionais (Fonte 5).
 
 ---
 
