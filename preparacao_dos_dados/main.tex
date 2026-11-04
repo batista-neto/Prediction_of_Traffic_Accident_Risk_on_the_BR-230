@@ -678,7 +678,7 @@ A seleção de preditores respeita o princípio de prevenção de vazamento temp
     \textbf{Papel Analítico} & \textbf{Atributos Selecionados} & \textbf{Destino no Pipeline} \\
     \hline
     Preditores Contextuais (Entrada) &
-    \texttt{uf}, \texttt{municipio}, \texttt{km\_ajustado}, \texttt{latitude}, \texttt{longitude}, \texttt{hora}, \texttt{mes}, \texttt{dia\_semana\_norm}, \texttt{fase\_dia}, \texttt{condicao\_metereologica}, \texttt{tipo\_pista}, \texttt{tracado\_principal}, \texttt{uso\_solo}, \texttt{sentido\_via}, flags derivadas e variáveis de pessoa agregadas (\texttt{tem\_motocicleta}, \texttt{tem\_pedestre}, \texttt{idade\_media}). &
+    \texttt{km\_ajustado}, \texttt{latitude}, \texttt{longitude}, \texttt{hora}, \texttt{mes}, \texttt{fase\_dia}, \texttt{condicao\_metereologica}, \texttt{tipo\_pista}, \texttt{tracado\_principal}, \texttt{uso\_solo}, \texttt{sentido\_via}, flags derivadas e variáveis de pessoa agregadas (\texttt{envolve\_moto}, \texttt{envolve\_pedestre}, \texttt{idade\_media}). &
     Matriz de características ($X$) para modelagem e espacialização em mapas. \\
     \hline
     Desfecho (Alvo) &
@@ -686,8 +686,8 @@ A seleção de preditores respeita o princípio de prevenção de vazamento temp
     Vetor alvo ($y$) supervisionado. \\
     \hline
     Auditoria e Rastreio &
-    \texttt{id}, \texttt{data\_inversa}, \texttt{causa\_acidente}, \texttt{tipo\_acidente}, \texttt{tracado\_via} original, \texttt{km} bruto, contagens nominais de vítimas. &
-    Arquivo de ocorrências preparadas completas (auditoria). \\
+    \texttt{id}, \texttt{uf}, \texttt{municipio}, \texttt{dia\_semana\_norm}, \texttt{data\_inversa}, \texttt{causa\_acidente}, \texttt{tipo\_acidente}, \texttt{tracado\_via} original, \texttt{km} bruto, contagens nominais de vítimas. &
+    Arquivo de ocorrências preparadas completas (auditoria); \texttt{uf}/\texttt{municipio} ficam fora de $X$ por alta cardinalidade. \\
     \hline
   \end{tabularx}
 \end{table}
@@ -696,8 +696,8 @@ A seleção de preditores respeita o princípio de prevenção de vazamento temp
 
 Os arquivos de pessoas (\texttt{acidentesYYYY.csv}) registram 15.764 linhas na BR-230 no grão \textbf{1 linha = 1 pessoa envolvida}. A incorporação desses dados à base principal de ocorrências (\textbf{1 linha = 1 acidente}) exigiu agregação relacional prévia via \texttt{groupby('id')} para evitar a multiplicação indevida de linhas:
 \begin{itemize}
-  \item \texttt{tem\_motocicleta}: Indicador booleano (3.244 acidentes envolveram moto);
-  \item \texttt{tem\_pedestre}: Indicador booleano (270 acidentes com atropelamento);
+  \item \texttt{envolve\_moto}: Indicador booleano (3.584 acidentes envolveram moto);
+  \item \texttt{envolve\_pedestre}: Indicador booleano (270 acidentes com atropelamento);
   \item \texttt{idade\_media}: Média das idades válidas por sinistro (após expurgo de zeros sentinela);
   \item \texttt{prop\_masculino}: Proporção de condutores/passageiros do sexo masculino.
 \end{itemize}
@@ -725,7 +725,7 @@ A limpeza dos dados na Fase~3 responde sistematicamente aos seis problemas funda
     \textbf{1. Completude} (Valores omissos) &
     876 pessoas com \texttt{pesid=0}; 239 acidentes com \texttt{idade} sentinela 0 ou $>100$ anos. &
     Média de idade distorcida para baixo na base agregada. &
-    Substituição dos zeros sentinela por \texttt{NaN}. Apenas idades de 1 a 100 anos são computadas; 239 nulos resultantes são isolados para imputação na Fase~4. \\
+    Substituição dos zeros sentinela por \texttt{NaN}. Apenas idades de 1 a 100 anos entram em \texttt{idade\_media}; os 239 nulos são imputados na preparação pela mediana do treino ($33{,}0$ anos). \\
     \hline
     \textbf{2. Corretude e Erros Lógicos} &
     1 registro no Tocantins com km 146,0 (acima do teto DNIT de 144,7~km). &
@@ -769,7 +769,7 @@ Com base nas evidências empíricas da Análise Exploratória, foram construído
   \item \textbf{\texttt{alvo\_fatal} (Alvo supervisionado):} $1$ se \texttt{classificacao\_acidente} == ``Com Vítimas Fatais'' e $0$ caso contrário.
   \item \textbf{\texttt{area\_urbana} / \texttt{area\_rural}:} Variáveis indicadoras derivadas da normalização de \texttt{uso\_solo}, capturando a diferença crítica de letalidade (14,76\% rural vs. 5,61\% urbano).
   \item \textbf{\texttt{fim\_de\_semana}:} Indicador booleano ativo para sexta-feira, sábado e domingo, capturando padrões de pico noturno.
-  \item \textbf{\texttt{periodo\_noturno}:} Indicador booleano que consolida ``Plena Noite'' e ``Amanhecer'' (períodos de visibilidade comprometida).
+  \item \textbf{\texttt{periodo\_noturno}:} Indicador booleano que consolida ``Plena Noite'', ``Anoitecer'' e ``Amanhecer'' (períodos de visibilidade comprometida).
   \item \textbf{\texttt{rural\_pista\_simples}:} Interação multiplicativa entre traçado simples e meio rural (1.840 ocorrências, foco de gravidade).
   \item \textbf{\texttt{fora\_pb}:} Indicador geográfico que sinaliza ocorrências fora da Paraíba (onde a letalidade média sobe para 18,04\%).
 \end{itemize}
@@ -895,7 +895,7 @@ A conclusão das etapas exploratórias e de preparação fornece os insumos e de
   \item \textbf{Algoritmos Recomendados:} Treinamento de classificadores probabilísticos capazes de lidar com interações não lineares e variáveis mistas (Gradiente Boosting via LightGBM e XGBoost, Random Forest e Regressão Logística regularizada como \textit{baseline});
   \item \textbf{Tratamento do Desbalanceamento:} Como a classe positiva representa 9,70\% das instâncias, deve-se adotar ponderação de classes (\texttt{scale\_pos\_weight} ou \texttt{class\_weight='balanced'}) e calibração fina de limiares de decisão (\textit{threshold tuning}), priorizando a minimização de falsos negativos;
   \item \textbf{Métricas de Avaliação:} Em consonância com os critérios de sucesso da Fase~1, a performance deve ser avaliada por PR-AUC (Área sob a curva Precisão-Recall), ROC-AUC, F1-Score e Recall na classe fatal, evitando a acurácia global como métrica orientadora;
-  \item \textbf{Tratamento de Dados Faltantes:} O único preditor contextual com omissões no conjunto de modelagem é \texttt{idade\_media} (239 valores nulos, correspondendo a 3,84\% da base). Para modelos lineares, recomenda-se imputação pela mediana contextual por tipo de veículo; algoritmos baseados em árvores (XGBoost/LightGBM) tratam nativamente a rota de split para nulos;
+  \item \textbf{Dados Faltantes:} A imputação de \texttt{idade\_media} pela mediana do treino ($33{,}0$ anos) já foi aplicada nas matrizes $X$; as partições codificadas estão sem nulos. Na Fase~4, permanece opcional testar imputação contextual (ex.: por tipo de veículo) ou o tratamento nativo de nulos em árvores, caso se volte à versão pré-imputação;
   \item \textbf{Geração do Mapa de Calor:} A camada geográfica de densidade histórica de acidentes será gerada via Estimativa de Densidade por Kernel (KDE) ponderada pela severidade predita do modelo sobre as coordenadas geográficas de \texttt{br230\_ocorrencias\_preparadas.csv}.
 \end{enumerate}
 
