@@ -22,3 +22,8 @@ bases/*.zip
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+.latexdesk/
+
+aula4.pdf
+# VS Code / IDE
+.vscode/

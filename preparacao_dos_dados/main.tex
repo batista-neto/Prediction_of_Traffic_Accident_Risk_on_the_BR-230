@@ -16,13 +16,14 @@
 \usepackage{ragged2e}
 \usepackage{fancyhdr}
 \usepackage{lastpage}
-\usepackage{url}
+\usepackage{xurl}
 \usepackage{cite}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{microtype}
+\usepackage{amsmath,amssymb}
 \usepackage[colorlinks=true,linkcolor=primary,citecolor=primary,urlcolor=primary]{hyperref}
 
 % =========================================================
@@ -37,12 +38,12 @@
 \renewcommand{\familydefault}{\sfdefault}
 
 \geometry{
-  top=3.35cm,
-  bottom=1.8cm,
+  top=3.4cm,
+  bottom=2.0cm,
   left=2.0cm,
   right=2.0cm,
-  headheight=64pt,
-  headsep=0.45cm
+  headheight=66pt,
+  headsep=0.5cm
 }
 
 \setlength{\parindent}{0pt}
@@ -50,123 +51,91 @@
 \setlist[itemize]{leftmargin=1.5em, itemsep=0.2em}
 \setlist[enumerate]{leftmargin=1.5em, itemsep=0.2em}
 
+% Colunas especializadas para tabularx
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
-
-\AtEndDocument{\label{LastPage}}
-
-% =========================================================
-% CAMPOS DO DOCUMENTO
-% =========================================================
-\newcommand{\NomeProjeto}{Mapa de Calor e Predição do Risco de Acidentes de Trânsito na BR-230}
-\newcommand{\VersaoModelo}{1.0}
-\newcommand{\DataEmissao}{03/11/2026}
-
-\newcommand{\IntegranteTres}{Winy Gabrielly Soares de Oliveira}
-\newcommand{\IntegranteDois}{Ricardo Diniz Mendes}
-\newcommand{\IntegranteUm}{João Batista Santos Silva Neto}
-
-\newcommand{\Componentes}{
-João Batista Santos Silva Neto \\
-Ricardo Diniz Mendes \\
-Winy Gabrielly Soares de Oliveira
-}
-
-\newcommand{\EmailTres}{winy.soares@discente.ufma.br}
-\newcommand{\EmailDois}{ricardo.dm@discente.ufma.br}
-\newcommand{\EmailUm}{jbss.neto@discente.ufma.br}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
 
 % =========================================================
-% CABEÇALHO
+% CABEÇALHO E RODAPÉ
 % =========================================================
-\newcommand{\CabecalhoProjeto}{%
-\begin{minipage}{\textwidth}
-\centering
-\renewcommand{\arraystretch}{1.25}
-
-\begin{tabularx}{\textwidth}{|p{2.0cm}|X|p{4.2cm}|}
-\hline
-& \centering\textbf{Documentação do Projeto}\arraybackslash
-& Versão do Modelo: \VersaoModelo \\
-\cline{3-3}
-& &
-Emissão: \DataEmissao
-\quad Página: \thepage/\pageref{LastPage} \\
-\cline{2-3}
-&
-\multicolumn{2}{l|}{
-Projeto:
-\hfill
-\textbf{\NomeProjeto}
-\hfill
-} \\
-\hline
-\end{tabularx}
-
-\end{minipage}%
-}
-
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[C]{\CabecalhoProjeto}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
 
-\makeatletter
-\renewcommand\section{
-\@startsection{section}{1}{0pt}%
-{1.4ex plus .2ex minus .2ex}%
-{0.8ex plus .2ex}%
-{\normalfont\Large\bfseries\color{primary}}
+\fancyhead[L]{%
+  \small\textbf{CRISP-DM --- Fases 2 e 3: Análise Exploratória e Preparação dos Dados}\\
+  \footnotesize\textcolor{secondary}{Projeto BR-230: Predição do Risco e Mapa de Calor de Acidentes de Trânsito}%
 }
-\renewcommand\subsection{
-\@startsection{subsection}{2}{0pt}%
-{1.2ex plus .2ex minus .2ex}%
-{0.6ex plus .2ex}%
-{\normalfont\large\bfseries\color{secondary}}
-}
-\renewcommand\subsubsection{
-\@startsection{subsubsection}{3}{0pt}%
-{1.0ex plus .2ex minus .2ex}%
-{0.5ex plus .2ex}%
-{\normalfont\normalsize\bfseries}
-}
-\makeatother
 
+\fancyhead[R]{%
+  \footnotesize
+  \textbf{PPGCC / UFMA}\\
+  Ciência de Dados\\
+  Série 2022--2025%
+}
+
+\fancyfoot[L]{%
+  \footnotesize\textcolor{secondary}{Relatório Técnico Consolidado --- Alinhamento Teórico Aula 4 / CRISP-DM}%
+}
+
+\fancyfoot[R]{%
+  \footnotesize\textbf{Página \thepage\ de \pageref{LastPage}}%
+}
+
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% =========================================================
+% DADOS DO PROJETO
+% =========================================================
+\newcommand{\NomeProjeto}{Predição do Risco de Acidentes de Trânsito na Rodovia BR-230 com Base em Dados Abertos da Polícia Rodoviária Federal}
+\newcommand{\Componentes}{%
+  João Batista Santos Silva Neto \and
+  Ricardo Diniz Mendes \and
+  Winy Gabrielly Soares de Oliveira%
+}
+
+% =========================================================
 \begin{document}
+\pagenumbering{alph}
 
 % ---------------------------------------------------------
-% CAPA
+% CAPA SIMPLES / CABEÇALHO INICIAL
 % ---------------------------------------------------------
-\begin{center}
-\vspace*{1.2cm}
-
-{\Large\textbf{Projeto da Disciplina Ciência de Dados}}\\[0.8em]
-
-{\Large\textbf{Fase 3: Preparação dos Dados (CRISP-DM)}}
-
-\end{center}
-
-\vspace{0.8cm}
-\vfill
-
+\begin{titlepage}
 \begin{center}
 
-{\Huge\textbf{Relatório de Formatação, Seleção, Limpeza, Construção e Integração}}\\[1.5cm]
+\vspace*{1.0cm}
 
-{\Large\Componentes}\\[1.5cm]
+{\Large\textbf{UNIVERSIDADE FEDERAL DO MARANHÃO}}\\[0.2cm]
+{\large\textbf{CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA}}\\[0.2cm]
+{\large\textbf{DEPARTAMENTO DE INFORMÁTICA}}\\[0.2cm]
+{\large\textbf{PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA DA COMPUTAÇÃO (PPGCC)}}\\[0.2cm]
+{\normalsize\textbf{DISCIPLINA: CIÊNCIA DE DADOS --- PROF. LUCIANO REIS COUTINHO}}\\[2.5cm]
 
-{\Large\textbf{\NomeProjeto}}\\[0.5cm]
+{\Huge\textbf{\textcolor{primary}{Relatório Técnico de Análise Exploratória e Preparação dos Dados}}}\\[0.8cm]
 
-\textit{Universidade Federal do Maranhão (UFMA) \\ Programa de Pós-Graduação em Ciência da Computação (PPGCC)}
+{\Large\textbf{Fases 2 e 3 do Modelo CRISP-DM}}\\[0.4cm]
+{\large\textit{Taxonomia de Escalas, Medidas de Forma, Diagnóstico de Outliers e Engenharia de Preditores para a Rodovia BR-230}}\\[2.0cm]
 
-\end{center}
+\textbf{Autores:}\\[0.3cm]
+{\large João Batista Santos Silva Neto}\\[0.15cm]
+{\large Ricardo Diniz Mendes}\\[0.15cm]
+{\large Winy Gabrielly Soares de Oliveira}\\[2.5cm]
 
 \vfill
+
+{\large São Luís -- MA}\\
+{\large 2026}
+
+\end{center}
+\end{titlepage}
+
 \newpage
+\pagenumbering{arabic}
 
 % ---------------------------------------------------------
-% HISTÓRICO
+% HISTÓRICO DE REVISÕES
 % ---------------------------------------------------------
 \section*{Histórico de Revisões do Documento}
 
@@ -174,13 +143,12 @@ Projeto:
 
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
-
-\begin{tabularx}{\textwidth}{|p{1.6cm}|X|p{3.2cm}|p{2.8cm}|p{2.2cm}|}
+\begin{tabularx}{\textwidth}{|c|L|>{\raggedright\arraybackslash}p{3.2cm}|c|c|}
 \hline
-\textbf{Revisão} & \textbf{Descrição} & \textbf{Modificado por} & \textbf{Status} & \textbf{Data} \\
+\textbf{Rev.} & \textbf{Descrição das Modificações} & \textbf{Modificado por} & \textbf{Status} & \textbf{Data} \\
 \hline
 1.0 &
-Elaboração do Relatório da Fase de Preparação dos Dados a partir da matriz de encaminhamentos da Fase~2: base BR-230 2022--2025, limpezas, atributos derivados, partição prospectiva e artefatos em \texttt{bases/preparadas/}. &
+Elaboração do Relatório da Fase de Preparação dos Dados: base BR-230 2022--2025, taxonomia de Stevens e EDA (Aula~4), limpezas, atributos derivados, \textit{One-Hot Encoding} com imputação sem vazamento, partição prospectiva, matrizes $X$/$y$ e camada geoespacial GeoJSON, com artefatos em \texttt{bases/preparadas/}. &
 Equipe do projeto &
 Concluído &
 03/11/2026 \\
@@ -193,307 +161,571 @@ Concluído &
 % =========================================================
 % 1 INTRODUÇÃO
 % =========================================================
-\section{Introdução e Objetivo da Fase}
+\section{Introdução e Enquadramento Metodológico}
 
-A Fase~3 do CRISP-DM (\textit{Data Preparation}) transforma dados brutos em um conjunto pronto para mineração~\cite{chapman2000}. No guia clássico, essa etapa concentra a maior parte do esforço do projeto e compreende cinco tarefas: \textbf{formatar}, \textbf{selecionar}, \textbf{limpar}, \textbf{construir} e \textbf{integrar}.
+O modelo de referência CRISP-DM (\textit{Cross-Industry Standard Process for Data Mining}) estrutura o ciclo de vida da ciência de dados em fases iterativas e dependentes~\cite{chapman2000}. No desenvolvimento do projeto da rodovia BR-230 (Transamazônica), as fases de \textbf{Entendimento dos Dados} (Fase~2) e \textbf{Preparação dos Dados} (Fase~3) operam em estreita simbiose:
+\begin{enumerate}
+    \item A Fase~2 investiga as fontes disponíveis, descreve sua estrutura, realiza a \textbf{Análise Exploratória dos Dados (EDA)} e avalia a qualidade da informação, conforme delineado na Aula~4 da disciplina de Ciência de Dados do PPGCC/UFMA.
+    \item A Fase~3 materializa os diagnósticos e decisões analíticas por meio de transformações concretas: \textbf{formatação}, \textbf{seleção}, \textbf{limpeza}, \textbf{construção de atributos} e \textbf{integração}, culminando na criação das matrizes de treino e teste para os algoritmos de aprendizado de máquina da Fase~4 (Modelagem).
+\end{enumerate}
 
-No projeto da BR-230, o objetivo de negócio permanece o definido na Fase~1: combinar mapa de calor da concentração histórica de acidentes com um componente preditivo de risco~\cite{santos2021,behboudi2024}. A Fase~2 fechou o diagnóstico com 6.217 ocorrências pós-pandemia (2022--2025), variável-alvo ``Com Vítimas Fatais'' (603 casos; 9,70\%) e uma matriz explícita de decisões para a preparação.
+O objetivo de negócio, estabelecido na Fase~1, consiste em associar a densidade histórica de ocorrências (mapa de calor por intensidade pontual) com um classificador preditivo capaz de estimar a probabilidade condicional de letalidade de um sinistro dado o contexto viário e ambiental:
+\[
+P(\text{Fatal} = 1 \mid \text{Acidente}, \text{contexto viário, temporal e ambiental}).
+\]
 
-Este relatório documenta a execução dessa matriz no notebook \texttt{preparacao\_dos\_dados.ipynb}, alinhada a operações do \textit{Data Wrangling with pandas Cheat Sheet} (\texttt{concat}, \texttt{query}, \texttt{merge}, \texttt{groupby}/\texttt{agg}, seleção de colunas e encadeamento de transformações).
+A base da Polícia Rodoviária Federal (PRF) registra o universo de acidentes atendidos pela corporação, porém carece de contadores contínuos de Volume Médio Diário (VMD). Portanto, a variável-alvo modelada é a severidade do acidente (letalidade condicional), e não a taxa de exposição por veículo-quilômetro.
 
-\subsection{Escopo e produtos}
-
-\begin{itemize}
-    \item Universo: arquivos \texttt{datatran2022.csv} a \texttt{datatran2025.csv} e \texttt{acidentes2022.csv} a \texttt{acidentes2025.csv} da PRF~\cite{prfdados}.
-    \item Grão analítico principal: \textbf{1 linha = 1 ocorrência} na BR-230.
-    \item Produtos: base limpa completa; conjunto de modelagem com preditores contextuais; partição treino (2022--2024) / teste (2025); figura de controle.
-\end{itemize}
-
-A modelagem estima a probabilidade condicional $P(\text{Fatal} \mid \text{Acidente}, \text{contexto})$. A base da PRF não traz Volume Médio Diário; o mapa de calor continua expressando densidade histórica de ocorrência, não exposição ao tráfego.
-
-\newpage
-
-% =========================================================
-% 2 FORMATAÇÃO
-% =========================================================
-\section{Formatação dos Dados}
-
-A tarefa \textit{Format data} ajusta a sintaxe dos arquivos sem alterar o significado analítico.
-
-\subsection{Codificação, delimitadores e tipos}
-
-Os CSV da PRF estão em \texttt{ISO-8859-1} (\textit{latin-1}), usam ponto e vírgula como separador de campos e vírgula como separador decimal. A rotina de carga fixa \texttt{encoding='latin-1'}, \texttt{sep=';'} e \texttt{decimal=','}, garantindo que latitude, longitude e quilômetro entrem como \texttt{float64}.
-
-Em seguida:
-\begin{itemize}
-    \item nomes de coluna são normalizados para minúsculas;
-    \item \texttt{data\_inversa} e \texttt{horario} geram \texttt{data}, \texttt{hora}, \texttt{ano} e \texttt{mes};
-    \item contagens de pessoas e veículos são forçadas a numérico com \texttt{errors='coerce'}.
-\end{itemize}
-
-Essa formatação é pré-condição da espacialização (WGS84) e da partição temporal prospectiva.
-
-\subsection{Reprodutibilidade da ingestão}
-
-Se um arquivo não existir em \texttt{bases/}, a função \texttt{garantir\_base()} baixa o ZIP oficial do Google Drive da PRF e extrai o CSV. Em redes com inspeção HTTPS, o cliente HTTP combina o bundle do \texttt{certifi} com as autoridades do chaveiro do sistema, preservando a verificação de certificado.
+O recorte empírico adotado abrange a série histórica pós-pandemia de \textbf{2022 a 2025} na rodovia \textbf{BR-230}, totalizando \textbf{6.217 acidentes} catalogados e \textbf{603 ocorrências com vítimas fatais} (taxa média de 9,70\%).
 
 \newpage
 
 % =========================================================
-% 3 SELEÇÃO E INTEGRAÇÃO
+% 2 TAXONOMIA DE DADOS E ESCALAS DE MEDIDA (AULA 4)
 % =========================================================
-\section{Seleção e Integração}
+\section{Taxonomia de Dados e Escalas de Medida}
 
-\subsection{Integração temporal das ocorrências}
+Conforme enfatizado na Aula~4, é fundamental distinguir o \textbf{tipo computacional} do dado (\texttt{INTEGER}, \texttt{FLOAT}, \texttt{VARCHAR}, \texttt{DATE}) do seu \textbf{tipo de escala de medida} (taxonomia de Stevens: Nominal, Ordinal, Intervalar e Razão). A escala de medida determina rigorosamente:
+\begin{itemize}
+    \item As relações matemáticas e operadores analíticos válidos ($=, \neq, <, >, -, \div$);
+    \item As transformações admissíveis sem distorção ou perda semântica da informação ($\text{Razão} \rightarrow \text{Intervalar} \rightarrow \text{Ordinal} \rightarrow \text{Nominal}$);
+    \item As medidas estatísticas de posição, variabilidade e forma cujo cálculo é matematicamente cabível.
+\end{itemize}
 
-Os quatro anos de \texttt{datatran} são empilhados com \texttt{pd.concat} (união vertical de observações). O recorte viário usa \texttt{query("br == 230")}. A Tabela~\ref{tab:volume_prep} confirma a série já descrita na Fase~2.
-
-\begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\caption{Volume consolidado da BR-230 após integração temporal (ocorrências).}
-\label{tab:volume_prep}
-\begin{tabularx}{\textwidth}{|c|c|c|c|c|}
-\hline
-\textbf{Ano} & \textbf{Acidentes} & \textbf{Fatais} & \textbf{Mortos} & \textbf{Prop. fatal (\%)} \\
-\hline
-2022 & 1.345 & 135 & 148 & 10,04 \\
-\hline
-2023 & 1.403 & 143 & 160 & 10,19 \\
-\hline
-2024 & 1.724 & 157 & 175 & 9,11 \\
-\hline
-2025 & 1.745 & 168 & 192 & 9,63 \\
-\hline
-\textbf{Total} & \textbf{6.217} & \textbf{603} & \textbf{675} & \textbf{9,70} \\
-\hline
-\end{tabularx}
-\end{table}
-
-\subsection{Seleção de atributos por papel analítico}
-
-A Tabela~\ref{tab:papeis} separa atributos de contexto (preditores), desfecho e campos de auditoria. A seleção evita vazamento: contagens de vítimas e a própria classificação não entram como entrada do classificador. \texttt{causa\_acidente} e \texttt{tipo\_acidente} permanecem no arquivo completo, mas fora do conjunto principal de preditores, porque a Fase~2 registrou que são preenchidos após a ocorrência.
+A Tabela~\ref{tab:taxonomia_escalas} cataloga os atributos do projeto de acordo com essa hierarquia formal.
 
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.25}
-\caption{Papéis dos atributos no conjunto preparado.}
-\label{tab:papeis}
-\begin{tabularx}{\textwidth}{|p{3.2cm}|X|p{3.6cm}|}
+\caption{Taxonomia e escalas de medida dos atributos do projeto BR-230 (conforme Aula~4).}
+\label{tab:taxonomia_escalas}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\small}p{3.1cm}|>{\centering\arraybackslash}p{2.1cm}|>{\centering\arraybackslash}p{2.1cm}|>{\centering\arraybackslash}p{2.5cm}|L|}
 \hline
-\textbf{Papel} & \textbf{Exemplos} & \textbf{Destino} \\
+\textbf{Atributo} & \textbf{Tipo Físico} & \textbf{Escala} & \textbf{Operações Válidas} & \textbf{Estatísticas Cabíveis / Papel} \\
 \hline
-Contexto (preditores) &
-UF, município, km, latitude, longitude, dia da semana, hora, mês, fase do dia, clima, tipo de pista, traçado principal, uso do solo, sentido, flags derivados e agregados de pessoa &
-Modelo e mapa \\
+\texttt{id} & \texttt{int64} & Nominal & $=, \neq$ & Chave primária de integridade \\
 \hline
-Desfecho &
-\texttt{alvo\_fatal}, \texttt{classificacao\_acidente}, \texttt{mortos}, \texttt{feridos} &
-Alvo / auditoria \\
+\texttt{uf}, \texttt{municipio} & \texttt{object} & Nominal & $=, \neq$ & Moda, frequência absoluta/relativa \\
 \hline
-Auditoria / exploração &
-Traçado original, divergência UF$\times$regional, km acima do DNIT, causa e tipo &
-Arquivo completo \\
+\texttt{tipo\_pista}, \texttt{tracado} & \texttt{object} & Nominal & $=, \neq$ & Moda, tabelas de contingência \\
+\hline
+\texttt{condicao\_meteo} & \texttt{object} & Nominal & $=, \neq$ & Preditores contextuais de via \\
+\hline
+\texttt{fase\_dia} & \texttt{object} & Ordinal & $=, \neq, <, >$ & Mediana, quantis, moda (ranking diurno) \\
+\hline
+\texttt{gravidade} & \texttt{object} & Ordinal & $=, \neq, <, >$ & Sem vítimas $<$ com feridos $<$ fatal \\
+\hline
+\texttt{data}, \texttt{horario} & \texttt{datetime64} & Intervalar & $=, \neq, <, >, -$ & Diferença de tempo (zero arbitrário/UTC) \\
+\hline
+\texttt{km}, \texttt{km\_ajustado} & \texttt{float64} & Razão & $=, \neq, <, >, -, \div$ & Média, desvio, $CV$, IQR, skewness \\
+\hline
+\texttt{hora} (0--23) & \texttt{int64} & Intervalar / Razão & $=, \neq, <, >, -$ & Média circular/linear, dispersão horária \\
+\hline
+\texttt{idade\_media} & \texttt{float64} & Razão & $=, \neq, <, >, -, \div$ & Média, desvio, quartis (zero absoluto) \\
+\hline
+\texttt{mortos}, \texttt{feridos} & \texttt{int64} & Razão & $=, \neq, <, >, -, \div$ & Contagem absoluta de vítimas \\
+\hline
+\texttt{alvo\_fatal} & \texttt{int64} (0/1) & Binária (Nom.) & $=, \neq$ & Proporção ($p$), taxa de letalidade \\
+\hline
+\end{tabularx}
+\end{table}
+
+\textbf{Implicação direta para a modelagem:} Variáveis nominais de alta cardinalidade (\texttt{municipio}, \texttt{tracado\_}\allowbreak\texttt{via}) não permitem ordenação direta e exigiram redução semântica (como o isolamento do \texttt{tracado\_}\allowbreak\texttt{principal} e agrupamentos regionais). Por sua vez, atributos em escala de razão (\texttt{km}, \texttt{idade}) suportam parametrizações estatísticas e auditorias de valores atípicos.
+
+\newpage
+
+% =========================================================
+% 3 ANÁLISE EXPLORATÓRIA DOS DADOS (AULA 4)
+% =========================================================
+\section{Análise Exploratória dos Dados (EDA)}
+
+Em conformidade com as diretrizes da Aula~4, a exploração dos dados compreende a computação sistemática de medidas estatísticas de centro, dispersão e forma, a identificação formal de \textit{outliers} e a análise bivariada de distribuições conjuntas.
+
+\subsection{Medidas de tendência central, dispersão e forma}
+
+A Tabela~\ref{tab:estatisticas_eda} resume o perfil estatístico dos preditores contínuos e métricos da BR-230.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\caption{Sumário estatístico dos atributos métricos da BR-230 (série 2022--2025).}
+\label{tab:estatisticas_eda}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.6cm}|Y|Y|Y|Y|Y|}
+\hline
+\textbf{Métrica Estatística} & \textbf{Quilômetro} & \textbf{Hora} & \textbf{Idade Média} & \textbf{Mortos} & \textbf{Feridos} \\
+\hline
+Tamanho amostral ($n$) & 6.217 & 6.217 & 5.978 & 6.217 & 6.217 \\
+\hline
+Média aritmética ($\bar{x}$) & 185,47 km & 13,09 h & 38,79 anos & 0,109 & 1,138 \\
+\hline
+Mediana ($Md$) & 117,00 km & 14,00 h & 38,00 anos & 0,000 & 1,000 \\
+\hline
+Moda ($Mo$) & 19,00 km & 18,00 h & 35,00 anos & 0 & 1 \\
+\hline
+Ponto Médio ($\frac{\min+\max}{2}$) & 735,00 km & 11,50 h & 46,50 anos & 3,000 & 16,500 \\
+\hline
+Mínimo / Máximo & 0,0 / 1.470,0 & 0 / 23 & 9,0 / 84,0 & 0 / 6 & 0 / 33 \\
+\hline
+Amplitude total ($A$) & 1.470,00 km & 23,00 h & 75,00 anos & 6 & 33 \\
+\hline
+Desvio Padrão ($s$) & 223,04 km & 5,92 h & 11,19 anos & 0,360 & 1,155 \\
+\hline
+Variância ($s^2$) & 49.748,69 & 35,01 & 125,14 & 0,130 & 1,334 \\
+\hline
+Coeficiente de Variação ($CV$) & \textbf{1,203} & 0,452 & \textbf{0,288} & 3,312 & 1,015 \\
+\hline
+1º Quartil ($Q_1$) & 23,00 km & 8,00 h & 30,50 anos & 0,000 & 1,000 \\
+\hline
+3º Quartil ($Q_3$) & 281,30 km & 18,00 h & 46,00 anos & 0,000 & 1,000 \\
+\hline
+Distância Interquartil ($\text{IQR}$) & 258,30 km & 10,00 h & 15,50 anos & 0,000 & 0,000 \\
+\hline
+\textbf{Assimetria de Fisher ($\gamma$)} & \textbf{+2,009} & \textbf{--0,310} & \textbf{+0,534} & \textbf{+4,412} & \textbf{+8,677} \\
+\hline
+\textbf{Curtose de Fisher ($\beta$)} & \textbf{+4,766} & \textbf{--0,889} & \textbf{+0,198} & \textbf{+31,305} & \textbf{+186,04} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\textbf{Interpretação analítica dos achados (Aula~4):}
+\begin{itemize}
+    \item \textbf{Quilômetro (\texttt{km}):} Exibe assimetria fortemente positiva ($\gamma = +2,01$) e distribuição marcadamente leptocúrtica ($\beta = +4,77$), com $CV = 1,20$ (elevada dispersão relativa). A média ($\bar{x} = 185,5$) supera substancialmente a mediana ($Md = 117,0$), o que reflete a enorme concentração de sinistros nos trechos metropolitanos iniciais da Paraíba (km 0 a 150) e uma longa cauda nos trechos remotos do Pará e Amazonas (até km 1.470).
+    \item \textbf{Hora do dia:} Apresenta assimetria ligeiramente negativa ($\gamma = -0,31$) e perfil platicúrtico ($\beta = -0,89$). A dispersão é ampla e moderadamente homogênea ($CV = 0,45$), com pico modal no final da tarde (18h) e pico secundário matutino.
+    \item \textbf{Idade média dos envolvidos:} Apresenta $CV = 0,288$ (baixa variabilidade relativa) e aproxima-se de uma distribuição normal/mesocúrtica ($\gamma = +0,53$, $\beta = +0,20$), centrada em 38,8 anos, sem distorções severas de cauda após o expurgo das idades sentinela.
+    \item \textbf{Contagem de mortos:} Possui assimetria extrema ($\gamma = +4,41$) e curtose aguda ($\beta = +31,31$), atestando que acidentes fatais constituem um evento severamente desbalanceado (90,3\% das ocorrências têm 0 mortos).
+\end{itemize}
+
+\newpage
+
+\subsection{Detecção formal de outliers (Valores anômalos)}
+
+A Aula~4 prescreve dois critérios canônicos para auditoria de pontos fora da curva:
+\begin{enumerate}
+    \item \textbf{Regra Empírica da Amplitude:} Pontos externos ao intervalo $\bar{x} \pm 2s$ (ou $\pm 3s$);
+    \item \textbf{Regra dos Quartis de Tukey (Boxplot):} Pontos abaixo de $Q_1 - 1,5 \times \text{IQR}$ ou acima de $Q_3 + 1,5 \times \text{IQR}$.
+\end{enumerate}
+
+A Tabela~\ref{tab:outliers_comparacao} compara os resultados de ambos os métodos sobre os dados da BR-230 com formatação balanceada.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\caption{Comparação formal de detecção de outliers (Regra Empírica vs. Critério de Tukey).}
+\label{tab:outliers_comparacao}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.8cm}|Y|Y|L|}
+\hline
+\textbf{Atributo} & \textbf{Regra Empírica ($\bar{x} \pm 2s$)} & \textbf{Critério de Tukey ($1,5\times\text{IQR}$)} & \textbf{Diagnóstico e Tratamento no Pipeline} \\
+\hline
+\texttt{km\_ajustado} &
+$[-260,6 ; 631,6]$ km \newline \textbf{262 outliers} (4,21\%) &
+$[-364,5 ; 668,8]$ km \newline \textbf{227 outliers} (3,65\%) &
+Trechos autênticos do Pará e Amazonas (até km 1.470). Preservados integralmente; o efeito regional é modelado via \texttt{fora\_pb}. \\
+\hline
+\texttt{hora} &
+$[1,3 ; 24,9]$ h \newline \textbf{211 outliers} (3,39\%) &
+$[-7,0 ; 33,0]$ h \newline \textbf{0 outliers} (0,00\%) &
+Ciclo de 24 horas legítimo; nenhuma exclusão. O critério de Tukey atesta normalidade operacional do registro. \\
+\hline
+\texttt{idade\_media} &
+$[16,4 ; 61,2]$ anos \newline \textbf{232 outliers} (3,88\%) &
+$[7,3 ; 69,3]$ anos \newline \textbf{45 outliers} (0,75\%) &
+Idades atípicas válidas (crianças e idosos); mantidas na base. Casos com 0 sentinela foram tratados previamente. \\
+\hline
+\texttt{mortos} &
+$[-0,61 ; 0,83]$ \newline \textbf{603 outliers} (9,70\%) &
+$[0,00 ; 0,00]$ \newline \textbf{603 outliers} (9,70\%) &
+Coincide estritamente com os 603 sinistros fatais; compõe a classe minoritária da variável-alvo. \\
+\hline
+\end{tabularx}
+\end{table}
+
+\textbf{Decisão de Engenharia de Dados:} Nenhum acidente foi expurgado com base pura em quilometragem atípica. Como demonstrado na Fase~2, os valores de km acima de 668~km correspondem à extensão real da BR-230 no estado do Pará (que alcança o km 1.470). O modelo preditivo captura essa heterogeneidade espacial através do atributo binário derivado \texttt{fora\_pb}.
+
+\subsection{Análise bivariada e distribuições conjuntas}
+
+A distribuição conjunta de frequências (Aula~4, Slide 31) analisa a dependência estocástica entre fatores de risco viário/ambiental e a letalidade. A Tabela~\ref{tab:bivariada_risco} consolida os cruzamentos bivariados frente ao alvo preditivo.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\caption{Distribuição conjunta bivariada dos preditores contextuais frente à letalidade.}
+\label{tab:bivariada_risco}
+\begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
+\hline
+\textbf{Fator de Risco Analisado} & \textbf{Total de Ocorrências} & \textbf{Freq. Relativa (\%)} & \textbf{Ocorrências Fatais} & \textbf{Taxa de Letalidade (\%)} \\
+\hline
+\multicolumn{5}{|l|}{\textbf{Tipo de Pista}} \\
+\hline
+Pista Simples & 3.170 & 50,99\% & 452 & \textbf{14,26\%} \\
+\hline
+Pista Dupla & 2.865 & 46,08\% & 145 & 5,06\% \\
+\hline
+Pista Múltipla & 182 & 2,93\% & 6 & 3,30\% \\
+\hline
+\multicolumn{5}{|l|}{\textbf{Fase do Dia}} \\
+\hline
+Amanhecer & 235 & 3,78\% & 45 & \textbf{19,15\%} \\
+\hline
+Plena Noite & 2.208 & 35,52\% & 287 & \textbf{13,00\%} \\
+\hline
+Anoitecer & 388 & 6,24\% & 32 & 8,25\% \\
+\hline
+Pleno Dia & 3.386 & 54,46\% & 239 & 7,06\% \\
+\hline
+\multicolumn{5}{|l|}{\textbf{Uso do Solo (Ambiente)}} \\
+\hline
+Área Rural (\texttt{area\_rural=1}) & 2.778 & 44,68\% & 410 & \textbf{14,76\%} \\
+\hline
+Área Urbana (\texttt{area\_urbana=1}) & 3.439 & 55,32\% & 193 & 5,61\% \\
+\hline
+\multicolumn{5}{|l|}{\textbf{Localização Geográfica}} \\
+\hline
+Trecho Paraibano (PB) & 4.244 & 68,26\% & 247 & 5,82\% \\
+\hline
+Trecho Fora da PB (PA, MA, PI, TO, AM, CE) & 1.973 & 31,74\% & 356 & \textbf{18,04\%} \\
+\hline
+\end{tabularx}
+\end{table}
+
+A taxa de letalidade em pista simples (14,26\%) é quase o triplo da observada em pista dupla (5,06\%). Em trechos rurais fora da Paraíba com pista simples durante a noite ou amanhecer, a probabilidade empírica de óbito ultrapassa 25\%, fundamentando os atributos construídos na Seção~\ref{sec:construcao}.
+
+\newpage
+
+\subsection{Visualização gráfica da exploração}
+
+A Figura~\ref{fig:eda_completa} sintetiza três representações gráficas essenciais recomendadas na Aula~4: os boxplots de dispersão por subpopulação regional, o polígono acumulado (ogiva) de horários e o mapa de calor de contingência bivariada.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figuras/exploracao_distribuicoes_outliers.png}
+\caption{Análise Exploratória dos Dados (EDA): (A) Boxplots de dispersão e identificação de \textit{outliers} de km por UF; (B) Distribuição de frequências e Ogiva Acumulada de horário; (C) Distribuição bivariada e taxa de letalidade por tipo de pista e iluminação na BR-230.}
+\label{fig:eda_completa}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Painel A (Boxplots):} Demonstra a alta compacidade dos acidentes na Paraíba (IQR estreito até o km 280) contrastando com a vasta extensão e variabilidade quilométrica no Pará (com amplitude de até 1.470~km e mediana em 422~km).
+    \item \textbf{Painel B (Ogiva Horária):} A curva ogiva evidencia que 50\% dos sinistros ocorrem até as 14h, com forte gradiente de aceleração acumulada entre as 16h e as 20h.
+    \item \textbf{Painel C (Matriz Bivariada):} A intensidade cromática destaca que a conjunção de pista simples com o amanhecer atinge 22,6\% de fatalidade, enquanto pista dupla em pleno dia registra apenas 4,5\%.
+\end{itemize}
+
+\newpage
+
+% =========================================================
+% 4 FORMATAÇÃO (FASE 3)
+% =========================================================
+\section{Formatação dos Dados (Fase 3)}
+
+A tarefa \textit{Format data} reestrutura a sintaxe física dos arquivos brutos para assegurar a ingestão padronizada no ambiente analítico sem adulterar o conteúdo dos registros.
+
+\subsection{Codificação, delimitadores e tipagem de precisão}
+
+Os dados abertos da PRF são disponibilizados com particularidades que inviabilizam rotinas cegas de importação:
+\begin{itemize}
+    \item \textbf{Codificação:} Os arquivos utilizam \texttt{ISO-8859-1} (\textit{latin-1}). A rotina fixa o parâmetro \texttt{encoding=}\allowbreak\texttt{'latin-1'}, convertendo os textos para UTF-8 nativo em memória;
+    \item \textbf{Delimitador e formato numérico:} O separador de campos é o ponto e vírgula (\texttt{;}) e o separador decimal é a vírgula (\texttt{,}). A especificação \texttt{sep=';'} e \texttt{decimal=','} garante que coordenadas geográficas (\texttt{latitude}, \texttt{longitude}) e a quilometragem (\texttt{km}) sejam carregadas imediatamente como \texttt{float64}, evitando a degradação de campos espaciais em cadeias de texto;
+    \item \textbf{Normalização de datas e horas:} Os atributos \texttt{data\_inversa} e \texttt{horario} são convertidos para objetos datetime, derivando os campos padronizados \texttt{data}, \texttt{hora}, \texttt{ano}, \texttt{mes} e \texttt{dia\_semana\_norm};
+    \item \textbf{Higienização sintática:} Os identificadores de coluna são convertidos para minúsculas sem espaços periféricos.
+\end{itemize}
+
+\subsection{Reprodutibilidade da ingestão}
+
+A função \texttt{garantir\_base()} implementada no notebook gerencia a persistência local em \texttt{bases/}. Caso um dos oito CSVs oficiais (\texttt{datatran2022.csv} a \texttt{datatran2025.csv} e \texttt{acidentes2022.csv} a \texttt{acidentes2025.csv}) não esteja presente em disco, a rotina realiza o download automático a partir dos espelhos institucionais em nuvem. Para contornar bloqueios em redes com inspeção de tráfego SSL/TLS (proxies corporativos e certificados intermediários), o módulo integra as CAs do sistema operacional ao pacote \texttt{certifi}.
+
+\newpage
+
+% =========================================================
+% 5 SELEÇÃO E INTEGRAÇÃO (FASE 3)
+% =========================================================
+\section{Seleção e Integração dos Dados}
+
+\subsection{Integração temporal da série de ocorrências}
+
+A consolidação dos quatro exercícios anuais de \texttt{datatran} emprega a operação de empilhamento vertical de observações (\texttt{pd.concat}). O isolamento da rodovia-alvo é realizado via filtragem explícita: \texttt{query("br == 230")}.
+
+A Tabela~\ref{tab:volume_prep} detalha a evolução anual da base unificada da BR-230.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\caption{Série temporal de ocorrências na BR-230 (base integrada).}
+\label{tab:volume_prep}
+\begin{tabularx}{\textwidth}{|Y|Y|Y|Y|Y|}
+\hline
+\textbf{Ano de Ocorrência} & \textbf{Acidentes Totais} & \textbf{Acidentes Fatais} & \textbf{Total de Mortos} & \textbf{Proporção Fatal (\%)} \\
+\hline
+2022 & 1.345 & 135 & 148 & 10,04\% \\
+\hline
+2023 & 1.403 & 143 & 160 & 10,19\% \\
+\hline
+2024 & 1.724 & 157 & 175 & 9,11\% \\
+\hline
+2025 & 1.745 & 168 & 192 & 9,63\% \\
+\hline
+\textbf{Total Consolidado} & \textbf{6.217} & \textbf{603} & \textbf{675} & \textbf{9,70\%} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Seleção de atributos e prevenção de vazamento}
+
+A seleção de preditores respeita o princípio de prevenção de vazamento temporal (\textit{data leakage}). Informações que somente são geradas \textit{após} a ocorrência do sinistro ou como consequência direta de seu desfecho (como \texttt{causa\_acidente}, \texttt{tipo\_acidente}, contagens de feridos leves, graves e mortos) foram estritamente excluídas do vetor de entrada dos modelos preditivos.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\caption{Partição dos atributos de acordo com seu papel analítico no pipeline.}
+\label{tab:papeis_atributos}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.2cm}|L|>{\raggedright\arraybackslash}p{4.2cm}|}
+\hline
+\textbf{Papel Analítico} & \textbf{Atributos Selecionados} & \textbf{Destino no Pipeline} \\
+\hline
+Preditores Contextuais (Entrada) &
+\texttt{uf}, \texttt{municipio}, \texttt{km\_ajustado}, \texttt{latitude}, \texttt{longitude}, \texttt{hora}, \texttt{mes}, \texttt{dia\_semana\_norm}, \texttt{fase\_dia}, \texttt{condicao\_metereologica}, \texttt{tipo\_pista}, \texttt{tracado\_principal}, \texttt{uso\_solo}, \texttt{sentido\_via}, flags derivadas e variáveis de pessoa agregadas (\texttt{tem\_motocicleta}, \texttt{tem\_pedestre}, \texttt{idade\_media}). &
+Matriz de características ($X$) para modelagem e espacialização em mapas. \\
+\hline
+Desfecho (Alvo) &
+\texttt{alvo\_fatal} (binário determinístico construído a partir de \texttt{classificacao\_acidente}). &
+Vetor alvo ($y$) supervisionado. \\
+\hline
+Auditoria e Rastreio &
+\texttt{id}, \texttt{data\_inversa}, \texttt{causa\_acidente}, \texttt{tipo\_acidente}, \texttt{tracado\_via} original, \texttt{km} bruto, contagens nominais de vítimas. &
+Arquivo de ocorrências preparadas completas (auditoria). \\
 \hline
 \end{tabularx}
 \end{table}
 
 \subsection{Integração com o arquivo por pessoa}
 
-Os arquivos \texttt{acidentesYYYY.csv} (15.764 linhas na BR-230) são agregados por \texttt{id} do acidente e unidos à base de ocorrências com \texttt{merge} (\textit{left join}, validação um-para-um). A agregação produz:
+Os arquivos de pessoas (\texttt{acidentesYYYY.csv}) registram 15.764 linhas na BR-230 no grão \textbf{1 linha = 1 pessoa envolvida}. A incorporação desses dados à base principal de ocorrências (\textbf{1 linha = 1 acidente}) exigiu agregação relacional prévia via \texttt{groupby('id')} para evitar a multiplicação indevida de linhas:
 \begin{itemize}
-    \item \texttt{tem\_motocicleta} (3.244 acidentes com ao menos uma motocicleta);
-    \item \texttt{tem\_pedestre} (270);
-    \item \texttt{idade\_media} (239 acidentes sem idade válida após conversão de sentinelas, 3,8\%).
+    \item \texttt{tem\_motocicleta}: Indicador booleano (3.244 acidentes envolveram moto);
+    \item \texttt{tem\_pedestre}: Indicador booleano (270 acidentes com atropelamento);
+    \item \texttt{idade\_media}: Média das idades válidas por sinistro (após expurgo de zeros sentinela);
+    \item \texttt{prop\_masculino}: Proporção de condutores/passageiros do sexo masculino.
 \end{itemize}
-Todos os 6.217 acidentes encontram ao menos uma linha de pessoa correspondente. O grão de ocorrência não é inflado.
+
+A união (\textit{left join}) foi validada como 1:1 estrita: todos os 6.217 acidentes da BR-230 encontraram correspondência exata, mantendo a integridade referencial sem perdas.
 
 \newpage
 
 % =========================================================
-% 4 LIMPEZA
+% 6 LIMPEZA E QUALIDADE (FASE 3)
 % =========================================================
-\section{Limpeza dos Dados}
+\section{Limpeza dos Dados e Rastreio da Qualidade}
 
-A Tabela~\ref{tab:limpeza} resume as checagens executadas sobre a série consolidada.
+A limpeza dos dados na Fase~3 responde sistematicamente aos seis problemas fundamentais de qualidade diagnosticados na Aula~4 (Slide 42). A Tabela~\ref{tab:limpeza_rastreio} detalha a correspondência entre a dimensão de qualidade e o tratamento aplicado.
 
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\caption{Resultado das limpezas e sinalizações na BR-230 (2022--2025).}
-\label{tab:limpeza}
-\begin{tabularx}{\textwidth}{|p{6.2cm}|c|X|}
+\renewcommand{\arraystretch}{1.25}
+\caption{Matriz de rastreio: problemas de qualidade da Aula~4 vs. ações de limpeza da Fase~3.}
+\label{tab:limpeza_rastreio}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.4cm}|L|}
 \hline
-\textbf{Checagem} & \textbf{Quantidade} & \textbf{Tratamento} \\
+\textbf{Dimensão de Qualidade} & \textbf{Incidência na BR-230} & \textbf{Impacto Analítico} & \textbf{Tratamento Implementado na Fase~3} \\
 \hline
-Acidentes no recorte & 6.217 & Base única de ocorrências \\
+\textbf{1. Completude} (Valores omissos) &
+876 pessoas com \texttt{pesid=0}; 239 acidentes com \texttt{idade} sentinela 0 ou $>100$ anos. &
+Média de idade distorcida para baixo na base agregada. &
+Substituição dos zeros sentinela por \texttt{NaN}. Apenas idades de 1 a 100 anos são computadas; 239 nulos resultantes são isolados para imputação na Fase~4. \\
 \hline
-Alvo positivo (\texttt{alvo\_fatal}=1) & 603 (9,70\%) & Variável-alvo binária \\
+\textbf{2. Corretude e Erros Lógicos} &
+1 registro no Tocantins com km 146,0 (acima do teto DNIT de 144,7~km). &
+Inconsistência cadastral frente ao SNV. &
+Criação do \texttt{km\_ajustado} fixado em 144,7~km, preservando a ocorrência e registrando a flag \texttt{km\_acima\_dnit}. \\
 \hline
-Traçados compostos (\texttt{;}) & 1.606 & Redução a \texttt{tracado\_principal} + flag \\
+\textbf{3. Frequência de Erros} &
+109 registros onde a UF do município difere da sigla em \texttt{regional}. &
+Conflito entre circunscrição policial e limite geográfico. &
+Prevalência estrita das coordenadas WGS84 e do município físico, conforme regra da Fase~2; criação da flag \texttt{uf\_diverge\_regional}. \\
 \hline
-UF do município $\neq$ UF da regional & 109 & Prevalecem UF e coordenadas do local \\
+\textbf{4. Sinônimos e Múltiplos Rótulos} &
+1.606 registros com múltiplos traçados concatenados por ponto e vírgula (\texttt{;}). &
+Inchaço artificial da cardinalidade categórica. &
+Extração do \texttt{tracado\_principal} (primeiro termo) e geração da flag binária \texttt{tracado\_composto}. \\
 \hline
-km acima do limite DNIT (TO) & 1 & \texttt{km\_ajustado}=144,7; original preservado \\
+\textbf{5. Ruídos e Outliers} &
+Trechos com quilometragens acima de 668~km no Pará e Amazonas. &
+Pontos detectados como anômalos em algoritmos de distância. &
+Preservação integral após validação geográfica; materialização do fator na flag espacial \texttt{fora\_pb}. \\
 \hline
-Rural + pista simples & 1.840 & Flag de combinação crítica \\
-\hline
-Rural + simples fora da Paraíba & 1.040 (25,1\% fatais) & Flag \texttt{fora\_pb} \\
-\hline
-\texttt{pesid}=0 convertido a nulo & 876 linhas de pessoa & Sentinela $\rightarrow$ \texttt{NaN} \\
+\textbf{6. Redundâncias e Duplicações} &
+Chaves duplicadas ou grãos inflados em junções. &
+Superestimação de ocorrências. &
+Auditoria de unicidade em \texttt{id} (6.217 valores únicos) e agregação rigorosa de pessoas pré-merge. \\
 \hline
 \end{tabularx}
 \end{table}
 
-\subsection{Variável-alvo}
-
-Define-se
-\[
-\texttt{alvo\_fatal} =
-\begin{cases}
-1, & \text{se }\texttt{classificacao\_acidente}=\text{``Com Vítimas Fatais''},\\
-0, & \text{caso contrário.}
-\end{cases}
-\]
-A construção é determinística a partir do rótulo oficial da PRF e coincide com os 603 sinistros fatais da Fase~2.
-
-\subsection{Traçado composto}
-
-Em 1.606 registros, \texttt{tracado\_via} contém mais de um valor separado por ponto e vírgula. A preparação cria \texttt{tracado\_principal} (primeiro valor) e a flag \texttt{tracado\_composto}, permitindo tanto a modelagem com cardinalidade reduzida quanto auditoria do campo original.
-
-\subsection{Prevalência geográfica e marco do Tocantins}
-
-Nas 109 divergências entre a UF do município e a UF embutida em \texttt{regional}, prevalecem a UF e as coordenadas do local do sinistro, conforme a Fase~2. No Tocantins, um registro com km 146,0 ultrapassa os 144,7~km publicados pelo DNIT~\cite{dnit2026}; \texttt{km\_ajustado} recebe o teto cadastral sem descartar a ocorrência.
-
-\subsection{Completude operacional dos preditores contextuais}
-
-Latitude, longitude, km, fase do dia, clima, pista, uso do solo e demais preditores categóricos de ocorrência estão integralmente preenchidos nas 6.217 linhas. O único atributo contextual com omissão relevante no conjunto de modelagem é \texttt{idade\_media} (239 nulos), herdado das idades sentinela do arquivo por pessoa.
-
 \newpage
 
 % =========================================================
-% 5 CONSTRUÇÃO
+% 7 CONSTRUÇÃO DE ATRIBUTOS E PARTIÇÃO (FASE 3)
 % =========================================================
-\section{Construção de Atributos e Partição}
+\section{Construção de Atributos e Partição Prospectiva}
+\label{sec:construcao}
 
-\subsection{Atributos derivados}
+\subsection{Atributos derivados (Engenharia de características)}
 
-Além do alvo e do traçado principal, foram construídos:
+Com base nas evidências empíricas da Análise Exploratória, foram construídos os seguintes preditores especializados:
 \begin{itemize}
-    \item \texttt{area\_urbana} / \texttt{area\_rural} a partir de \texttt{uso\_solo};
-    \item \texttt{fim\_de\_semana} a partir do dia da semana normalizado;
-    \item \texttt{periodo\_noturno} a partir de \texttt{fase\_dia};
-    \item \texttt{rural\_pista\_simples} e \texttt{fora\_pb}, que materializam o achado de gravidade da Fase~2.
+    \item \textbf{\texttt{alvo\_fatal} (Alvo supervisionado):} $1$ se \texttt{classificacao\_acidente} == ``Com Vítimas Fatais'' e $0$ caso contrário.
+    \item \textbf{\texttt{area\_urbana} / \texttt{area\_rural}:} Variáveis indicadoras derivadas da normalização de \texttt{uso\_solo}, capturando a diferença crítica de letalidade (14,76\% rural vs. 5,61\% urbano).
+    \item \textbf{\texttt{fim\_de\_semana}:} Indicador booleano ativo para sexta-feira, sábado e domingo, capturando padrões de pico noturno.
+    \item \textbf{\texttt{periodo\_noturno}:} Indicador booleano que consolida ``Plena Noite'' e ``Amanhecer'' (períodos de visibilidade comprometida).
+    \item \textbf{\texttt{rural\_pista\_simples}:} Interação multiplicativa entre traçado simples e meio rural (1.840 ocorrências, foco de gravidade).
+    \item \textbf{\texttt{fora\_pb}:} Indicador geográfico que sinaliza ocorrências fora da Paraíba (onde a letalidade média sobe para 18,04\%).
 \end{itemize}
 
-A Figura~\ref{fig:controle_prep} mostra o controle anual de volume versus proporção fatal e a letalidade por tipo de pista após a preparação.
+A Figura~\ref{fig:controle_anual} apresenta os gráficos de controle do pipeline: o volume anual consolidado contra a taxa de letalidade e o perfil de severidade por tipo de pista.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{figuras/preparacao_controle_anual_pista.png}
-\caption{Controle da base preparada: volume e proporção fatal por ano (esquerda) e proporção fatal por tipo de pista (direita) na BR-230 (2022--2025).}
-\label{fig:controle_prep}
+\includegraphics[width=0.92\textwidth]{figuras/preparacao_controle_anual_pista.png}
+\caption{Controle da base preparada: (esquerda) Volume anual de acidentes e proporção fatal estável em torno de 9,7\%; (direita) Proporção fatal por configuração de pista na BR-230 (2022--2025).}
+\label{fig:controle_anual}
 \end{figure}
 
 \subsection{Partição prospectiva treino/teste}
 
-A divisão é temporal, não aleatória: treino em 2022--2024 e teste em 2025. A escolha preserva o papel de 2025 como horizonte prospectivo e como ano validado contra o Anuário Estatístico da PRF na Fase~2~\cite{prfanuario2025}.
+Diferentemente de divisões puramente aleatórias (como o \textit{k-fold cross validation} descontextualizado), o particionamento temporal preserva a ordem cronológica dos dados e reflete o cenário de aplicação real do modelo em produção~\cite{tozetto2025}.
+
+A partição adotada estabelece:
+\begin{itemize}
+    \item \textbf{Conjunto de Treinamento e Validação:} Triênio histórico de \textbf{2022 a 2024};
+    \item \textbf{Conjunto de Teste Prospectivo:} Exercício fechado de \textbf{2025}.
+\end{itemize}
+
+A Tabela~\ref{tab:particao_prospectiva} comprova a estabilidade estatística da proporção de classes em ambos os subconjuntos.
 
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\caption{Partição prospectiva do conjunto de modelagem.}
-\label{tab:particao}
-\begin{tabularx}{\textwidth}{|l|c|c|c|}
+\caption{Distribuição da partição prospectiva temporal para modelagem supervisionada.}
+\label{tab:particao_prospectiva}
+\begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
 \hline
-\textbf{Conjunto} & \textbf{Acidentes} & \textbf{Fatais} & \textbf{Prop. fatal (\%)} \\
+\textbf{Subconjunto de Dados} & \textbf{Período} & \textbf{Acidentes ($n$)} & \textbf{Casos Fatais ($y=1$)} & \textbf{Proporção Fatal (\%)} \\
 \hline
-Treino (2022--2024) & 4.472 & 435 & 9,73 \\
+Treino / Validação & 2022 a 2024 & 4.472 & 435 & 9,73\% \\
 \hline
-Teste (2025) & 1.745 & 168 & 9,63 \\
+Teste Prospectivo & 2025 & 1.745 & 168 & 9,63\% \\
 \hline
-\textbf{Total} & \textbf{6.217} & \textbf{603} & \textbf{9,70} \\
+\textbf{Total BR-230} & \textbf{2022 a 2025} & \textbf{6.217} & \textbf{603} & \textbf{9,70\%} \\
 \hline
 \end{tabularx}
 \end{table}
 
-O desbalanceamento (cerca de 1 caso fatal para 9,3 ocorrências) não é artificialmente equilibrado nesta fase. A Fase~4 deverá tratar ponderação de classes, limiar de decisão e métricas alinhadas aos critérios da Fase~1 (recall, precisão, F1, ROC-AUC e taxa de falsos negativos).
+A taxa de letalidade permanece virtualmente idêntica entre os conjuntos (9,73\% em treino e 9,63\% em teste), confirmando a robustez da partição contra desvios de amostragem temporal.
+
+\subsection{Codificação categórica e matrizes de aprendizado \texorpdfstring{($X$ e $y$)}{(X e y)}}
+
+Para alimentar algoritmos de aprendizado supervisionado (como Redes Neurais Artificiais MLP, Regressão Logística regularizada e modelos de \textit{Boosting}), as variáveis categóricas nominais contextuais foram submetidas ao processo de codificação:
+\begin{itemize}
+    \item \textbf{One-Hot Encoding (\texttt{pd.get\_dummies}):} Aplicado sobre \texttt{tipo\_pista}, \texttt{condicao\_metereologica}, \texttt{uso\_solo}, \texttt{fase\_dia}, \texttt{tracado\_principal} e \texttt{sentido\_via}. Foi fixado \texttt{drop\_first=True} para evitar multicolinearidade exata (armadilha da variável \textit{dummy});
+    \item \textbf{Consistência Dimensional (\texttt{reindex}):} O conjunto de teste foi realinhado estritamente pelas colunas geradas no treinamento (\texttt{fill\_value=0}), garantindo paridade dimensional mesmo na ocorrência de níveis não observados em 2025;
+    \item \textbf{Blindagem contra Vazamento (\textit{Data Leakage}):} Valores ausentes no preditor \texttt{idade\_media} (devidos a indivíduos não qualificados no boletim) foram tratados por imputação pela mediana calculada exclusivamente sobre o conjunto de treino ($33{,}0$ anos). O valor derivado foi subsequentemente imputado tanto em treino quanto em teste, preservando o rigor experimental;
+    \item \textbf{Isolamento de Preditores e Desfecho:} Os atributos de identificação, georreferenciamento textual e o desfecho foram desvinculados, resultando nas matrizes analíticas isoladas $X_{\text{treino}} \in \mathbb{R}^{4.472 \times 35}$, $y_{\text{treino}} \in \{0, 1\}^{4.472}$, $X_{\text{teste}} \in \mathbb{R}^{1.745 \times 35}$ e $y_{\text{teste}} \in \{0, 1\}^{1.745}$, com taxa de completude de 100\% (zero valores nulos).
+\end{itemize}
+
+\subsection{Estruturação geoespacial vetorial (WGS84 EPSG:4326)}
+
+Visando à construção do mapa de calor de acidentes na Fase de Modelagem por Estimação de Densidade de Kernel (\textit{Kernel Density Estimation} --- KDE), as coordenadas geográficas válidas de latitude e longitude foram mapeadas em feições vetoriais de pontos pontuais (\texttt{Point}) através da biblioteca GeoPandas, sob o datum geodésico universal WGS84 (EPSG:4326). O arquivo exportado (\texttt{br230\_espacial.geojson}) contém todas as 6.217 ocorrências com geometria ativa e atributos contextuais associados.
 
 \newpage
 
 % =========================================================
-% 6 ARTEFATOS
+% 8 ARTEFATOS GERADOS (FASE 3)
 % =========================================================
-\section{Artefatos Gerados}
+\section{Artefatos Gerados e Reprodutibilidade}
 
-Os arquivos finais estão em \texttt{bases/preparadas/}, em CSV UTF-8 com vírgula.
+Todas as transformações, cálculos estatísticos e visualizações são gerados de forma determinística pelo notebook \texttt{preparacao\_dos\_dados/}\allowbreak\texttt{preparacao\_dos\_dados.ipynb}.
+
+Os arquivos de dados oficiais gerados encontram-se persistidos no diretório \texttt{bases/preparadas/} no formato UTF-8 (delimitado por vírgula) e em formato GeoJSON para as feições espaciais:
 
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.25}
-\caption{Inventário dos artefatos da Preparação dos Dados.}
-\label{tab:artefatos}
-\begin{tabularx}{\textwidth}{|p{5.4cm}|c|X|}
+\renewcommand{\arraystretch}{1.2}
+\caption{Inventário oficial dos artefatos produzidos pela Fase~3.}
+\label{tab:inventario_artefatos}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\ttfamily\footnotesize}p{5.4cm}|Y|Y|L|}
 \hline
-\textbf{Arquivo} & \textbf{Linhas} & \textbf{Conteúdo} \\
+\textbf{Nome do Arquivo} & \textbf{Linhas} & \textbf{Tamanho} & \textbf{Finalidade Analítica} \\
 \hline
-\texttt{br230\_ocorrencias\_preparadas.csv} & 6.217 & Base completa limpa (contexto, desfecho, auditoria e agregados de pessoa). \\
+br230\_ocorrencias\_preparadas.csv & 6.217 & 2,36 MiB & Base completa com todos os atributos contextuais, desfechos de auditoria, coordenadas WGS84 e variáveis de pessoa agregadas. \\
 \hline
-\texttt{br230\_modelo\_completo.csv} & 6.217 & Preditores contextuais + \texttt{alvo\_fatal}. \\
+br230\_modelo\_completo.csv & 6.217 & 1,15 MiB & Matriz com preditores contextuais selecionados e a variável-alvo \texttt{alvo\_fatal} (sem atributos vazadores). \\
 \hline
-\texttt{br230\_modelo\_treino.csv} & 4.472 & Partição 2022--2024. \\
+br230\_modelo\_treino.csv & 4.472 & 830 KiB & Partição de treinamento e calibração (série temporal 2022 a 2024). \\
 \hline
-\texttt{br230\_modelo\_teste.csv} & 1.745 & Partição 2025. \\
+br230\_modelo\_teste.csv & 1.745 & 330 KiB & Partição de avaliação prospectiva independente (série temporal 2025). \\
+\hline
+X\_treino.csv & 4.472 & 680 KiB & Matriz numérica de treino já codificada via One-Hot Encoding (35 preditores). \\
+\hline
+y\_treino.csv & 4.472 & 10 KiB & Vetor de rótulos binários de treino (\texttt{alvo\_fatal}). \\
+\hline
+X\_teste.csv & 1.745 & 270 KiB & Matriz numérica de teste prospectivo codificada e alinhada (35 preditores). \\
+\hline
+y\_teste.csv & 1.745 & 4 KiB & Vetor de rótulos binários de teste (\texttt{alvo\_fatal}). \\
+\hline
+br230\_espacial.geojson & 6.217 & 8,22 MiB & Camada vetorial espacial WGS84 (EPSG:4326) para estimação de Kernel (KDE). \\
 \hline
 \end{tabularx}
 \end{table}
 
-O notebook \texttt{preparacao\_dos\_dados/preparacao\_dos\_dados.ipynb} reproduz integralmente o pipeline. A figura de controle é salva em \texttt{preparacao\_dos\_dados/figuras/}.
+As figuras de controle e da análise exploratória encontram-se salvas no diretório \texttt{preparacao\_dos\_dados/}\allowbreak\texttt{figuras/} em resolução gráfica adequada para publicação:
+\begin{itemize}
+    \item \texttt{exploracao\_distribuicoes\_outliers.png} (Boxplots por UF, Ogiva horária e Heatmap bivariado);
+    \item \texttt{preparacao\_controle\_anual\_pista.png} (Série anual e perfil por tipo de pista).
+\end{itemize}
 
 \newpage
 
 % =========================================================
-% 7 ENCAMINHAMENTOS
+% 9 ENCAMINHAMENTOS PARA A MODELAGEM (FASE 4)
 % =========================================================
 \section{Encaminhamentos para a Fase 4 (Modelagem)}
 
-\begin{enumerate}
-    \item Treinar o classificador binário de gravidade sobre \texttt{br230\_modelo\_treino.csv}, avaliando em \texttt{br230\_modelo\_teste.csv}.
-    \item Usar apenas preditores contextuais; manter causa/tipo e contagens de vítimas fora da entrada do modelo principal.
-    \item Tratar o desbalanceamento com pesos de classe e/ou ajuste de limiar, priorizando recall e baixa taxa de falso negativo, conforme as metas da Fase~1.
-    \item Imputar ou isolar \texttt{idade\_media} nula (3,8\%) antes do treino, se o atributo for mantido.
-    \item Construir o mapa de calor a partir de latitude/longitude da base preparada completa, podendo colorir pela probabilidade predita ou pela flag \texttt{alvo\_fatal}.
-    \item Documentar a ausência de VMD: o produto preditivo expressa risco condicional à ocorrência registrada, não taxa por veículo-km.
-\end{enumerate}
+A conclusão das etapas exploratórias e de preparação fornece os insumos e delimita as restrições metodológicas para a modelagem preditiva supervisionada:
 
-A Tabela~\ref{tab:rastreio} rastreia o cumprimento da matriz de decisões da Fase~2.
+\begin{enumerate}
+    \item \textbf{Algoritmos Recomendados:} Treinamento de classificadores probabilísticos capazes de lidar com interações não lineares e variáveis mistas (Gradiente Boosting via LightGBM e XGBoost, Random Forest e Regressão Logística regularizada como \textit{baseline});
+    \item \textbf{Tratamento do Desbalanceamento:} Como a classe positiva representa 9,70\% das instâncias, deve-se adotar ponderação de classes (\texttt{scale\_pos\_weight} ou \texttt{class\_weight='balanced'}) e calibração fina de limiares de decisão (\textit{threshold tuning}), priorizando a minimização de falsos negativos;
+    \item \textbf{Métricas de Avaliação:} Em consonância com os critérios de sucesso da Fase~1, a performance deve ser avaliada por PR-AUC (Área sob a curva Precisão-Recall), ROC-AUC, F1-Score e Recall na classe fatal, evitando a acurácia global como métrica orientadora;
+    \item \textbf{Tratamento de Dados Faltantes:} O único preditor contextual com omissões no conjunto de modelagem é \texttt{idade\_media} (239 valores nulos, correspondendo a 3,84\% da base). Para modelos lineares, recomenda-se imputação pela mediana contextual por tipo de veículo; algoritmos baseados em árvores (XGBoost/LightGBM) tratam nativamente a rota de split para nulos;
+    \item \textbf{Geração do Mapa de Calor:} A camada geográfica de densidade histórica de acidentes será gerada via Estimativa de Densidade por Kernel (KDE) ponderada pela severidade predita do modelo sobre as coordenadas geográficas de \texttt{br230\_ocorrencias\_preparadas.csv}.
+\end{enumerate}
 
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.25}
-\caption{Rastreio da matriz de decisões da Fase~2 na Preparação.}
-\label{tab:rastreio}
-\begin{tabularx}{\textwidth}{|p{4.4cm}|c|X|}
+\caption{Matriz de cumprimento dos encaminhamentos da Fase~2.}
+\label{tab:matriz_rastreabilidade}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.8cm}|c|L|}
 \hline
-\textbf{Decisão da Fase~2} & \textbf{Status} & \textbf{Implementação} \\
+\textbf{Decisão / Requisito da Fase~2} & \textbf{Status} & \textbf{Solução Implementada na Fase~3} \\
 \hline
-Base única de ocorrências + partição 2022--2024 / 2025 & Cumprida & \texttt{concat} + \texttt{query} por ano \\
+Base única com recorte BR-230 e partição prospectiva & Cumprida & \texttt{concat} dos 4 anos, filtro \texttt{query("br==230")}, split temporal 2022--2024 / 2025. \\
 \hline
-Posicionamento por coordenadas WGS84 & Cumprida & latitude/longitude numéricas, 0 nulos \\
+Coordenadas WGS84 limpas e sem nulos & Cumprida & Latitude/longitude numéricas em \texttt{float64}, 0 nulos na série da BR-230. \\
 \hline
-Zeros sentinela $\rightarrow$ \texttt{NaN} & Cumprida & \texttt{pesid}, idade (e idade $>$100) \\
+Tratamento de sentinelas de pessoa ($0 \rightarrow \text{NaN}$) & Cumprida & Expurgados zeros em \texttt{pesid} e idade; cálculo de idade média válida por acidente. \\
 \hline
-Traçado composto & Cumprida & primeiro valor + flag \\
+Redução de traçados compostos & Cumprida & Primeiro traçado isolado em \texttt{tracado\_principal}; flag de multiplicidade registrada. \\
 \hline
-Prevalência geográfica e km do TO & Cumprida & flags + \texttt{km\_ajustado} \\
+Prevalência geográfica e correção cadastral no TO & Cumprida & Prevalência das coordenadas municipais; km 146 ajustado para 144,7~km conforme SNV. \\
 \hline
-Desbalanceamento documentado & Cumprida & 9,70\% no total; tratamento na Fase~4 \\
+Desbalanceamento severo documentado & Cumprida & 9,70\% de letalidade total documentada para tratamento algorítmico na Fase~4. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -501,7 +733,7 @@ Desbalanceamento documentado & Cumprida & 9,70\% no total; tratamento na Fase~4 
 \newpage
 
 % =========================================================
-% 8 REFERÊNCIAS
+% 10 REFERÊNCIAS
 % =========================================================
 \input{bib}
 
