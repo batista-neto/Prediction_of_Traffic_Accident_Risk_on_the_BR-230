@@ -187,7 +187,6 @@ A base da Polícia Rodoviária Federal (PRF) registra o universo de acidentes at
 
 O recorte empírico adotado abrange a série histórica pós-pandemia de \textbf{2022 a 2025} na rodovia \textbf{BR-230}, totalizando \textbf{6.217 acidentes} catalogados e \textbf{603 ocorrências com vítimas fatais} (taxa média de 9,70\%).
 
-
 % =========================================================
 % 2 TAXONOMIA DE DADOS E ESCALAS DE MEDIDA (AULA 4)
 % =========================================================
@@ -240,7 +239,6 @@ A Tabela~\ref{tab:taxonomia_escalas} cataloga os atributos do projeto de acordo 
 \end{table}
 
 \textbf{Implicação direta para a modelagem:} Variáveis nominais de alta cardinalidade (\texttt{municipio}, \texttt{tracado\_}\allowbreak\texttt{via}) não permitem ordenação direta e exigiram redução semântica (como o isolamento do \texttt{tracado\_}\allowbreak\texttt{principal} e agrupamentos regionais). Por sua vez, atributos em escala de razão (\texttt{km}, \texttt{idade}) suportam parametrizações estatísticas e auditorias de valores atípicos.
-
 
 % =========================================================
 % 3 ANÁLISE EXPLORATÓRIA DOS DADOS (AULA 4)
@@ -303,7 +301,6 @@ A Tabela~\ref{tab:estatisticas_eda} resume o perfil estatístico dos preditores 
   \item \textbf{Idade média dos envolvidos:} Apresenta $CV = 0,288$ (baixa variabilidade relativa) e aproxima-se de uma distribuição normal/mesocúrtica ($\gamma = +0,53$, $\beta = +0,20$), centrada em 38,8 anos, sem distorções severas de cauda após o expurgo das idades sentinela.
   \item \textbf{Contagem de mortos:} Possui assimetria extrema ($\gamma = +4,41$) e curtose aguda ($\beta = +31,31$), atestando que acidentes fatais constituem um evento severamente desbalanceado (90,3\% das ocorrências têm 0 mortos).
 \end{itemize}
-
 
 \subsection{Detecção formal de outliers (Valores anômalos)}
 
@@ -399,7 +396,6 @@ A distribuição conjunta de frequências (Aula~4, Slide 31) analisa a dependên
 
 A taxa de letalidade em pista simples (14,26\%) é quase o triplo da observada em pista dupla (5,06\%). Em trechos rurais fora da Paraíba com pista simples durante a noite ou amanhecer, a probabilidade empírica de óbito ultrapassa 25\%, fundamentando os atributos construídos na Seção~\ref{sec:construcao}.
 
-
 \subsection{Visualização gráfica da exploração}
 
 A Figura~\ref{fig:eda_completa} sintetiza três representações gráficas essenciais recomendadas na Aula~4: os boxplots de dispersão por subpopulação regional, o polígono acumulado (ogiva) de horários e o mapa de calor de contingência bivariada.
@@ -422,39 +418,39 @@ A Figura~\ref{fig:eda_completa} sintetiza três representações gráficas essen
 A Aula~4 prescreve a distribuição de frequências em três formas: absoluta, relativa e acumulada. A Tabela~\ref{tab:freq_causas} apresenta as oito principais causas de acidente da BR-230, e a Figura~\ref{fig:freq_pareto} mostra o respectivo gráfico de Pareto, o histograma com polígono de frequência do quilômetro e a participação por fase do dia.
 
 \begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\caption{Distribuição de frequências das oito principais causas de acidente (BR-230, 2022--2025, $n=6.217$).}
-\label{tab:freq_causas}
-\begin{tabularx}{\textwidth}{|L|Y|Y|Y|}
-\hline
-\textbf{Causa do acidente} & \textbf{Freq. absoluta} & \textbf{Freq. relativa (\%)} & \textbf{Freq. acumulada (\%)} \\
-\hline
-Ausência de reação do condutor & 1.062 & 17,08 & 17,08 \\
-\hline
-Reação tardia ou ineficiente do condutor & 850 & 13,67 & 30,75 \\
-\hline
-Acessar a via sem observar a presença dos outros veículos & 632 & 10,17 & 40,92 \\
-\hline
-Condutor deixou de manter distância do veículo da frente & 455 & 7,32 & 48,24 \\
-\hline
-Ingestão de álcool pelo condutor & 360 & 5,79 & 54,03 \\
-\hline
-Manobra de mudança de faixa & 346 & 5,57 & 59,59 \\
-\hline
-Transitar na contramão & 301 & 4,84 & 64,44 \\
-\hline
-Velocidade incompatível & 222 & 3,57 & 68,01 \\
-\hline
-\end{tabularx}
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \caption{Distribuição de frequências das oito principais causas de acidente (BR-230, 2022--2025, $n=6.217$).}
+  \label{tab:freq_causas}
+  \begin{tabularx}{\textwidth}{|L|Y|Y|Y|}
+    \hline
+    \textbf{Causa do acidente} & \textbf{Freq. absoluta} & \textbf{Freq. relativa (\%)} & \textbf{Freq. acumulada (\%)} \\
+    \hline
+    Ausência de reação do condutor & 1.062 & 17,08 & 17,08 \\
+    \hline
+    Reação tardia ou ineficiente do condutor & 850 & 13,67 & 30,75 \\
+    \hline
+    Acessar a via sem observar a presença dos outros veículos & 632 & 10,17 & 40,92 \\
+    \hline
+    Condutor deixou de manter distância do veículo da frente & 455 & 7,32 & 48,24 \\
+    \hline
+    Ingestão de álcool pelo condutor & 360 & 5,79 & 54,03 \\
+    \hline
+    Manobra de mudança de faixa & 346 & 5,57 & 59,59 \\
+    \hline
+    Transitar na contramão & 301 & 4,84 & 64,44 \\
+    \hline
+    Velocidade incompatível & 222 & 3,57 & 68,01 \\
+    \hline
+  \end{tabularx}
 \end{table}
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{figuras/exploracao_frequencias_pareto.png}
-\caption{(A) Pareto das oito principais causas; (B) histograma e polígono de frequência do quilômetro, com média (185~km) e mediana (117~km); (C) participação dos acidentes por fase do dia.}
-\label{fig:freq_pareto}
+  \centering
+  \includegraphics[width=\textwidth]{figuras/exploracao_frequencias_pareto.png}
+  \caption{(A) Pareto das oito principais causas; (B) histograma e polígono de frequência do quilômetro, com média (185~km) e mediana (117~km); (C) participação dos acidentes por fase do dia.}
+  \label{fig:freq_pareto}
 \end{figure}
 
 \begin{itemize}
@@ -469,28 +465,28 @@ Velocidade incompatível & 222 & 3,57 & 68,01 \\
 Complementamos o sumário da seção anterior com as medidas da Aula~4 ainda não calculadas (moda, ponto médio, amplitude, variância e coeficiente de variação $CV=s/\bar{x}$) e comparamos a regra empírica de $2\sigma$ com a regra de Tukey (Tabela~\ref{tab:medidas_comp}).
 
 \begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\caption{Medidas complementares e contagem de outliers por duas regras.}
-\label{tab:medidas_comp}
-\begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|Y|Y|Y|}
-\hline
-\textbf{Atributo} & \textbf{Moda} & \textbf{Pto. médio} & \textbf{Ampl.} & \textbf{Variância} & \textbf{CV} & \textbf{Outl. $2\sigma$} & \textbf{Outl. Tukey} \\
-\hline
-\texttt{km} & 23 & 735,0 & 1.470 & 49.748,7 & 1,20 & 262 (4,2\%) & 227 (3,7\%) \\
-\hline
-\texttt{hora} & 18 & 11,5 & 23 & 35,0 & 0,45 & 211 (3,4\%) & 0 (0,0\%) \\
-\hline
-\texttt{pessoas} & 2 & 25,5 & 49 & 3,6 & 0,77 & 111 (1,8\%) & 432 (7,0\%) \\
-\hline
-\texttt{veiculos} & 2 & 11,5 & 21 & 0,9 & 0,51 & 315 (5,1\%) & 315 (5,1\%) \\
-\hline
-\texttt{feridos} & 1 & 16,5 & 33 & 1,3 & 1,01 & 145 (2,3\%) & 2.887 (46,4\%) \\
-\hline
-\texttt{mortos} & 0 & 3,0 & 6 & 0,13 & 3,31 & 603 (9,7\%) & 603 (9,7\%) \\
-\hline
-\end{tabularx}
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \caption{Medidas complementares e contagem de outliers por duas regras.}
+  \label{tab:medidas_comp}
+  \begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Atributo} & \textbf{Moda} & \textbf{Pto. médio} & \textbf{Ampl.} & \textbf{Variância} & \textbf{CV} & \textbf{Outl. $2\sigma$} & \textbf{Outl. Tukey} \\
+    \hline
+    \texttt{km} & 23 & 735,0 & 1.470 & 49.748,7 & 1,20 & 262 (4,2\%) & 227 (3,7\%) \\
+    \hline
+    \texttt{hora} & 18 & 11,5 & 23 & 35,0 & 0,45 & 211 (3,4\%) & 0 (0,0\%) \\
+    \hline
+    \texttt{pessoas} & 2 & 25,5 & 49 & 3,6 & 0,77 & 111 (1,8\%) & 432 (7,0\%) \\
+    \hline
+    \texttt{veiculos} & 2 & 11,5 & 21 & 0,9 & 0,51 & 315 (5,1\%) & 315 (5,1\%) \\
+    \hline
+    \texttt{feridos} & 1 & 16,5 & 33 & 1,3 & 1,01 & 145 (2,3\%) & 2.887 (46,4\%) \\
+    \hline
+    \texttt{mortos} & 0 & 3,0 & 6 & 0,13 & 3,31 & 603 (9,7\%) & 603 (9,7\%) \\
+    \hline
+  \end{tabularx}
 \end{table}
 
 As duas regras divergem muito em atributos de contagem com mediana próxima do primeiro quartil: em \texttt{feridos}, Tukey marca 46,4\% dos registros como anômalos porque o $IQR$ é nulo, enquanto $2\sigma$ marca 2,3\%. Esses valores são ocorrências reais (acidentes com múltiplos feridos) e não erros, portanto \textbf{nenhum outlier foi removido}. Em \texttt{mortos}, os 603 ``outliers'' são exatamente os acidentes fatais, isto é, a classe-alvo. O coeficiente de variação de \texttt{mortos} (3,31) confirma a natureza rara e muito dispersa do desfecho.
@@ -500,10 +496,10 @@ As duas regras divergem muito em atributos de contagem com mediana próxima do p
 A Figura~\ref{fig:multivariada} apresenta a matriz de correlação de Pearson entre os atributos métricos e o indicador de óbito, e o mapa de calor de dia da semana $\times$ faixa horária (três dimensões: dia, hora e volume).
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{figuras/exploracao_multivariada.png}
-\caption{(A) Correlação de Pearson entre atributos métricos e óbito; (B) acidentes por dia da semana e faixa horária.}
-\label{fig:multivariada}
+  \centering
+  \includegraphics[width=\textwidth]{figuras/exploracao_multivariada.png}
+  \caption{(A) Correlação de Pearson entre atributos métricos e óbito; (B) acidentes por dia da semana e faixa horária.}
+  \label{fig:multivariada}
 \end{figure}
 
 \begin{itemize}
@@ -511,82 +507,81 @@ A Figura~\ref{fig:multivariada} apresenta a matriz de correlação de Pearson en
   \item \textbf{Dia $\times$ hora:} o maior volume ocorre aos domingos das 18h às 20h (253 acidentes), seguido de sábado no mesmo horário (220) e de segunda-feira de manhã (201, 6h--8h). A madrugada de fim de semana também é mais intensa do que a dos dias úteis.
 \end{itemize}
 
-
 \subsection{Sub-populações e inferência estatística}
 
 Os 6.217 registros são tratados como amostra do processo gerador de acidentes. A letalidade geral é de 9,70\% com intervalo de confiança de 95\% (Wilson) de $[8,99\%;\,10,46\%]$. A Tabela~\ref{tab:subpop} detalha a letalidade por sub-população, e as Tabelas~\ref{tab:qui2} e~\ref{tab:odds} trazem os testes de independência e as razões de chances.
 
 \begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\caption{Letalidade por sub-população com intervalo de confiança de 95\% (Wilson).}
-\label{tab:subpop}
-\begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
-\hline
-\textbf{Sub-população} & \textbf{$n$} & \textbf{Fatais} & \textbf{Letalidade (\%)} & \textbf{IC 95\% (\%)} \\
-\hline
-Pista simples & 3.170 & 452 & 14,26 & 13,08--15,52 \\
-\hline
-Pista dupla & 2.865 & 145 & 5,06 & 4,32--5,93 \\
-\hline
-Rural & 2.778 & 410 & 14,76 & 13,49--16,13 \\
-\hline
-Urbano & 3.439 & 193 & 5,61 & 4,89--6,43 \\
-\hline
-Plena noite & 2.208 & 287 & 13,00 & 11,66--14,47 \\
-\hline
-Pleno dia & 3.386 & 239 & 7,06 & 6,24--7,97 \\
-\hline
-Paraíba (PB) & 4.244 & 247 & 5,82 & 5,15--6,57 \\
-\hline
-Fora da PB & 1.973 & 356 & 18,04 & 16,41--19,80 \\
-\hline
-Rural + simples + noite & 708 & 162 & 22,88 & 19,94--26,12 \\
-\hline
-\end{tabularx}
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \caption{Letalidade por sub-população com intervalo de confiança de 95\% (Wilson).}
+  \label{tab:subpop}
+  \begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
+    \hline
+    \textbf{Sub-população} & \textbf{$n$} & \textbf{Fatais} & \textbf{Letalidade (\%)} & \textbf{IC 95\% (\%)} \\
+    \hline
+    Pista simples & 3.170 & 452 & 14,26 & 13,08--15,52 \\
+    \hline
+    Pista dupla & 2.865 & 145 & 5,06 & 4,32--5,93 \\
+    \hline
+    Rural & 2.778 & 410 & 14,76 & 13,49--16,13 \\
+    \hline
+    Urbano & 3.439 & 193 & 5,61 & 4,89--6,43 \\
+    \hline
+    Plena noite & 2.208 & 287 & 13,00 & 11,66--14,47 \\
+    \hline
+    Pleno dia & 3.386 & 239 & 7,06 & 6,24--7,97 \\
+    \hline
+    Paraíba (PB) & 4.244 & 247 & 5,82 & 5,15--6,57 \\
+    \hline
+    Fora da PB & 1.973 & 356 & 18,04 & 16,41--19,80 \\
+    \hline
+    Rural + simples + noite & 708 & 162 & 22,88 & 19,94--26,12 \\
+    \hline
+  \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\caption{Testes qui-quadrado de independência contra o desfecho fatal.}
-\label{tab:qui2}
-\begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
-\hline
-\textbf{Comparação} & \textbf{$\chi^2$} & \textbf{gl} & \textbf{$p$-valor} & \textbf{V de Cramér} \\
-\hline
-Tipo de pista $\times$ fatal & 154,13 & 2 & $3,4\times10^{-34}$ & 0,157 \\
-\hline
-PB $\times$ fora da PB & 228,38 & 1 & $1,4\times10^{-51}$ & 0,192 \\
-\hline
-Fase do dia $\times$ fatal & 79,29 & 3 & $4,4\times10^{-17}$ & 0,113 \\
-\hline
-Uso do solo $\times$ fatal & 145,74 & 1 & $1,5\times10^{-33}$ & 0,153 \\
-\hline
-\end{tabularx}
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \caption{Testes qui-quadrado de independência contra o desfecho fatal.}
+  \label{tab:qui2}
+  \begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
+    \hline
+    \textbf{Comparação} & \textbf{$\chi^2$} & \textbf{gl} & \textbf{$p$-valor} & \textbf{V de Cramér} \\
+    \hline
+    Tipo de pista $\times$ fatal & 154,13 & 2 & $3,4\times10^{-34}$ & 0,157 \\
+    \hline
+    PB $\times$ fora da PB & 228,38 & 1 & $1,4\times10^{-51}$ & 0,192 \\
+    \hline
+    Fase do dia $\times$ fatal & 79,29 & 3 & $4,4\times10^{-17}$ & 0,113 \\
+    \hline
+    Uso do solo $\times$ fatal & 145,74 & 1 & $1,5\times10^{-33}$ & 0,153 \\
+    \hline
+  \end{tabularx}
 \end{table}
 
 \begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\caption{Razão de chances (\textit{odds ratio}) de acidente fatal por grupo de exposição.}
-\label{tab:odds}
-\begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
-\hline
-\textbf{Grupo de exposição} & \textbf{$n$ expostos} & \textbf{Letal. expostos (\%)} & \textbf{Letal. demais (\%)} & \textbf{OR (IC 95\%)} \\
-\hline
-Rural + pista simples & 1.840 & 19,24 & 5,69 & 3,95 (3,32--4,69) \\
-\hline
-Plena noite & 2.208 & 13,00 & 7,88 & 1,75 (1,47--2,07) \\
-\hline
-Fora da PB & 1.973 & 18,04 & 5,82 & 3,56 (3,00--4,23) \\
-\hline
-Rural + simples + noite & 708 & 22,88 & 8,01 & 3,41 (2,79--4,17) \\
-\hline
-\end{tabularx}
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.2}
+  \caption{Razão de chances (\textit{odds ratio}) de acidente fatal por grupo de exposição.}
+  \label{tab:odds}
+  \begin{tabularx}{\textwidth}{|L|Y|Y|Y|Y|}
+    \hline
+    \textbf{Grupo de exposição} & \textbf{$n$ expostos} & \textbf{Letal. expostos (\%)} & \textbf{Letal. demais (\%)} & \textbf{OR (IC 95\%)} \\
+    \hline
+    Rural + pista simples & 1.840 & 19,24 & 5,69 & 3,95 (3,32--4,69) \\
+    \hline
+    Plena noite & 2.208 & 13,00 & 7,88 & 1,75 (1,47--2,07) \\
+    \hline
+    Fora da PB & 1.973 & 18,04 & 5,82 & 3,56 (3,00--4,23) \\
+    \hline
+    Rural + simples + noite & 708 & 22,88 & 8,01 & 3,41 (2,79--4,17) \\
+    \hline
+  \end{tabularx}
 \end{table}
 
 Todas as associações são estatisticamente significativas ($p<0,001$), porém com tamanho de efeito de pequeno a moderado (V de Cramér entre 0,11 e 0,19). Os testes indicam \textbf{associação, não causalidade}. A combinação rural + pista simples multiplica as chances de óbito por cerca de 4, o que confirma, com intervalo de confiança, a hipótese levantada na Fase~2.
@@ -604,8 +599,6 @@ Respondendo às perguntas do Slide~42 da Aula~4:
   \item \textbf{Redundância:} apenas o atributo \texttt{br} é constante (BR-230 por construção). O único par com $|r|>0,8$ é \texttt{mortos} $\times$ óbito, já tratado como vazamento.
   \item \textbf{Valores distintos com significado similar:} detectada grafia duplicada em \texttt{causa\_acidente}, na categoria ``Transitar no acostamento'', que aparece com diferença de capitalização. A categoria é rara e não é usada como preditor.
 \end{itemize}
-
-
 
 % =========================================================
 % 4 FORMATAÇÃO (FASE 3)
@@ -627,7 +620,6 @@ Os dados abertos da PRF são disponibilizados com particularidades que inviabili
 \subsection{Reprodutibilidade da ingestão}
 
 A função \texttt{garantir\_base()} implementada no notebook gerencia a persistência local em \texttt{bases/}. Caso um dos oito CSVs oficiais (\texttt{datatran2022.csv} a \texttt{datatran2025.csv} e \texttt{acidentes2022.csv} a \texttt{acidentes2025.csv}) não esteja presente em disco, a rotina realiza o download automático a partir dos espelhos institucionais em nuvem. Para contornar bloqueios em redes com inspeção de tráfego SSL/TLS (proxies corporativos e certificados intermediários), o módulo integra as CAs do sistema operacional ao pacote \texttt{certifi}.
-
 
 % =========================================================
 % 5 SELEÇÃO E INTEGRAÇÃO (FASE 3)
@@ -704,7 +696,6 @@ Os arquivos de pessoas (\texttt{acidentesYYYY.csv}) registram 15.764 linhas na B
 
 A união (\textit{left join}) foi validada como 1:1 estrita: todos os 6.217 acidentes da BR-230 encontraram correspondência exata, mantendo a integridade referencial sem perdas.
 
-
 % =========================================================
 % 6 LIMPEZA E QUALIDADE (FASE 3)
 % =========================================================
@@ -754,7 +745,6 @@ A limpeza dos dados na Fase~3 responde sistematicamente aos seis problemas funda
     \hline
   \end{tabularx}
 \end{table}
-
 
 % =========================================================
 % 7 CONSTRUÇÃO DE ATRIBUTOS E PARTIÇÃO (FASE 3)
@@ -834,13 +824,23 @@ Para alimentar algoritmos de aprendizado supervisionado (como Redes Neurais Arti
 
 Visando à construção do mapa de calor de acidentes na Fase de Modelagem por Estimação de Densidade de Kernel (\textit{Kernel Density Estimation} --- KDE), as coordenadas geográficas válidas de latitude e longitude foram mapeadas em feições vetoriais de pontos pontuais (\texttt{Point}) através da biblioteca GeoPandas, sob o datum geodésico universal WGS84 (EPSG:4326). O arquivo exportado (\texttt{br230\_espacial.geojson}) contém todas as 6.217 ocorrências com geometria ativa e atributos contextuais associados.
 
-
 % =========================================================
 % 8 ARTEFATOS GERADOS (FASE 3)
 % =========================================================
 \section{Artefatos Gerados e Reprodutibilidade}
 
 Todas as transformações, cálculos estatísticos e visualizações são gerados de forma determinística pelo notebook \texttt{preparacao\_dos\_dados/}\allowbreak\texttt{preparacao\_dos\_dados.ipynb}.
+
+\noindent
+\begin{center}
+  \fbox{%
+  \begin{minipage}{0.92\textwidth}
+    \centering \vspace{0.15cm}
+    \textbf{Reprodutibilidade e Execução Interativa:}\\[0.2cm]
+    \href{https://colab.research.google.com/github/batista-neto/Prediction_of_Traffic_Accident_Risk_on_the_BR-230/blob/main/preparacao_dos_dados/preparacao_dos_dados.ipynb}{\textbf{[Clique aqui para abrir o Notebook no Google Colab]}}\\[0.15cm]
+  \end{minipage}%
+  }
+\end{center}
 
 Os arquivos de dados oficiais gerados encontram-se persistidos no diretório \texttt{bases/preparadas/} no formato UTF-8 (delimitado por vírgula) e em formato GeoJSON para as feições espaciais:
 
@@ -878,11 +878,10 @@ Os arquivos de dados oficiais gerados encontram-se persistidos no diretório \te
 As figuras de controle e da análise exploratória encontram-se salvas no diretório \texttt{preparacao\_dos\_dados/}\allowbreak\texttt{figuras/} em resolução gráfica adequada para publicação:
 \begin{itemize}
   \item \texttt{exploracao\_distribuicoes\_outliers.png} (Boxplots por UF, Ogiva horária e Heatmap bivariado);
-    \item \texttt{exploracao\_frequencias\_pareto.png} (Pareto das causas, histograma de km e setores por fase do dia);
-    \item \texttt{exploracao\_multivariada.png} (Matriz de correlação e mapa de calor dia $\times$ faixa horária);
+  \item \texttt{exploracao\_frequencias\_pareto.png} (Pareto das causas, histograma de km e setores por fase do dia);
+  \item \texttt{exploracao\_multivariada.png} (Matriz de correlação e mapa de calor dia $\times$ faixa horária);
   \item \texttt{preparacao\_controle\_anual\_pista.png} (Série anual e perfil por tipo de pista).
 \end{itemize}
-
 
 % =========================================================
 % 9 ENCAMINHAMENTOS PARA A MODELAGEM (FASE 4)
